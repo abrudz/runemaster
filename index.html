@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" id="root">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>RuneMaster</title>
+    <link rel="stylesheet" href="index.css"/>
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <dialog id="msg">
+      <p id="msgp">message</p>
+      <form method="dialog"><button autofocus>OK</button></form>
+    </dialog>
+    <dialog id="ask">
+      <p id="askp">question</p>
+      <form method="dialog">
+        <input id="aski" autofocus autocomplete="off" spellcheck="false" onchange="ans(this.value)">
+        <p><button>Submit</button> <button value="cancel">Cancel</button></p>
+      </form>
+      <fieldset><legend>Click to insert</legend><div id="askb"></div></fieldset>
+    </dialog>
+    <i id="i">🧍‍</i>
+    <table id="M"></table>
+    <fieldset>
+      <legend>Runes in belt</legend>
+      <table id="belt">
+        <tr><th>Emerald: &ensp;</th><td></td></tr>
+        <tr><th>Ruby:    &ensp;</th><td></td></tr>
+        <tr><th>Sapphire:&ensp;</th><td></td></tr>
+        <tr><th>Amethyst:&ensp;</th><td></td></tr>
+      </table>
+    </fieldset>
+  </body>
+</html>
