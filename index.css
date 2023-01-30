@@ -1,4 +1,5 @@
-@font-face{font-family:Text;src:url("DiabloHeavy.ttf")}
+@font-face{font-family:Text;letter-spacing:0.25ex;src:url("Gemcut Bold.otf")}
+@font-face{font-family:Text;letter-spacing:0.25ex;src:url("Gemcut Bold Italic.otf");font-style:italic}
 @font-face{font-family:APL;src:local("APL386 Unicode"),local("APL385 Unicode"),url("APL386.ttf")}
 *{user-select:none}
 html{
@@ -17,10 +18,11 @@ html{
   --size: 2.5rem;
 }
 body{background:var(--spot)}
-dialog{z-index:150;font-size:calc(var(--size) * 0.6)}
-dialog p{line-height:calc(var(--size) * 0.8)}
-dialog button{font-family:Text;font-size:calc(var(--size) * 0.6)}
-#askb>button,dialog code{font-weight:800;font-family:APL;white-space:pre}
+dialog{z-index:150;font-size:calc(var(--size) * 0.6);background:var(--spot)}
+dialog::backdrop{background:#0003}
+dialog p{line-height:calc(var(--size) * 0.8);font-family:Text;letter-spacing:0.25ex}
+dialog button{font-family:Text;letter-spacing:0.25ex;font-size:calc(var(--size) * 0.6)}
+#askb>button,dialog code{font-weight:bold;font-family:APL;white-space:pre}
 #askb>*{cursor:pointer}
 dialog input{width:100%;font-family:APL;font-size:calc(var(--size) * 0.6)}
 #M {
@@ -38,8 +40,13 @@ td {
   background:var(--back);
   width: var(--size);
 }
-fieldset{border:0.2rem solid currentColor;font-family:Text}
-legend,th{font-size:1.5rem}
+fieldset{
+  border:0.15rem solid currentColor;
+  font-family:Text;
+  letter-spacing:0.25ex;
+  padding: 0.5rem 1rem 1rem 1rem;
+}
+legend,th{font-size:1.5rem;}
 th{text-align:left;font-weight:normal}
 td>*{z-index:100}
 #M td,b{text-align:center;}

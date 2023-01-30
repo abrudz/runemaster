@@ -14,20 +14,20 @@
     <dialog id="ask">
       <p id="askp">question</p>
       <form method="dialog">
-        <input id="aski" autofocus autocomplete="off" spellcheck="false" onchange="ans(this.value)">
-        <p><button>Submit</button> <button value="cancel">Cancel</button></p>
+        <input id="aski" autofocus autocomplete="off" spellcheck="false">
+        <p><button onclick="ans(aski.value)">submit</button> <button value="cancel" onclick="aski.value=''">cancel</button></p>
       </form>
-      <fieldset><legend>Click to insert</legend><div id="askb"></div></fieldset>
+      <fieldset><legend> allowed runes — click to insert </legend><div id="askb"></div></fieldset>
     </dialog>
     <i id="i">🧍‍</i>
     <table id="M"></table>
     <fieldset>
-      <legend>Runes in belt</legend>
+      <legend> collected runes </legend>
       <table id="belt">
-        <tr><th>Emerald: &ensp;</th><td></td></tr>
-        <tr><th>Ruby:    &ensp;</th><td></td></tr>
-        <tr><th>Sapphire:&ensp;</th><td></td></tr>
-        <tr><th>Amethyst:&ensp;</th><td></td></tr>
+        <tr><th>emerald: &ensp;</th><td></td></tr>
+        <tr><th>ruby:    &ensp;</th><td></td></tr>
+        <tr><th>sapphire:&ensp;</th><td></td></tr>
+        <tr><th>amethyst:&ensp;</th><td></td></tr>
       </table>
     </fieldset>
   </body>
