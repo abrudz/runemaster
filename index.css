@@ -1,6 +1,6 @@
 @font-face{font-family:Text;letter-spacing:0.25ex;src:url("Gemcut Bold.otf")}
 @font-face{font-family:Text;letter-spacing:0.25ex;src:url("Gemcut Bold Italic.otf");font-style:italic}
-@font-face{font-family:APL;src:local("APL386 Unicode"),local("APL385 Unicode"),url("APL386.ttf")}
+@font-face{font-family:APL;src:local("APL387 Unicode"),local("APL386 Unicode"),local("APL385 Unicode"),url("APL387.ttf")}
 *{user-select:none}
 html{
   --emerald   :rgb(  0, 73, 73);
