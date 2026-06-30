@@ -11,8 +11,10 @@ const md=s=>s.replace(/\{(\w\W)\}/g,(_,m)=>b(m)).replace(/(?<!\\)`(.*?[^\\])`/g,
 const exec=s=>fetch("https://tryapl.org/Exec",{
   method:"POST",
   headers:{"Content-Type":"application/json;charset=utf-8"},
-  body:JSON.stringify([0, 0, 0, s])
+  body:JSON.stringify([0, 0, 0, s]),
+  signal:AbortSignal.timeout(35e3)
 }).then(d=>d.json()).then(d=>react(+d[3][0]))
+  .catch(_=>{msgp.innerHTML="TryAPL isn't responding — please try again.";msg.showModal()})
 const getTop =e=>window.scrollY+e.getBoundingClientRect().top +"px"
 const getLeft=e=>window.scrollX+e.getBoundingClientRect().left+"px"
 const getR=e=>parseInt(e.id.replace(/r|c\d+/g,""))
