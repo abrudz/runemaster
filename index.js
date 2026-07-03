@@ -24,6 +24,12 @@ const place=(e,y,x)=>{
   e.style.top=getTop(t)
   e.style.left=getLeft(t)
 }
+const jump=(r,c)=>{
+  i.style.transition="none"
+  i.r=r;i.c=c
+  void i.offsetWidth
+  i.style.transition=""
+}
 const lb=ch=>{
   const bi=$$("#belt b").map(e=>e.id)
   const a=ch.match(/../g,"")
@@ -39,11 +45,7 @@ const lb=ch=>{
   })
   
 }
-window.addEventListener('resize',()=>{
-  i.style.display="none"
-  place(i,i.r,i.c)
-  i.style.display="block"
-})
+window.addEventListener('resize',()=>jump(i.r,i.c))
 const show=()=>$$(
   `#r${i.r-1}c${i.c-1}>*,`+
   `#r${i.r-1}c${i.c+0}>*,`+
@@ -77,10 +79,10 @@ addEventListener('keydown', async e=>{
   e.key=="PageDown"  ||e.key=="3"||e.key=="c"||e.key=="."    ?down(right(moved=1)):0
   if(moved&&!$$("dialog").some(e=>e.hasAttribute("open"))){
     e.preventDefault()
-    if(newR<0)   {mr-=1;await loadM(mr,mc);i.r=rMax;i.c=newC;show()}else
-    if(newR>rMax){mr+=1;await loadM(mr,mc);i.r=0   ;i.c=newC;show()}else
-    if(newC<0)   {mc-=1;await loadM(mr,mc);i.c=cMax;i.r=newR;show()}else
-    if(newC>cMax){mc+=1;await loadM(mr,mc);i.c=0   ;i.r=newR;show()}
+    if(newR<0)   {mr-=1;await loadM(mr,mc);jump(rMax,newC);show()}else
+    if(newR>rMax){mr+=1;await loadM(mr,mc);jump(0   ,newC);show()}else
+    if(newC<0)   {mc-=1;await loadM(mr,mc);jump(newR,cMax);show()}else
+    if(newC>cMax){mc+=1;await loadM(mr,mc);jump(newR,0   );show()}
     else{
       let t=td(newR,newC).children[0]
       if(t&&t.style.visibility!="hidden"){
