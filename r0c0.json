@@ -101,7 +101,7 @@
  "j(": {
   "req": "",
   "add": "m⍳D∘d≡j{",
-  "task": "{j(} is the _diamond of precedence_ — a pair of parentheses `( )` binding an expression together so a rune takes it whole. An _identity matrix_ of size `⍵` is a square table of `0`s bearing `1`s on its diagonal. Drawing on {m⍳}, {D∘} and {d≡}, forge a rune that raises an identity matrix of the given size.\n\n`{answer} 3` gives a 3×3 identity table.",
+  "task": "{j(} is the _diamond of precedence_ — a pair of parentheses `( )` binding an expression together so a rune takes it whole. An _identity matrix_ of size `⍵` is a square table of 0s bearing 1s on its diagonal. Drawing on {m⍳}, {D∘} and {d≡}, forge a rune that raises an identity matrix of the given size.\n\n`{answer} 3` gives a 3×3 identity table.",
   "f": "{(⍳⍵)∘.≡⍳⍵}",
   "a": [
    "2",
