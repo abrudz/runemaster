@@ -1,12 +1,14 @@
 'use strict'
 let i,M,root,aski,askb,askp,ask,msg,msgp
-let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={}
+let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={},doors={},seen={}
+const KEY="runemaster"                             // localStorage key for saved progress
 const $=s=>document.querySelector(s)
 const $$=s=>[...document.querySelectorAll(s)]
 const td=(r,c)=>$("#r"+r+"c"+c)
 const ins={"(":"()","[":"[]","{":"{}","∘":"∘."}   // rune glyph -> displayed / typed form (multi-char)
 const mid={"()":1,"[]":1,"{}":1}                   // enclosure pairs: cursor sits between
 const b=r=>`<b tabindex='0' class='${r[0]}'>${ins[r[1]]??r[1]}</b>`
+const mkb=id=>{const e=document.createElement("b");e.tabIndex=0;e.id=id;e.className=id[0];e.innerHTML=ins[id[1]]??id[1];return e}  // rebuild a collected rune (keeps its id so chk sees it)
 const bs=s=>(s.match(/../g)??[]).map(b)
 const reqs=t=>j[t.id].req.match(/../g)??[]
 const dfnkeys=q=>q.f?(Array.isArray(q.a[0])?"⍺ ⍵ ":"⍵ "):""  // dfn arg keys for function challenges (braces come from the {} diamond)
@@ -47,21 +49,27 @@ const lb=ch=>{
   })
 }
 window.addEventListener('resize',()=>jump(i.r,i.c))
-const show=()=>$$(
-  `#r${i.r-1}c${i.c-1}>*,`+
-  `#r${i.r-1}c${i.c+0}>*,`+
-  `#r${i.r-1}c${i.c+1}>*,`+
-  `#r${i.r+0}c${i.c-1}>*,`+
-  `#r${i.r+0}c${i.c+0}>*,`+
-  `#r${i.r+0}c${i.c+1}>*,`+
-  `#r${i.r+1}c${i.c-1}>*,`+
-  `#r${i.r+1}c${i.c+0}>*,`+
-  `#r${i.r+1}c${i.c+1}>*`
-).forEach(e=>e.style.opacity=1)
+const show=()=>{                                       // reveal the 3×3 around the player, and remember it
+  let s=seen[cur]??=[]
+  for(let r=i.r-1;r<=i.r+1;r++)for(let c=i.c-1;c<=i.c+1;c++){
+    let t=td(r,c);if(!t)continue
+    if(t.children[0])t.children[0].style.opacity=1
+    let k=r+","+c;if(!s.includes(k))s.push(k)
+  }
+}
 const chk=()=>{
   let bi=$$("#belt b").map(e=>e.id)
   $$(".l").forEach(e=>reqs(e).every(r=>~bi.indexOf(r))?(e.className="o",e.innerText="🚪"):0)
 }
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({mr,mc,r:i.r,c:i.c,belt:$$("#belt b").map(e=>e.id),doors,seen}))}catch(_){}}
+const restore=()=>{
+  let s;try{s=JSON.parse(localStorage.getItem(KEY))}catch(_){s=null}
+  if(!s)return null
+  doors=s.doors??{};seen=s.seen??{}
+  ;(s.belt??[]).forEach(id=>{let g="mdMDj".indexOf(id[0]);if(~g)$$("#belt td")[g].appendChild(mkb(id))})
+  return s
+}
+window.reset=()=>{localStorage.removeItem(KEY);location.reload()}   // playtesting: wipe saved progress
 addEventListener('keydown', async e=>{
   const up   =()=>newR=i.r-1
   const down =()=>newR=i.r+1
@@ -110,6 +118,7 @@ addEventListener('keydown', async e=>{
         }
       }else show(i.r=newR,i.c=newC)
     }
+    save()
   }
 });
 async function loadM(mr,mc) {
@@ -132,6 +141,9 @@ async function loadM(mr,mc) {
   cur=key
   j=mem[key].j
   M.innerHTML=mem[key].html
+  let got=new Set($$("#belt b").map(e=>e.id))                                    // runes already collected
+  $$("#M b").forEach(e=>got.has(e.id)?e.remove():doors[key]?.includes(e.id)?e.style.visibility="hidden":0)  // gone / passed doors open
+  ;(seen[key]??[]).forEach(k=>{let[r,c]=k.split(",");let e=td(r,c)?.children[0];if(e)e.style.opacity=1})    // restore revealed fog-of-war
   if(j.theme.wall)root.style.setProperty("--wall",j.theme.wall)
   if(j.theme.back)root.style.setProperty("--back",j.theme.back)
   if(j.theme.spot)root.style.setProperty("--spot",j.theme.spot)
@@ -143,8 +155,11 @@ document.addEventListener('DOMContentLoaded', async function main() {
   i=$("#i");M=$("#M");root=$("#root")
   aski=$("#aski");askb=$("#askb");askp=$("#askp")
   ask=$("#ask");msg=$("#msg");msgp=$("#msgp")
+  if(/[?&]reset\b/.test(location.search))localStorage.removeItem(KEY)
+  const s=restore()
+  if(s){mr=s.mr;mc=s.mc}
   await loadM(mr,mc)
-  i.rVal=Math.floor(rMax/2);i.cVal=Math.floor(cMax/2)
+  i.rVal=s?s.r:Math.floor(rMax/2);i.cVal=s?s.c:Math.floor(cMax/2)
   Object.defineProperty(i, 'r', {get: ()=>i.rVal, set: v=> place(i,i.rVal=v,i.cVal  )})
   Object.defineProperty(i, 'c', {get: ()=>i.cVal, set: v=> place(i,i.rVal  ,i.cVal=v)})
   i.r=i.rVal;i.c=i.cVal
@@ -167,9 +182,12 @@ window.ans=t=>{
 const react=b=>{
   if(b&&ask.b.id[0]=="l"){
     show(i.r=ask.r,i.c=ask.c)
-    ask.b.style.visibility="hidden"  
+    ask.b.style.visibility="hidden"
+    ;(doors[cur]??=[]).push(ask.b.id)   // remember this door is passed
+    save()
   }else if(b){
     $$("#belt td")[g].appendChild(c)
     chk()
+    save()
   }
 }
