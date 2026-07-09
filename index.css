@@ -199,3 +199,9 @@ i {
   width: var(--size);
   border-radius: calc(var(--size) / 2.5);
 }
+#left {
+  font-family: Text;
+  letter-spacing: 0.25ex;
+  text-align: center;
+  margin: 0.5rem;
+}

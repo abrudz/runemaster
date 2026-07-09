@@ -61,6 +61,8 @@ const chk=()=>{
   let bi=$$("#belt b").map(e=>e.id)
   $$(".l").forEach(e=>reqs(e).every(r=>~bi.indexOf(r))?(e.className="o",e.innerText="🚪"):0)
 }
+const count=()=>{let n=$$("#M b.m,#M b.d,#M b.M,#M b.D,#M b.j").length   // uncollected rune stones in this room
+  $("#left").textContent=n?`${n} rune${n-1?"s":""} yet to find here`:"all runes here are yours"}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({mr,mc,r:i.r,c:i.c,belt:$$("#belt b").map(e=>e.id),doors,seen}))}catch(_){}}
 const restore=()=>{
   let s;try{s=JSON.parse(localStorage.getItem(KEY))}catch(_){s=null}
@@ -150,6 +152,7 @@ async function loadM(mr,mc) {
   let first=$$("#M td")[0]   ;rMin=getR(first);cMin=getC(first)
   let last =$$("#M td").pop();rMax=getR(last );cMax=getC(last )
   chk()
+  count()
 }
 document.addEventListener('DOMContentLoaded', async function main() {
   i=$("#i");M=$("#M");root=$("#root")
@@ -188,6 +191,7 @@ const react=b=>{
   }else if(b){
     $$("#belt td")[g].appendChild(c)
     chk()
+    count()
     save()
   }
 }
