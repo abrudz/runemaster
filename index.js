@@ -9,7 +9,6 @@ const ins={"(":"()","[":"[]","{":"{}","∘":"∘."}    // glyph -> typed form
 const mid={"()":1,"[]":1,"{}":1}                   // pairs: cursor between
 const b=r=>`<b tabindex='0' class='${r[0]}'>${ins[r[1]]??r[1]}</b>`
 const mkb=id=>{const e=document.createElement("b");e.tabIndex=0;e.id=id;e.className=id[0];e.innerHTML=ins[id[1]]??id[1];return e}  // rebuild collected rune (keep id for chk)
-const bs=s=>(s.match(/../g)??[]).map(b)
 const reqs=t=>j[t.id].req.match(/../g)??[]
 const dfnkeys=q=>q.f?(Array.isArray(q.a[0])?"⍺ ⍵ ":"⍵ "):""   // dfn arg keys ({} from diamond)
 const keys=q=>q.req+q.add+dfnkeys(q)+[...q.task.matchAll(/`\w`/g)].join``.replace(/`(\w)`/g,"$1 ")   // a challenge's allowed runes
@@ -81,7 +80,8 @@ async function step(newR,newC){                      // move to / interact with 
     let t=td(newR,newC).children[0]
     if(t&&t.style.visibility!="hidden"){
       if(t.className=="l"){
-        msgp.innerHTML="This door requires mastery of the following runes:<br>"+bs(j[t.id].req).join` `
+        let bi=$$("#belt b").map(e=>e.id)   // collected
+        msgp.innerHTML="This door still needs:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `   // only the runes you lack
         msg.showModal()
       }else if(t.className=="o"){ask.r=newR;ask.c=newC;openask(t,keys(j[t.id]))}
       else if(~(g="mdMDj".indexOf(t.className))){show(i.r=newR,i.c=newC);c=t;openask(c,c.id+keys(j[c.id]))}
