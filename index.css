@@ -59,7 +59,7 @@ b {
 }
 #belt b,#askb>*{margin:0 calc(var(--size) * 0.1)}
 #M b{opacity:0;}
-.m,.d,.M,.D{
+.m,.d,.M,.D,.j{
   width:calc(var(--size) * 0.6);
   height:calc(var(--size) * 0.6);
   line-height:calc(var(--size) * 0.6);
@@ -71,6 +71,7 @@ b {
 .d {border-radius:1em  1em  0em  0em;color:var(--ruby    );-webkit-text-stroke-color:var(--ruby    );background:var(--l-ruby    );border-color:rgba(255,255,255,0.25)}
 .M {border-radius:0em .5em .5em .5em;color:var(--sapphire);-webkit-text-stroke-color:var(--sapphire);background:var(--l-sapphire);border-color:rgba(255,255,255,0.25)}
 .D {border-radius:.5em 0em .5em .5em;color:var(--amethyst);-webkit-text-stroke-color:var(--amethyst);background:var(--l-amethyst);border-color:rgba(255,255,255,0.25)}
+.j {border-radius:50%;color:#333;-webkit-text-stroke-color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.5);background:radial-gradient(circle at 50% 40%,rgba(255,255,255,0.9),rgba(255,0,64,0.16) 24%,rgba(255,170,0,0.16) 38%,rgba(60,200,0,0.16) 52%,rgba(0,150,255,0.16) 66%,rgba(150,0,220,0.16) 80%,rgba(255,255,255,0.55))}
 i {
   height:var(--size);
   width:var(--size);

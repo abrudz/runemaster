@@ -31,20 +31,20 @@ const jump=(r,c)=>{
   void i.offsetWidth
   i.style.transition=""
 }
+const cls={"(":")","[":"]","{":"}"}          // enclosure openers -> closers
 const lb=ch=>{
   const bi=$$("#belt b").map(e=>e.id)
   const a=ch.match(/../g,"")
-  aski.pattern="["+a.map(t=>t[1]==" "?t[0]:t[1]).join("").replace(/[-^$\\.*+?()[\]{}|\/&!#%,:;<=>@~`]/g,"\\$&")+" ]*"
+  aski.pattern="["+a.map(t=>t[0]=="j"?t[1]+cls[t[1]]:t[1]==" "?t[0]:t[1]).join("").replace(/[-^$\\.*+?()[\]{}|\/&!#%,:;<=>@~`]/g,"\\$&")+" ]*"
   askb.innerHTML=a.sort(_=>Math.random()-0.5).
             map(s=>s[1]==" "?`<button>${s[0]}</button>`:s==c.id||~bi.indexOf(s)?b(s):"").join("")
   $$("#askb>*").forEach(e=>e.onclick=()=>{
+    const ins=e.innerText+(cls[e.innerText]??"")   // enclosures insert as a pair, cursor between
     let se=aski.selectionStart+1
-    aski.value=aski.value.slice(0,aski.selectionStart)+
-    e.innerText+aski.value.slice(aski.selectionEnd,aski.value.length)
+    aski.value=aski.value.slice(0,aski.selectionStart)+ins+aski.value.slice(aski.selectionEnd)
     aski.selectionStart=aski.selectionEnd=se
     aski.focus()
   })
-  
 }
 window.addEventListener('resize',()=>jump(i.r,i.c))
 const show=()=>$$(
@@ -98,7 +98,7 @@ addEventListener('keydown', async e=>{
           ask.r=newR;ask.c=newC
           aski.value=""
           ask.showModal()
-        }else if(~(g="mdMD".indexOf(t.className))){
+        }else if(~(g="mdMDj".indexOf(t.className))){
           show(i.r=newR,i.c=newC)
           c=t
           askp.innerHTML=md(j[c.id].task)
