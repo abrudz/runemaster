@@ -7,15 +7,15 @@
  },
  "M": [
   "w w w w w w w w w w w ",
-  "w   d↓  d∩  d⌊  d⌈  w ",
-  "w                   w ",
-  "w   d⌿  d=  m≠      w ",
-  "w                   w ",
-  "w   d∧  d∨  m⌽      w ",
-  "w                   w ",
-  "w                   w ",
-  "                    w ",
-  "w                   w ",
+  "w d↓    w   d∩    w w ",
+  "w   w   w   w w     l2",
+  "w d⌿w         w   w w ",
+  "w   w w w w   w     w ",
+  "w     d∧w d=    w   w ",
+  "w w w   w   w   w   w ",
+  "w m≠        w       w ",
+  "    w w w d∨w m⌽w d⌈w ",
+  "w               w d⌊w ",
   "w w w w w w w w w w w "
  ],
  "d↓": {
@@ -77,5 +77,11 @@
   "add": "",
   "task": "{m⌽} is the _emerald rune of reversal_, mirroring the order of the list on its right. The watchtowers along the shore report their heights as `l`; recite them from last to first.",
   "expr": "⌽l←5?99"
+ },
+ "l2": {
+  "req": "d⌊d⌈m⌽",
+  "add": "",
+  "task": "A slab of granite seals the eastern tunnel, scored with a warden's demand: take the crystal readings `v`, let none sink beneath the floor `f` nor rise above the ceiling `c`, then recite them from last to first. Speak them so and the slab grinds aside.",
+  "expr": "⌽(f←3)⌈(c←7)⌊v←?⍨9"
  }
 }
