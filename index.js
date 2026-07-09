@@ -88,11 +88,11 @@ addEventListener('keydown', async e=>{
   e.key=="PageDown"  ||e.key=="3"||e.key=="c"||e.key=="."    ?down(right(moved=1)):0
   if(moved&&!$$("dialog").some(e=>e.hasAttribute("open"))){
     e.preventDefault()
-    if(newR<0)   {mr-=1;await loadM(mr,mc);jump(rMax,newC);show()}else
-    if(newR>rMax){mr+=1;await loadM(mr,mc);jump(0   ,newC);show()}else
-    if(newC<0)   {mc-=1;await loadM(mr,mc);jump(newR,cMax);show()}else
-    if(newC>cMax){mc+=1;await loadM(mr,mc);jump(newR,0   );show()}
-    else{
+    if(newR<0   &&newC==i.c){mr-=1;await loadM(mr,mc);jump(rMax,newC);show()}else
+    if(newR>rMax&&newC==i.c){mr+=1;await loadM(mr,mc);jump(0   ,newC);show()}else
+    if(newC<0   &&newR==i.r){mc-=1;await loadM(mr,mc);jump(newR,cMax);show()}else
+    if(newC>cMax&&newR==i.r){mc+=1;await loadM(mr,mc);jump(newR,0   );show()}else  // only orthogonal steps switch maps; a diagonal move off an edge is ignored (would land on a wall)
+    if(0<=newR&&newR<=rMax&&0<=newC&&newC<=cMax){
       let t=td(newR,newC).children[0]
       if(t&&t.style.visibility!="hidden"){
         if(t.className=="l"){
