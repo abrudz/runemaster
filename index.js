@@ -52,7 +52,11 @@ const chk=()=>{
   $$(".l").forEach(e=>reqs(e).every(r=>~bi.indexOf(r))?(e.className="o",e.innerText="🚪"):0)
 }
 const count=()=>{let n=$$("#M b.m,#M b.d,#M b.M,#M b.D,#M b.j").length   // uncollected stones here
-  $("#left").textContent=n?`${n} rune${n-1?"s":""} yet to find here`:"all runes here are yours"}
+  $("#left").textContent=`${j.name}: ${n?`${n} rune${n-1?"s":""} yet to find here`:"all runes here are yours"}`
+  document.title=`${j.name} (${n}) - RuneMaster`}
+const favico=w=>{                                    // dynamic svg favicon of the wall emoji
+  let l=$("link[rel=icon]")??document.head.appendChild(Object.assign(document.createElement("link"),{rel:"icon"}))
+  l.href="data:image/svg+xml,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="82" font-size="88" text-anchor="middle">${w}</text></svg>`)}
 const fit=()=>{                                      // fit board+margin+chrome to viewport (no scroll)
   let chrome=0
   for(const el of document.body.children)if(el!=M&&el!=i&&el.tagName!="DIALOG")chrome+=el.offsetHeight
@@ -132,6 +136,7 @@ async function loadM(mr,mc){
   if(j.theme.wall)root.style.setProperty("--wall",j.theme.wall)
   if(j.theme.back)root.style.setProperty("--back",j.theme.back)
   if(j.theme.spot)root.style.setProperty("--spot",j.theme.spot)
+  favico(j.theme.w)
   let first=$$("#M td")[0]     ;rMin=getR(first);cMin=getC(first)
   let last =$$("#M td").at(-1) ;rMax=getR(last );cMax=getC(last )
   chk();count();fit()
