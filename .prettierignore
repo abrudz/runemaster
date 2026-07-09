@@ -1,0 +1,6 @@
+# RuneMaster game source follows the terse house style in CONVENTIONS.md,
+# which Prettier would undo (spacing, semicolons, line breaks). Keep it out.
+index.js
+index.css
+index.html
+CONVENTIONS.md
