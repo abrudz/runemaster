@@ -11,7 +11,7 @@
   "    w     w       w w ",
   "w   w   w w   w     w ",
   "w d≤      w   w w   w ",
-  "w w w w   w     w   w ",
+  "w w w w   w     w   l0",
   "w           w d⊃w   w ",
   "w   w w w   w w w   w ",
   "w d≥    w           w ",
@@ -53,5 +53,11 @@
   "add": "d+",
   "task": "{M\\} is the _sapphire rune of scanning_ — set to the right of a rune, it sweeps that rune through the ever-growing prefixes of the list on its right, leaving a trail of running results. Drawing on {d+}, tally the running total of the tribute `t`, coin upon coin.",
   "expr": "+\\t←?6⍴20"
+ },
+ "l0": {
+  "req": "d,M/j{j(d=m⌽",
+  "add": "",
+  "task": "Beyond the eastern arch lies the Hall of Mirrors, and its seal yields only to broad mastery. Take the names `a` and `b`, join them into one strand, and speak it mirrored end to end.",
+  "expr": "⌽(a←'STAR'),b←'GATE'"
  }
 }
