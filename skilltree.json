@@ -1,0 +1,4019 @@
+{
+ "meta": {
+  "source": [
+   "APL Challenge content xref.xlsx",
+   "challenge-site/{A..I}/docs",
+   "challenge-site/app/{A..I}.json5"
+  ],
+  "gemstones": {
+   "m": "emerald: monadic function",
+   "d": "ruby: dyadic function",
+   "M": "sapphire: monadic operator",
+   "D": "amethyst: the ∘. (outer product) operator — single operand on the right",
+   "j": "diamond: enclosure syntax"
+  },
+  "rounds": [
+   "A",
+   "B",
+   "C",
+   "D",
+   "E",
+   "F",
+   "G",
+   "H",
+   "I"
+  ],
+  "noteX": "spreadsheet column X == problem 10"
+ },
+ "runes": {
+  "m⍳": {
+   "id": "m⍳",
+   "color": "m",
+   "gem": "emerald",
+   "glyph": "⍳",
+   "display": "⍳",
+   "name": "Iota",
+   "arity": "monadic-function",
+   "intro": [
+    "A",
+    1
+   ],
+   "rounds": [
+    [
+     "A",
+     1
+    ],
+    [
+     "B",
+     5
+    ],
+    [
+     "D",
+     1
+    ],
+    [
+     "E",
+     1
+    ],
+    [
+     "H",
+     1
+    ]
+   ],
+   "prereq": [],
+   "mentions": []
+  },
+  "d×": {
+   "id": "d×",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "×",
+   "display": "×",
+   "name": "Times",
+   "arity": "dyadic-function",
+   "intro": [
+    "A",
+    2
+   ],
+   "rounds": [
+    [
+     "A",
+     2
+    ],
+    [
+     "B",
+     4
+    ],
+    [
+     "C",
+     4
+    ],
+    [
+     "D",
+     2
+    ],
+    [
+     "E",
+     4
+    ],
+    [
+     "F",
+     3
+    ],
+    [
+     "G",
+     4
+    ],
+    [
+     "H",
+     4
+    ]
+   ],
+   "prereq": [],
+   "mentions": []
+  },
+  "m∪": {
+   "id": "m∪",
+   "color": "m",
+   "gem": "emerald",
+   "glyph": "∪",
+   "display": "∪",
+   "name": "Unique",
+   "arity": "monadic-function",
+   "intro": [
+    "A",
+    3
+   ],
+   "rounds": [
+    [
+     "A",
+     3
+    ]
+   ],
+   "prereq": [],
+   "mentions": []
+  },
+  "d,": {
+   "id": "d,",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": ",",
+   "display": ",",
+   "name": "Catenate",
+   "arity": "dyadic-function",
+   "intro": [
+    "A",
+    4
+   ],
+   "rounds": [
+    [
+     "A",
+     4
+    ],
+    [
+     "D",
+     8
+    ],
+    [
+     "F",
+     6
+    ],
+    [
+     "G",
+     8
+    ],
+    [
+     "I",
+     6
+    ]
+   ],
+   "prereq": [
+    "m∪"
+   ],
+   "mentions": [
+    "d×"
+   ]
+  },
+  "d+": {
+   "id": "d+",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "+",
+   "display": "+",
+   "name": "Plus",
+   "arity": "dyadic-function",
+   "intro": [
+    "A",
+    4
+   ],
+   "rounds": [
+    [
+     "A",
+     4
+    ],
+    [
+     "D",
+     4
+    ],
+    [
+     "E",
+     4
+    ],
+    [
+     "F",
+     3
+    ],
+    [
+     "G",
+     1
+    ],
+    [
+     "H",
+     4
+    ]
+   ],
+   "prereq": [
+    "m∪"
+   ],
+   "mentions": [
+    "d×"
+   ]
+  },
+  "D∘": {
+   "id": "D∘",
+   "color": "D",
+   "gem": "amethyst",
+   "glyph": "∘.",
+   "display": "∘",
+   "name": "Outer Product",
+   "arity": "operator (single operand on right)",
+   "intro": [
+    "A",
+    5
+   ],
+   "rounds": [
+    [
+     "A",
+     5
+    ],
+    [
+     "B",
+     9
+    ],
+    [
+     "C",
+     4
+    ],
+    [
+     "E",
+     5
+    ],
+    [
+     "H",
+     5
+    ]
+   ],
+   "prereq": [],
+   "mentions": [
+    "d×",
+    "d+"
+   ]
+  },
+  "M/": {
+   "id": "M/",
+   "color": "M",
+   "gem": "sapphire",
+   "glyph": "/",
+   "display": "/",
+   "name": "Reduce",
+   "arity": "monadic-operator",
+   "intro": [
+    "A",
+    6
+   ],
+   "rounds": [
+    [
+     "A",
+     10
+    ],
+    [
+     "C",
+     9
+    ],
+    [
+     "E",
+     9
+    ],
+    [
+     "G",
+     4
+    ],
+    [
+     "A",
+     6
+    ],
+    [
+     "B",
+     6
+    ],
+    [
+     "C",
+     6
+    ],
+    [
+     "E",
+     4
+    ],
+    [
+     "F",
+     3
+    ],
+    [
+     "F",
+     5
+    ],
+    [
+     "F",
+     9
+    ]
+   ],
+   "prereq": [
+    "m⍳"
+   ],
+   "mentions": [
+    "m⍳",
+    "d×",
+    "d+"
+   ]
+  },
+  "j{": {
+   "id": "j{",
+   "color": "j",
+   "gem": "diamond",
+   "glyph": "{}",
+   "display": "{",
+   "name": "Braces",
+   "arity": "enclosure",
+   "intro": [
+    "A",
+    7
+   ],
+   "rounds": [
+    [
+     "A",
+     7
+    ]
+   ],
+   "prereq": [
+    "m⍳",
+    "M/"
+   ],
+   "mentions": [
+    "d×",
+    "d+",
+    "M/"
+   ]
+  },
+  "d≡": {
+   "id": "d≡",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "≡",
+   "display": "≡",
+   "name": "Match",
+   "arity": "dyadic-function",
+   "intro": [
+    "A",
+    8
+   ],
+   "rounds": [
+    [
+     "A",
+     8
+    ],
+    [
+     "D",
+     6
+    ]
+   ],
+   "prereq": [
+    "m∪",
+    "j{"
+   ],
+   "mentions": [
+    "m∪"
+   ]
+  },
+  "j(": {
+   "id": "j(",
+   "color": "j",
+   "gem": "diamond",
+   "glyph": "()",
+   "display": "(",
+   "name": "Parentheses",
+   "arity": "enclosure",
+   "intro": [
+    "A",
+    9
+   ],
+   "rounds": [
+    [
+     "A",
+     9
+    ]
+   ],
+   "prereq": [
+    "m⍳",
+    "D∘",
+    "j{"
+   ],
+   "mentions": [
+    "m⍳",
+    "d×",
+    "d+"
+   ]
+  },
+  "d↓": {
+   "id": "d↓",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "↓",
+   "display": "↓",
+   "name": "Drop",
+   "arity": "dyadic-function",
+   "intro": [
+    "B",
+    1
+   ],
+   "rounds": [
+    [
+     "B",
+     1
+    ],
+    [
+     "H",
+     8
+    ],
+    [
+     "B",
+     6
+    ]
+   ],
+   "prereq": [],
+   "mentions": []
+  },
+  "d∩": {
+   "id": "d∩",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "∩",
+   "display": "∩",
+   "name": "Intersection",
+   "arity": "dyadic-function",
+   "intro": [
+    "B",
+    2
+   ],
+   "rounds": [
+    [
+     "B",
+     2
+    ]
+   ],
+   "prereq": [],
+   "mentions": []
+  },
+  "d⌊": {
+   "id": "d⌊",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "⌊",
+   "display": "⌊",
+   "name": "Minimum",
+   "arity": "dyadic-function",
+   "intro": [
+    "B",
+    3
+   ],
+   "rounds": [
+    [
+     "B",
+     3
+    ]
+   ],
+   "prereq": [],
+   "mentions": []
+  },
+  "d⌈": {
+   "id": "d⌈",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "⌈",
+   "display": "⌈",
+   "name": "Maximum",
+   "arity": "dyadic-function",
+   "intro": [
+    "B",
+    4
+   ],
+   "rounds": [
+    [
+     "B",
+     4
+    ],
+    [
+     "E",
+     2
+    ]
+   ],
+   "prereq": [
+    "d⌊"
+   ],
+   "mentions": [
+    "d⌊"
+   ]
+  },
+  "d⌿": {
+   "id": "d⌿",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "⌿",
+   "display": "⌿",
+   "name": "Replicate",
+   "arity": "dyadic-function",
+   "intro": [
+    "B",
+    5
+   ],
+   "rounds": [
+    [
+     "B",
+     5
+    ]
+   ],
+   "prereq": [
+    "m⍳",
+    "j("
+   ],
+   "mentions": [
+    "d×"
+   ]
+  },
+  "d=": {
+   "id": "d=",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "=",
+   "display": "=",
+   "name": "Equal",
+   "arity": "dyadic-function",
+   "intro": [
+    "B",
+    6
+   ],
+   "rounds": [
+    [
+     "E",
+     3
+    ],
+    [
+     "B",
+     6
+    ],
+    [
+     "H",
+     2
+    ],
+    [
+     "C",
+     1
+    ],
+    [
+     "G",
+     2
+    ]
+   ],
+   "prereq": [
+    "M/",
+    "j(",
+    "d↓"
+   ],
+   "mentions": [
+    "d×",
+    "d↓"
+   ]
+  },
+  "d<": {
+   "id": "d<",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "<",
+   "display": "<",
+   "name": "Less",
+   "arity": "dyadic-function",
+   "intro": [
+    "B",
+    6
+   ],
+   "rounds": [
+    [
+     "B",
+     6
+    ],
+    [
+     "H",
+     2
+    ],
+    [
+     "C",
+     1
+    ],
+    [
+     "G",
+     2
+    ],
+    [
+     "E",
+     10
+    ]
+   ],
+   "prereq": [
+    "M/",
+    "j(",
+    "d↓"
+   ],
+   "mentions": [
+    "d×",
+    "d↓"
+   ]
+  },
+  "d≤": {
+   "id": "d≤",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "≤",
+   "display": "≤",
+   "name": "At Most",
+   "arity": "dyadic-function",
+   "intro": [
+    "B",
+    6
+   ],
+   "rounds": [
+    [
+     "B",
+     6
+    ],
+    [
+     "H",
+     2
+    ],
+    [
+     "C",
+     1
+    ],
+    [
+     "G",
+     2
+    ],
+    [
+     "E",
+     10
+    ]
+   ],
+   "prereq": [
+    "M/",
+    "j(",
+    "d↓"
+   ],
+   "mentions": [
+    "d×",
+    "d↓"
+   ]
+  },
+  "d≥": {
+   "id": "d≥",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "≥",
+   "display": "≥",
+   "name": "At Least",
+   "arity": "dyadic-function",
+   "intro": [
+    "B",
+    6
+   ],
+   "rounds": [
+    [
+     "B",
+     6
+    ],
+    [
+     "H",
+     2
+    ],
+    [
+     "C",
+     1
+    ],
+    [
+     "G",
+     2
+    ],
+    [
+     "E",
+     10
+    ]
+   ],
+   "prereq": [
+    "M/",
+    "j(",
+    "d↓"
+   ],
+   "mentions": [
+    "d×",
+    "d↓"
+   ]
+  },
+  "d>": {
+   "id": "d>",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": ">",
+   "display": ">",
+   "name": "Greater",
+   "arity": "dyadic-function",
+   "intro": [
+    "B",
+    6
+   ],
+   "rounds": [
+    [
+     "B",
+     6
+    ],
+    [
+     "H",
+     2
+    ],
+    [
+     "C",
+     1
+    ],
+    [
+     "G",
+     2
+    ],
+    [
+     "E",
+     10
+    ]
+   ],
+   "prereq": [
+    "M/",
+    "j(",
+    "d↓"
+   ],
+   "mentions": [
+    "d×",
+    "d↓"
+   ]
+  },
+  "m≠": {
+   "id": "m≠",
+   "color": "m",
+   "gem": "emerald",
+   "glyph": "≠",
+   "display": "≠",
+   "name": "Nub Sieve",
+   "arity": "monadic-function",
+   "intro": [
+    "B",
+    8
+   ],
+   "rounds": [
+    [
+     "B",
+     8
+    ]
+   ],
+   "prereq": [
+    "M/",
+    "j{"
+   ],
+   "mentions": []
+  },
+  "d∧": {
+   "id": "d∧",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "∧",
+   "display": "∧",
+   "name": "And",
+   "arity": "dyadic-function",
+   "intro": [
+    "B",
+    8
+   ],
+   "rounds": [
+    [
+     "B",
+     8
+    ],
+    [
+     "C",
+     5
+    ],
+    [
+     "G",
+     6
+    ]
+   ],
+   "prereq": [
+    "M/",
+    "j{"
+   ],
+   "mentions": []
+  },
+  "m⌽": {
+   "id": "m⌽",
+   "color": "m",
+   "gem": "emerald",
+   "glyph": "⌽",
+   "display": "⌽",
+   "name": "Reverse",
+   "arity": "monadic-function",
+   "intro": [
+    "B",
+    10
+   ],
+   "rounds": [
+    [
+     "D",
+     5
+    ],
+    [
+     "G",
+     5
+    ],
+    [
+     "B",
+     10
+    ],
+    [
+     "H",
+     4
+    ]
+   ],
+   "prereq": [
+    "m⍳",
+    "D∘",
+    "j{",
+    "j("
+   ],
+   "mentions": []
+  },
+  "d∨": {
+   "id": "d∨",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "∨",
+   "display": "∨",
+   "name": "Or",
+   "arity": "dyadic-function",
+   "intro": [
+    "B",
+    10
+   ],
+   "rounds": [
+    [
+     "B",
+     10
+    ],
+    [
+     "C",
+     6
+    ]
+   ],
+   "prereq": [
+    "m⍳",
+    "D∘",
+    "j{",
+    "j("
+   ],
+   "mentions": []
+  },
+  "d≠": {
+   "id": "d≠",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "≠",
+   "display": "≠",
+   "name": "Not Equal",
+   "arity": "dyadic-function",
+   "intro": [
+    "C",
+    1
+   ],
+   "rounds": [
+    [
+     "C",
+     1
+    ],
+    [
+     "G",
+     2
+    ],
+    [
+     "E",
+     10
+    ]
+   ],
+   "prereq": [
+    "d>",
+    "m≠"
+   ],
+   "mentions": []
+  },
+  "d⊃": {
+   "id": "d⊃",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "⊃",
+   "display": "⊃",
+   "name": "Pick",
+   "arity": "dyadic-function",
+   "intro": [
+    "C",
+    3
+   ],
+   "rounds": [
+    [
+     "C",
+     3
+    ]
+   ],
+   "prereq": [
+    "j("
+   ],
+   "mentions": []
+  },
+  "M\\": {
+   "id": "M\\",
+   "color": "M",
+   "gem": "sapphire",
+   "glyph": "\\",
+   "display": "\\",
+   "name": "Scan",
+   "arity": "monadic-operator",
+   "intro": [
+    "C",
+    8
+   ],
+   "rounds": [
+    [
+     "C",
+     8
+    ]
+   ],
+   "prereq": [
+    "M/",
+    "j{",
+    "d="
+   ],
+   "mentions": [
+    "M/"
+   ]
+  },
+  "j[": {
+   "id": "j[",
+   "color": "j",
+   "gem": "diamond",
+   "glyph": "[]",
+   "display": "[",
+   "name": "Brackets",
+   "arity": "enclosure",
+   "intro": [
+    "D",
+    3
+   ],
+   "rounds": [
+    [
+     "D",
+     3
+    ]
+   ],
+   "prereq": [],
+   "mentions": []
+  },
+  "d⍴": {
+   "id": "d⍴",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "⍴",
+   "display": "⍴",
+   "name": "Reshape",
+   "arity": "dyadic-function",
+   "intro": [
+    "D",
+    4
+   ],
+   "rounds": [
+    [
+     "D",
+     4
+    ],
+    [
+     "I",
+     3
+    ]
+   ],
+   "prereq": [
+    "m⍳"
+   ],
+   "mentions": [
+    "d×"
+   ]
+  },
+  "M¨": {
+   "id": "M¨",
+   "color": "M",
+   "gem": "sapphire",
+   "glyph": "¨",
+   "display": "¨",
+   "name": "Each",
+   "arity": "monadic-operator",
+   "intro": [
+    "D",
+    5
+   ],
+   "rounds": [
+    [
+     "D",
+     5
+    ]
+   ],
+   "prereq": [
+    "m⌽"
+   ],
+   "mentions": [
+    "m⍳",
+    "d⍴"
+   ]
+  },
+  "d∊": {
+   "id": "d∊",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "∊",
+   "display": "∊",
+   "name": "Membership",
+   "arity": "dyadic-function",
+   "intro": [
+    "F",
+    1
+   ],
+   "rounds": [
+    [
+     "F",
+     1
+    ]
+   ],
+   "prereq": [],
+   "mentions": []
+  },
+  "d⍉": {
+   "id": "d⍉",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "⍉",
+   "display": "⍉",
+   "name": "Transpose",
+   "arity": "dyadic-function",
+   "intro": [
+    "G",
+    10
+   ],
+   "rounds": [
+    [
+     "G",
+     10
+    ]
+   ],
+   "prereq": [
+    "d,",
+    "M/",
+    "j{",
+    "j(",
+    "d=",
+    "m⌽"
+   ],
+   "mentions": []
+  },
+  "m≢": {
+   "id": "m≢",
+   "color": "m",
+   "gem": "emerald",
+   "glyph": "≢",
+   "display": "≢",
+   "name": "Tally",
+   "arity": "monadic-function",
+   "intro": [
+    "I",
+    1
+   ],
+   "rounds": [
+    [
+     "I",
+     1
+    ]
+   ],
+   "prereq": [],
+   "mentions": []
+  },
+  "m⌈": {
+   "id": "m⌈",
+   "color": "m",
+   "gem": "emerald",
+   "glyph": "⌈",
+   "display": "⌈",
+   "name": "Ceiling",
+   "arity": "monadic-function",
+   "intro": [
+    "I",
+    2
+   ],
+   "rounds": [
+    [
+     "I",
+     2
+    ]
+   ],
+   "prereq": [],
+   "mentions": []
+  },
+  "d-": {
+   "id": "d-",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "-",
+   "display": "-",
+   "name": "Minus",
+   "arity": "dyadic-function",
+   "intro": [
+    "I",
+    4
+   ],
+   "rounds": [
+    [
+     "I",
+     4
+    ]
+   ],
+   "prereq": [
+    "j("
+   ],
+   "mentions": []
+  },
+  "d÷": {
+   "id": "d÷",
+   "color": "d",
+   "gem": "ruby",
+   "glyph": "÷",
+   "display": "÷",
+   "name": "Divide",
+   "arity": "dyadic-function",
+   "intro": [
+    "I",
+    4
+   ],
+   "rounds": [
+    [
+     "I",
+     4
+    ]
+   ],
+   "prereq": [
+    "j("
+   ],
+   "mentions": []
+  },
+  "m⌊": {
+   "id": "m⌊",
+   "color": "m",
+   "gem": "emerald",
+   "glyph": "⌊",
+   "display": "⌊",
+   "name": "Floor",
+   "arity": "monadic-function",
+   "intro": [
+    "I",
+    5
+   ],
+   "rounds": [
+    [
+     "I",
+     5
+    ]
+   ],
+   "prereq": [
+    "d÷"
+   ],
+   "mentions": [
+    "m⌈"
+   ]
+  }
+ },
+ "problems": {
+  "A1": {
+   "round": "A",
+   "problem": 1,
+   "title": "Easy as 1-2-3",
+   "file": "challenge-site/A/docs/1.md",
+   "chars": "⍳",
+   "kind": "value",
+   "introduces": [
+    "m⍳"
+   ],
+   "uses": [
+    "m⍳"
+   ],
+   "prereq": [],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "⍳12",
+    "regex": "^ *⍳ *\\d+ *$"
+   }
+  },
+  "A2": {
+   "round": "A",
+   "problem": 2,
+   "title": "Some Times",
+   "file": "challenge-site/A/docs/2.md",
+   "chars": "⍳×",
+   "kind": "value",
+   "introduces": [
+    "d×"
+   ],
+   "uses": [
+    "d×"
+   ],
+   "prereq": [],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "31 41 59 26×100",
+    "regex": "^ *31 +41 +59 +26 *× *100|100 *× *31 +41 +59 +26 *$"
+   }
+  },
+  "A3": {
+   "round": "A",
+   "problem": 3,
+   "title": "Remove Duplicates",
+   "file": "challenge-site/A/docs/3.md",
+   "chars": "⍳×∪'",
+   "kind": "value",
+   "introduces": [
+    "m∪"
+   ],
+   "uses": [
+    "m∪"
+   ],
+   "prereq": [],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "∪'MISSISSIPPI'",
+    "regex": "^ *∪ *'MISSISSIPPI' *"
+   }
+  },
+  "A4": {
+   "round": "A",
+   "problem": 4,
+   "title": "Duplicates Again",
+   "file": "challenge-site/A/docs/4.md",
+   "chars": "⍳×∪',+",
+   "kind": "value",
+   "introduces": [
+    "d,",
+    "d+"
+   ],
+   "uses": [
+    "m∪",
+    "d,"
+   ],
+   "prereq": [
+    "m∪"
+   ],
+   "teachingRefs": [
+    "d×"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "∪'MISS','PILL','ALICE','DALE'",
+    "regex": "^ *∪ *'MISS' *, *'PILL' *, *'ALICE' *, *'DALE' *$"
+   }
+  },
+  "A5": {
+   "round": "A",
+   "problem": 5,
+   "title": "Table Motions",
+   "file": "challenge-site/A/docs/5.md",
+   "chars": "⍳×∪',+",
+   "kind": "value",
+   "introduces": [
+    "D∘"
+   ],
+   "uses": [
+    "D∘"
+   ],
+   "prereq": [],
+   "teachingRefs": [
+    "d×",
+    "d+"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "3 1 4∘.+3 1 4",
+    "regex": "^ *3 +1 +4 *∘ *\\. *\\+ *3 +1 +4 *$"
+   }
+  },
+  "A6": {
+   "round": "A",
+   "problem": 6,
+   "title": "It is a Fact",
+   "file": "challenge-site/A/docs/6.md",
+   "chars": "⍳×∪',+/",
+   "kind": "value",
+   "introduces": [
+    "M/"
+   ],
+   "uses": [
+    "m⍳",
+    "M/"
+   ],
+   "prereq": [
+    "m⍳"
+   ],
+   "teachingRefs": [
+    "m⍳",
+    "d×",
+    "d+"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "×/⍳6",
+    "regex": "^ *× */ *⍳ *6 *$"
+   }
+  },
+  "A7": {
+   "round": "A",
+   "problem": 7,
+   "title": "Factorials",
+   "file": "challenge-site/A/docs/7.md",
+   "chars": "⍳×∪',+/{⍵",
+   "kind": "function",
+   "introduces": [
+    "j{"
+   ],
+   "uses": [
+    "m⍳",
+    "M/",
+    "j{"
+   ],
+   "prereq": [
+    "m⍳",
+    "M/"
+   ],
+   "teachingRefs": [
+    "d×",
+    "d+",
+    "M/"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{×/⍳⍵}",
+    "a": [
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "10+?3"
+    ]
+   }
+  },
+  "A8": {
+   "round": "A",
+   "problem": 8,
+   "title": "All Distinct",
+   "file": "challenge-site/A/docs/8.md",
+   "chars": "⍳×∪',+/{⍵≡",
+   "kind": "function",
+   "introduces": [
+    "d≡"
+   ],
+   "uses": [
+    "m∪",
+    "j{",
+    "d≡"
+   ],
+   "prereq": [
+    "m∪",
+    "j{"
+   ],
+   "teachingRefs": [
+    "m∪"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{⍵≡∪⍵}",
+    "a": [
+     "1 2 3 2 1",
+     "'DYALOG APL'",
+     "1 16 12",
+     "'DYALOG'",
+     "{⍵[(5+?5)?≢⍵]}(⎕A~'AEIOUY')",
+     "?99⍴⍨5+?5"
+    ]
+   }
+  },
+  "A9": {
+   "round": "A",
+   "problem": 9,
+   "title": "Identity Crisis",
+   "file": "challenge-site/A/docs/9.md",
+   "chars": "⍳×∪',+/{⍵≡(",
+   "kind": "function",
+   "introduces": [
+    "j("
+   ],
+   "uses": [
+    "m⍳",
+    "D∘",
+    "j{",
+    "j("
+   ],
+   "prereq": [
+    "m⍳",
+    "D∘",
+    "j{"
+   ],
+   "teachingRefs": [
+    "m⍳",
+    "d×",
+    "d+"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{(⍳⍵)∘.≡⍳⍵}",
+    "a": [
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "?9"
+    ]
+   }
+  },
+  "A10": {
+   "round": "A",
+   "problem": 10,
+   "title": "Frequent Fliers",
+   "file": "challenge-site/A/docs/10.md",
+   "chars": "⍳×∪',+/{⍵≡(",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "m∪",
+    "D∘",
+    "M/",
+    "j{",
+    "j("
+   ],
+   "prereq": [
+    "m∪",
+    "D∘",
+    "M/",
+    "j{",
+    "j("
+   ],
+   "teachingRefs": [
+    "d×",
+    "d+",
+    "M/",
+    "d≡"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{+/(∪⍵)∘.≡⍵}",
+    "a": [
+     "2 7 1 8 2 8 1 8 2 8",
+     "'MISSISSIPPI'",
+     "5 3 6 6 3 5 5 4 1 6 1 6 4 6 3 2 3 2 6 3 1 4 4 3 5",
+     "{⍵[?(5+?5)⍴≢⍵]}'AEIOUY'",
+     "?5⍴⍨5+?5"
+    ]
+   }
+  },
+  "B1": {
+   "round": "B",
+   "problem": 1,
+   "title": "Drop",
+   "file": "challenge-site/B/docs/1.md",
+   "chars": "↓",
+   "kind": "value",
+   "introduces": [
+    "d↓"
+   ],
+   "uses": [
+    "d↓"
+   ],
+   "prereq": [],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "2↓'ALLOCATION'",
+    "regex": "^ *2 *↓ *'ALLOCATION' *$"
+   }
+  },
+  "B2": {
+   "round": "B",
+   "problem": 2,
+   "title": "Meet Me at the Intersection",
+   "file": "challenge-site/B/docs/2.md",
+   "chars": "↓∩",
+   "kind": "value",
+   "introduces": [
+    "d∩"
+   ],
+   "uses": [
+    "d∩"
+   ],
+   "prereq": [],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "'EUPHORIA'∩'AEIOU'",
+    "regex": "^ *'EUPHORIA' *∩ *'[AEIOU]+' *$"
+   }
+  },
+  "B3": {
+   "round": "B",
+   "problem": 3,
+   "title": "Minimalism",
+   "file": "challenge-site/B/docs/3.md",
+   "chars": "↓∩⌊",
+   "kind": "value",
+   "introduces": [
+    "d⌊"
+   ],
+   "uses": [
+    "d⌊"
+   ],
+   "prereq": [],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "1 2 3 4 5 6 7 8 9 10⌊7",
+    "regex": "^ *(7 *)+⌊ *(1 +2 +3 +4 +5 +6 +7 +8 +9 +|⍳ *)10 *$|^ *1 +2 +3 +4 +5 +6 +7 +8 +9 +10 *⌊ *(7 *)+$"
+   }
+  },
+  "B4": {
+   "round": "B",
+   "problem": 4,
+   "title": "Staying In Bounds",
+   "file": "challenge-site/B/docs/4.md",
+   "chars": "↓∩⌊⌈",
+   "kind": "value",
+   "introduces": [
+    "d⌈"
+   ],
+   "uses": [
+    "d⌊",
+    "d⌈"
+   ],
+   "prereq": [
+    "d⌊"
+   ],
+   "teachingRefs": [
+    "d⌊"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "3⌈1 2 3 4 5 6 7 8 9 10⌊7",
+    "regex": "^ *((([73] *)+| *1 +2 +3 +4 +5 +6 +7 +8 +9 +10) *[⌈⌊] *){2} *(([73] *)+|( *1 +2 +3 +4 +5 +6 +7 +8 +9 +|⍳ *)10) *$"
+   }
+  },
+  "B5": {
+   "round": "B",
+   "problem": 5,
+   "title": "Self Replication",
+   "file": "challenge-site/B/docs/5.md",
+   "chars": "↓∩⌊⌈⌿⍳(",
+   "kind": "value",
+   "introduces": [
+    "d⌿"
+   ],
+   "uses": [
+    "m⍳",
+    "j(",
+    "d⌿"
+   ],
+   "prereq": [
+    "m⍳",
+    "j("
+   ],
+   "teachingRefs": [
+    "d×"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "(⍳5)⌿⍳5",
+    "regex": "^ *\\( *⍳ *5 *\\) *⌿ *\\(? *⍳ *5 +\\)? *$"
+   }
+  },
+  "B6": {
+   "round": "B",
+   "problem": 6,
+   "title": "Double Vision",
+   "file": "challenge-site/B/docs/6.md",
+   "chars": "↓∩⌊⌈⌿⍳(<≤=≥>¯/",
+   "kind": "value",
+   "introduces": [
+    "d=",
+    "d<",
+    "d≤",
+    "d≥",
+    "d>"
+   ],
+   "uses": [
+    "M/",
+    "j(",
+    "d↓",
+    "d="
+   ],
+   "prereq": [
+    "M/",
+    "j(",
+    "d↓"
+   ],
+   "teachingRefs": [
+    "d×",
+    "d↓"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "+/(¯1↓'BOOKKEEPER')=1↓'BOOKKEEPER'",
+    "regex": "^ *\\+ *[/⌿] *\\( *¯?1 *↓ *'BOOKKEEPER' *\\) *= *\\(? *¯?1 *↓ *'BOOKKEEPER' *\\)? *$"
+   }
+  },
+  "B7": {
+   "round": "B",
+   "problem": 7,
+   "title": "Double Visions",
+   "file": "challenge-site/B/docs/7.md",
+   "chars": "↓∩⌊⌈⌿⍳(<≤=≥>¯/{⍵",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "M/",
+    "j{",
+    "j(",
+    "d↓",
+    "d="
+   ],
+   "prereq": [
+    "M/",
+    "j{",
+    "j(",
+    "d↓",
+    "d="
+   ],
+   "teachingRefs": [
+    "d×"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{+/(¯1↓⍵)=1↓⍵}",
+    "a": [
+     "'BOOKKEEPER'",
+     "'DYALOG'",
+     "'ABRACADABRA'",
+     "'CRYPTOOOLOGY'",
+     "⎕A[(4+?5)?26]",
+     "⎕A[{⍵/⍨+∘≠⍨?2⍨¨⍵}(2+?3)?26]"
+    ]
+   }
+  },
+  "B8": {
+   "round": "B",
+   "problem": 8,
+   "title": "Unique Characters",
+   "file": "challenge-site/B/docs/8.md",
+   "chars": "↓∩⌊⌈⌿⍳(<≤=≥>¯/{⍵≠∧",
+   "kind": "function",
+   "introduces": [
+    "m≠",
+    "d∧"
+   ],
+   "uses": [
+    "M/",
+    "j{",
+    "m≠"
+   ],
+   "prereq": [
+    "M/",
+    "j{"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "function",
+    "f": "{∧/≠⍵}",
+    "a": [
+     "'DYALOG APL'",
+     "1 2 3 4 5 6",
+     "3 1 4 1 5 9 2 6",
+     "'COPYRIGHT'",
+     "'ADA'",
+     "?⍨20",
+     "?20⍴10"
+    ],
+    "p": ","
+   }
+  },
+  "B9": {
+   "round": "B",
+   "problem": 9,
+   "title": "Table Motions",
+   "file": "challenge-site/B/docs/9.md",
+   "chars": "↓∩⌊⌈⌿⍳(<≤=≥>¯/{⍵≠∧⍺",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "D∘",
+    "j{",
+    "m⌈"
+   ],
+   "prereq": [
+    "D∘",
+    "j{"
+   ],
+   "teachingRefs": [
+    "d×",
+    "M/"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{⍵∘.⌈⍵}",
+    "a": [
+     "1 6 2",
+     "2 7 1 8",
+     "3 1 4 1 5",
+     "¯1+?11⍴⍨+∘?⍨3",
+     "¯1+?11⍴⍨+∘?⍨4"
+    ]
+   }
+  },
+  "B10": {
+   "round": "B",
+   "problem": 10,
+   "title": "X Marks the Spot",
+   "file": "challenge-site/B/docs/10.md",
+   "chars": "↓∩⌊⌈⌿⍳(<≤=≥>¯/{⍵≠∧⍺⌽∨",
+   "kind": "function",
+   "introduces": [
+    "m⌽",
+    "d∨"
+   ],
+   "uses": [
+    "m⍳",
+    "D∘",
+    "j{",
+    "j(",
+    "d∨",
+    "m⌽"
+   ],
+   "prereq": [
+    "m⍳",
+    "D∘",
+    "j{",
+    "j("
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "function",
+    "f": "{{⍵∨⌽⍵}(⍳⍵)∘.=⍳⍵}",
+    "a": [
+     "3",
+     "4",
+     "5",
+     "10",
+     "1",
+     "2",
+     "10+?10"
+    ]
+   }
+  },
+  "C1": {
+   "round": "C",
+   "problem": 1,
+   "title": "Comparing This to That",
+   "file": "challenge-site/C/docs/1.md",
+   "chars": "<≤=≥>≠",
+   "kind": "value",
+   "introduces": [
+    "d≠"
+   ],
+   "uses": [
+    "d>",
+    "m≠"
+   ],
+   "prereq": [
+    "d>",
+    "m≠"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "3 5 4 8 6>3 4 5 3 9⍝<≤=≥>≠",
+    "regex": "^ *3 +5 +4 +8 +6 *> *3 +4 +5 +3 +9 *$|^ *3 +4 +5 +3 +9 *< *3 +5 +4 +8 +6 *$"
+   }
+  },
+  "C2": {
+   "round": "C",
+   "problem": 2,
+   "title": "Literally",
+   "file": "challenge-site/C/docs/2.md",
+   "chars": "<≤=≥>≠'",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "d="
+   ],
+   "prereq": [
+    "d="
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "'A'='DYALOG APL'",
+    "regex": "^ *'DYALOG APL' *= *'A' *$|^ *'A' *= *'DYALOG APL' *$"
+   }
+  },
+  "C3": {
+   "round": "C",
+   "problem": 3,
+   "title": "Picky Picky",
+   "file": "challenge-site/C/docs/3.md",
+   "chars": "<≤=≥>≠'⊃(",
+   "kind": "value",
+   "introduces": [
+    "d⊃"
+   ],
+   "uses": [
+    "j(",
+    "d⊃"
+   ],
+   "prereq": [
+    "j("
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "2 1 6⊃('KEN' 'IVERSON') ('DYALOG' 'APL')",
+    "regex": "^ *\\d +\\d +\\d *⊃ *\\( *'KEN' +'IVERSON' *\\) *\\( *'DYALOG' +'APL' *\\) *$"
+   }
+  },
+  "C4": {
+   "round": "C",
+   "problem": 4,
+   "title": "Table Motions",
+   "file": "challenge-site/C/docs/4.md",
+   "chars": "<≤=≥>≠'⊃(∘.+×",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "D∘"
+   ],
+   "prereq": [
+    "D∘"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "1 5∘.⊃'OPIUM' 'HEAVY'",
+    "regex": "^ *\\d +\\d *∘ *. *⊃ *'OPIUM' +'HEAVY' *$"
+   }
+  },
+  "C5": {
+   "round": "C",
+   "problem": 5,
+   "title": "What, where?!",
+   "file": "challenge-site/C/docs/5.md",
+   "chars": "<≤=≥>≠'⊃(∘.+×∧",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "j(",
+    "d=",
+    "d∧",
+    "d⊃"
+   ],
+   "prereq": [
+    "j(",
+    "d=",
+    "d∧",
+    "d⊃"
+   ],
+   "teachingRefs": [
+    "d×"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "('Y'=2⊃'DYALOG')∧'G'=6⊃'DYALOG'",
+    "regex": "^ *((\\(? *\\(? *\\d+ *⊃ *\\(? *'DYALOG' *\\)? *= *'Y' *\\)? *\\)?|\\(? *'Y' *= *\\(? *\\d+ *⊃ *'DYALOG' *\\)? *\\)?|\\(? *\\d+ *⊃ *\\(? *'Y' *= *'DYALOG' *\\)? *\\)?) *[∧^] *(\\(? *\\(? *\\d+ *⊃ *\\(? *'DYALOG' *\\)? *= *'G' *\\)? *\\)?|\\(? *'G' *= *\\(? *\\d+ *⊃ *'DYALOG' *\\)? *\\)?|\\(? *\\d+ *⊃ *\\(? *'G' *= *'DYALOG' *\\)? *\\)?)|(\\(? *\\(? *\\d+ *⊃ *\\(? *'DYALOG' *\\)? *= *'G' *\\)? *\\)?|\\(? *'G' *= *\\(? *\\d+ *⊃ *'DYALOG' *\\)? *\\)?|\\(? *\\d+ *⊃ *\\(? *'G' *= *'DYALOG' *\\)? *\\)?) *[∧^] *(\\(? *\\(? *\\d+ *⊃ *\\(? *'DYALOG' *\\)? *= *'Y' *\\)? *\\)?|\\(? *'Y' *= *\\(? *\\d+ *⊃ *'DYALOG' *\\)? *\\)?|\\(? *\\d+ *⊃ *\\(? *'Y' *= *'DYALOG' *\\)? *\\)?)) *$"
+   }
+  },
+  "C6": {
+   "round": "C",
+   "problem": 6,
+   "title": "O, Say Can You See?",
+   "file": "challenge-site/C/docs/6.md",
+   "chars": "<≤=≥>≠'⊃(∘.+×∧∨/",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "M/",
+    "d="
+   ],
+   "prereq": [
+    "M/",
+    "d="
+   ],
+   "teachingRefs": [
+    "d×",
+    "d∧"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "∨/'DYALOG'='O'",
+    "regex": "^ *∨ */ *\\(? *'DYALOG' *[<≤=≥>≠] *'O' *\\)? *$|^ *∨ */ *\\(? *'O' *[<≤=≥>≠] *'DYALOG' *\\)? *$"
+   }
+  },
+  "C7": {
+   "round": "C",
+   "problem": 7,
+   "title": "O, Thus Be It",
+   "file": "challenge-site/C/docs/7.md",
+   "chars": "<≤=≥>≠'⊃(∘.+×∧∨/{⍵",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "M/",
+    "j{",
+    "d="
+   ],
+   "prereq": [
+    "M/",
+    "j{",
+    "d="
+   ],
+   "teachingRefs": [
+    "d×"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{∨/⍵='O'}",
+    "a": [
+     "'DYALOG'",
+     "'APL'",
+     "'HELLO WORLD'",
+     "'GREETINGS EARTH'",
+     "⎕A[26?⍨3+?5]~'O'",
+     "'O'@{l⍳⍛∊3?⍛?l←≢⍵}⎕A[26?⍨3+?5]"
+    ]
+   }
+  },
+  "C8": {
+   "round": "C",
+   "problem": 8,
+   "title": "Give Me a Break!",
+   "file": "challenge-site/C/docs/8.md",
+   "chars": "<≤=≥>≠'⊃(∘.+×∧∨/{⍵\\\\",
+   "kind": "function",
+   "introduces": [
+    "M\\"
+   ],
+   "uses": [
+    "M/",
+    "j{",
+    "d=",
+    "M\\"
+   ],
+   "prereq": [
+    "M/",
+    "j{",
+    "d="
+   ],
+   "teachingRefs": [
+    "M/"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{+/∧\\' '=⍵}",
+    "a": [
+     "' JUST ONE'",
+     "'NOT EVEN ONE'",
+     "'    SOME'",
+     "(⎕A,' ')[(27⍴⍨3+?5),27⌊30?⍨4+?6]",
+     "(⎕A,' ')[(27⍴⍨3+?5),27⌊30?⍨4+?6]",
+     "(⎕A,' ')[(27⍴⍨3+?5),27⌊30?⍨4+?6]"
+    ]
+   }
+  },
+  "C9": {
+   "round": "C",
+   "problem": 9,
+   "title": "Make No Sound",
+   "file": "challenge-site/C/docs/9.md",
+   "chars": "<≤=≥>≠'⊃(∘.+×∧∨/{⍵\\\\",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "D∘",
+    "M/",
+    "j{",
+    "m≠",
+    "M\\"
+   ],
+   "prereq": [
+    "D∘",
+    "M/",
+    "j{",
+    "m≠",
+    "M\\"
+   ],
+   "teachingRefs": [
+    "M/"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{+/∧\\∧/⍵∘.≠'AEIOU'}",
+    "a": [
+     "'SPHRAGISTIC'",
+     "'SEAL'",
+     "'EAGER'",
+     "'OH'",
+     "'GO'",
+     "'ICONOGRAPH'",
+     "'AEIOU'[?5],⊂⍤?⍨⍤≢⍛⌷∊2 0{⍵[?(⍺+?4)⍴≢⍵]}¨⎕A(~,⍥⊂⊢)'AEIOU'",
+     "(⎕A~'AEIOU')[?21],⊂⍤?⍨⍤≢⍛⌷∊2 0{⍵[?(⍺+?4)⍴≢⍵]}¨⎕A(~,⍥⊂⊢)'AEIOU'"
+    ]
+   }
+  },
+  "C10": {
+   "round": "C",
+   "problem": 10,
+   "title": "Who’s on First?",
+   "file": "challenge-site/C/docs/10.md",
+   "chars": "<≤=≥>≠'⊃(∘.+×∧∨/{⍵\\\\",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "d+",
+    "D∘",
+    "M/",
+    "j{",
+    "j(",
+    "m≠",
+    "d⊃",
+    "M\\"
+   ],
+   "prereq": [
+    "d+",
+    "D∘",
+    "M/",
+    "j{",
+    "j(",
+    "m≠",
+    "d⊃",
+    "M\\"
+   ],
+   "teachingRefs": [
+    "d×"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{((1++/∧\\∧/⍵∘.≠'AEIOU')⊃⍵)((1++/∧\\∨/⍵∘.='AEIOU')⊃⍵)}",
+    "a": [
+     "'SPHRAGISTIC'",
+     "'SEAL'",
+     "'EAGER'",
+     "'OH'",
+     "'GO'",
+     "'ICONOGRAPH'",
+     "'AEIOU'[?5],⊂⍤?⍨⍤≢⍛⌷∊2 0{⍵[?(⍺+?4)⍴≢⍵]}¨⎕A(~,⍥⊂⊢)'AEIOU'",
+     "(⎕A~'AEIOU')[?21],⊂⍤?⍨⍤≢⍛⌷∊2 0{⍵[?(⍺+?4)⍴≢⍵]}¨⎕A(~,⍥⊂⊢)'AEIOU'"
+    ]
+   }
+  },
+  "D1": {
+   "round": "D",
+   "problem": 1,
+   "title": "Easy as 1-2-3",
+   "file": "challenge-site/D/docs/1.md",
+   "chars": "⍳",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "m⍳"
+   ],
+   "prereq": [
+    "m⍳"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "⍳12",
+    "regex": "^ *⍳ *\\d+"
+   }
+  },
+  "D2": {
+   "round": "D",
+   "problem": 2,
+   "title": "Rectangle Areas",
+   "file": "challenge-site/D/docs/2.md",
+   "chars": "⍳×",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "d×"
+   ],
+   "prereq": [
+    "d×"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "3 1 4×2 7 2",
+    "regex": "^ *\\d +\\d +\\d *× *\\d +\\d +\\d *$"
+   }
+  },
+  "D3": {
+   "round": "D",
+   "problem": 3,
+   "title": "Selection",
+   "file": "challenge-site/D/docs/3.md",
+   "chars": "⍳×'[]",
+   "kind": "value",
+   "introduces": [
+    "j["
+   ],
+   "uses": [
+    "j["
+   ],
+   "prereq": [],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "'DYALOG APL'[6 5 7 9 5 4 10 2]",
+    "regex": "^ *'DYALOG APL' *\\[ *(\\d+ +)+\\d *\\] *$"
+   }
+  },
+  "D4": {
+   "round": "D",
+   "problem": 4,
+   "title": "How the Tables have Turned",
+   "file": "challenge-site/D/docs/4.md",
+   "chars": "⍳×'[]⍴",
+   "kind": "value",
+   "introduces": [
+    "d⍴"
+   ],
+   "uses": [
+    "m⍳",
+    "d⍴"
+   ],
+   "prereq": [
+    "m⍳"
+   ],
+   "teachingRefs": [
+    "d×"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "6 4⍴⍳24",
+    "regex": "^ *\\d+ +\\d+ *⍴ *⍳ *\\d+ *$"
+   }
+  },
+  "D5": {
+   "round": "D",
+   "problem": 5,
+   "title": "All Backwards",
+   "file": "challenge-site/D/docs/5.md",
+   "chars": "⍳×'[]⍴⌽¨",
+   "kind": "value",
+   "introduces": [
+    "M¨"
+   ],
+   "uses": [
+    "m⌽",
+    "M¨"
+   ],
+   "prereq": [
+    "m⌽"
+   ],
+   "teachingRefs": [
+    "m⍳",
+    "d⍴"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "⌽¨⌽'MOOD' 'NET' 'POP'",
+    "regex": "^ *(⌽ *⌽ *¨|⌽ *¨ *⌽) *'MOOD' +'NET' +'POP' *$"
+   }
+  },
+  "D6": {
+   "round": "D",
+   "problem": 6,
+   "title": "Palindrome",
+   "file": "challenge-site/D/docs/6.md",
+   "chars": "⍳×'[]⍴⌽¨",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "d≡",
+    "m⌽"
+   ],
+   "prereq": [
+    "d≡",
+    "m⌽"
+   ],
+   "teachingRefs": [
+    "M¨"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "'APL'≡⌽'APL'",
+    "regex": "^ *'APL' *≡ *\\(? *⌽ *'APL' *\\)? *$|^ *\\( *⌽ *'APL' *\\) *≡ *'APL' *$"
+   }
+  },
+  "D7": {
+   "round": "D",
+   "problem": 7,
+   "title": "More Palindromes",
+   "file": "challenge-site/D/docs/7.md",
+   "chars": "⍳×'[]⍴⌽¨{⍵",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "j{",
+    "d≡",
+    "m⌽"
+   ],
+   "prereq": [
+    "j{",
+    "d≡",
+    "m⌽"
+   ],
+   "teachingRefs": [
+    "d×",
+    "d+",
+    "M¨"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{⍵≡⌽⍵}",
+    "a": [
+     "'RACECAR'",
+     "'MEDIUM'",
+     "'CIVIC'",
+     "{⍵[?≢⍵]}¨'BCDFGHJKLM' 'AEIOU' 'NPQRSTVWXYZ'",
+     "3⍴{⍵[?≢⍵]}¨'BCDFGHJKLM' 'AEIOU'",
+     "{⍵[?≢⍵]}¨'BCDFGHJKLM' 'AEIO',,\\'AEIOU' 'BCDFGHJKLM'"
+    ]
+   }
+  },
+  "D8": {
+   "round": "D",
+   "problem": 8,
+   "title": "Turning up the Heat",
+   "file": "challenge-site/D/docs/8.md",
+   "chars": "⍳×'[]⍴⌽¨{⍵⍺,",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "d,",
+    "d+",
+    "j{",
+    "d⍴"
+   ],
+   "prereq": [
+    "d,",
+    "d+",
+    "j{",
+    "d⍴"
+   ],
+   "teachingRefs": [
+    "d×",
+    "d+",
+    "M¨"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{⍵ ⍵⍴⍺,⍵⍴'+'}",
+    "a": [
+     [
+      "'O'",
+      "3"
+     ],
+     [
+      "'Q'",
+      "4"
+     ],
+     [
+      "(¯1*?2)⎕C⎕A[?26]",
+      "2"
+     ],
+     [
+      "(¯1*?2)⎕C⎕A[?26]",
+      "3"
+     ],
+     [
+      "(¯1*?2)⎕C⎕A[?26]",
+      "4"
+     ],
+     [
+      "(¯1*?2)⎕C⎕A[?26]",
+      "5"
+     ],
+     [
+      "(¯1*?2)⎕C⎕A[?26]",
+      "4+2×?9"
+     ],
+     [
+      "(¯1*?2)⎕C⎕A[?26]",
+      "5+2×?9"
+     ]
+    ]
+   }
+  },
+  "D9": {
+   "round": "D",
+   "problem": 9,
+   "title": "Babushka",
+   "file": "challenge-site/D/docs/9.md",
+   "chars": "⍳×'[]⍴⌽¨{⍵⍺,",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "j{",
+    "j[",
+    "M¨"
+   ],
+   "prereq": [
+    "j{",
+    "j[",
+    "M¨"
+   ],
+   "teachingRefs": [
+    "d⍴",
+    "M¨"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{⍺{⍵[⍺]}¨⍵}",
+    "a": [
+     [
+      "3 2 1",
+      "'HERE' 'BE' 'DRAGONS'"
+     ],
+     [
+      "3 3 1 5",
+      "'JUST' 'EAT' 'APPLE' 'TODAY'"
+     ],
+     [
+      "?4⍴4",
+      "'HERE' 'DRAGONS'[?4⍴2]"
+     ],
+     [
+      "?5⍴3",
+      "'JUST' 'EAT' 'APPLE' 'TODAY'[?5⍴4]"
+     ]
+    ]
+   }
+  },
+  "D10": {
+   "round": "D",
+   "problem": 10,
+   "title": "X Marks the Spot",
+   "file": "challenge-site/D/docs/10.md",
+   "chars": "⍳×'[]⍴⌽¨{⍵⍺,",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "m⍳",
+    "d×",
+    "d+",
+    "D∘",
+    "M/",
+    "j{",
+    "j(",
+    "m⌽",
+    "M\\",
+    "j["
+   ],
+   "prereq": [
+    "m⍳",
+    "d×",
+    "d+",
+    "D∘",
+    "M/",
+    "j{",
+    "j(",
+    "m⌽",
+    "M\\",
+    "j["
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "function",
+    "f": "{' \\/X'[1+(∘.=⍨⍳⍵)+2×⌽(∘.=⍨⍳⍵)]}",
+    "a": [
+     "2",
+     "3",
+     "4",
+     "5",
+     "4+2×?9",
+     "5+2×?9"
+    ],
+    "p": "⎕C"
+   }
+  },
+  "E1": {
+   "round": "E",
+   "problem": 1,
+   "title": "Easy as 1-2-3",
+   "file": "challenge-site/E/docs/1.md",
+   "chars": "⍳",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "m⍳"
+   ],
+   "prereq": [
+    "m⍳"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "⍳12",
+    "regex": "^ *⍳ *\\d+$"
+   }
+  },
+  "E2": {
+   "round": "E",
+   "problem": 2,
+   "title": "I’m Larger than You",
+   "file": "challenge-site/E/docs/2.md",
+   "chars": "⍳⌈",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "d⌈"
+   ],
+   "prereq": [
+    "d⌈"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "31 41 59 26⌈50",
+    "regex": "^ *31 +41 +59 +26 *⌈ *\\d+ *$|^ *\\d+ *⌈ *31 +41 +59 +26 *$"
+   }
+  },
+  "E3": {
+   "round": "E",
+   "problem": 3,
+   "title": "Where Are You?",
+   "file": "challenge-site/E/docs/3.md",
+   "chars": "⍳⌈'=",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "d="
+   ],
+   "prereq": [
+    "d="
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "'R'='RASPBERRY'",
+    "regex": "^ *'RASPBERRY' *= *'R' *$|^ *'R' *= *'RASPBERRY' *$"
+   }
+  },
+  "E4": {
+   "round": "E",
+   "problem": 4,
+   "title": "The Greatest Number",
+   "file": "challenge-site/E/docs/4.md",
+   "chars": "⍳⌈'=/+×",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "M/",
+    "m⌈"
+   ],
+   "prereq": [
+    "M/"
+   ],
+   "teachingRefs": [
+    "d="
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "⌈/2 7 1 8 2 8 1 8 2 8 4 6",
+    "regex": "^ *⌈ */ *2 +7 +1 +8 +2 +8 +1 +8 +2 +8 +4 +6 $"
+   }
+  },
+  "E5": {
+   "round": "E",
+   "problem": 5,
+   "title": "Cards on the Table",
+   "file": "challenge-site/E/docs/5.md",
+   "chars": "⍳⌈'=/+×∘.",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "D∘"
+   ],
+   "prereq": [
+    "D∘"
+   ],
+   "teachingRefs": [
+    "d×",
+    "M/"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "∘.+⍨3 1 4",
+    "regex": "^ *3 +1 +4 *∘ *\\. *\\+ *3 +1 +4 *$"
+   }
+  },
+  "E6": {
+   "round": "E",
+   "problem": 6,
+   "title": "Identity Matrix",
+   "file": "challenge-site/E/docs/6.md",
+   "chars": "⍳⌈'=/+×∘.(",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "m⍳",
+    "D∘",
+    "j("
+   ],
+   "prereq": [
+    "m⍳",
+    "D∘",
+    "j("
+   ],
+   "teachingRefs": [
+    "d×",
+    "d+",
+    "d="
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "(⍳5)∘.=⍳5",
+    "regex": "^ *\\( *⍳ *5 *\\) *∘ *\\. *= *\\(? *⍳ *5 *\\)? *$"
+   }
+  },
+  "E7": {
+   "round": "E",
+   "problem": 7,
+   "title": "More Identity Matrices",
+   "file": "challenge-site/E/docs/7.md",
+   "chars": "⍳⌈'=/+×∘.({⍵",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "m⍳",
+    "D∘"
+   ],
+   "prereq": [
+    "m⍳",
+    "D∘"
+   ],
+   "teachingRefs": [
+    "m⍳",
+    "d×"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "∘.=⍨⍳",
+    "a": [
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "?9"
+    ]
+   }
+  },
+  "E8": {
+   "round": "E",
+   "problem": 8,
+   "title": "Spell it Out",
+   "file": "challenge-site/E/docs/8.md",
+   "chars": "⍳⌈'=/+×∘.({⍵[]",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "j{",
+    "j["
+   ],
+   "prereq": [
+    "j{",
+    "j["
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "function",
+    "f": "{⎕A[⍵]}",
+    "a": [
+     "1 2 3 2 1",
+     "1 16 12",
+     "4 25 1 12 15 7",
+     "?(1+?4)⍴26",
+     "?6⍴26",
+     "?(6+?6)⍴26",
+     "?⍨13",
+     "13+?⍨13"
+    ]
+   }
+  },
+  "E9": {
+   "round": "E",
+   "problem": 9,
+   "title": "How Many of Each?",
+   "file": "challenge-site/E/docs/9.md",
+   "chars": "⍳⌈'=/+×∘.({⍵[]",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "D∘",
+    "M/",
+    "j{"
+   ],
+   "prereq": [
+    "D∘",
+    "M/",
+    "j{"
+   ],
+   "teachingRefs": [
+    "d×",
+    "d+",
+    "M/"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{+/'APL'∘.=⍵}",
+    "a": [
+     "'DYALOG APL'",
+     "'MISSISSIPPI'",
+     "'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG!'",
+     "(⎕A,' &!-')[?(1+?4)⍴30]",
+     "(⎕A,' &!-')[?6⍴30]",
+     "(⎕A,' &!-')[?(6+?6)⍴30]"
+    ]
+   }
+  },
+  "E10": {
+   "round": "E",
+   "problem": 10,
+   "title": "Histogram",
+   "file": "challenge-site/E/docs/10.md",
+   "chars": "⍳⌈'<≤=≥>≠/+×∘.({⍵[]",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "m⍳",
+    "d+",
+    "D∘",
+    "M/",
+    "j{",
+    "j(",
+    "j[",
+    "m⌈",
+    "d-"
+   ],
+   "prereq": [
+    "m⍳",
+    "d+",
+    "D∘",
+    "M/",
+    "j{",
+    "j(",
+    "j["
+   ],
+   "teachingRefs": [
+    "d="
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{' -'[1+{⍵∘.≥⍳⌈/⍵}+/(⍳6)∘.=⍵]}",
+    "a": [
+     "6 2 1 3 5 6 6 4 1 2",
+     "3 4 3 4 6",
+     "5 3 6 6 3 5 5 4 1 6 1 6 4 6 3 2 3 2 6 3 1 4 4 3 5",
+     "?(1+?4)⍴6",
+     "?6⍴6",
+     "?(6+?6)⍴6"
+    ]
+   }
+  },
+  "F1": {
+   "round": "F",
+   "problem": 1,
+   "title": "Are You There?",
+   "file": "challenge-site/F/docs/1.md",
+   "chars": "∊'",
+   "kind": "value",
+   "introduces": [
+    "d∊"
+   ],
+   "uses": [
+    "d∊"
+   ],
+   "prereq": [],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "'DYALOG IN USE'∊'AEIOU'",
+    "regex": "^ *'DYALOG IN USE' *∊ *'[AEIOU]{5}' *$"
+   }
+  },
+  "F2": {
+   "round": "F",
+   "problem": 2,
+   "title": "Are They There?",
+   "file": "challenge-site/F/docs/2.md",
+   "chars": "∊'(",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "d∊"
+   ],
+   "prereq": [
+    "d∊"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "'TO' 'BE' 'OR' 'NOT' 'TO' 'BE'∊'HERE' 'BE' 'DRAGONS'",
+    "regex": "^ *'TO' +'BE' +'OR' +'NOT' +'TO' +'BE' *∊ *'HERE' +'BE' +'DRAGONS' *$"
+   }
+  },
+  "F3": {
+   "round": "F",
+   "problem": 3,
+   "title": "Summation",
+   "file": "challenge-site/F/docs/3.md",
+   "chars": "∊'(×/+",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "M/"
+   ],
+   "prereq": [
+    "M/"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "+/3 1 4 1 5",
+    "regex": "^ *\\+ */ *3 +1 +4 +1 +5 *$"
+   }
+  },
+  "F4": {
+   "round": "F",
+   "problem": 4,
+   "title": "How Many Are There?",
+   "file": "challenge-site/F/docs/4.md",
+   "chars": "∊'(×/+",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "M/",
+    "d∊"
+   ],
+   "prereq": [
+    "M/",
+    "d∊"
+   ],
+   "teachingRefs": [
+    "d×",
+    "d+"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "+/'TO' 'BE' 'OR' 'NOT' 'TO' 'BE'∊'HERE' 'BE' 'DRAGONS'",
+    "regex": "^ *\\+ */ *'TO' +'BE' +'OR' +'NOT' +'TO' +'BE' *∊ *'HERE' +'BE' +'DRAGONS' *$"
+   }
+  },
+  "F5": {
+   "round": "F",
+   "problem": 5,
+   "title": "Windows",
+   "file": "challenge-site/F/docs/5.md",
+   "chars": "∊'(×/+",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "d+",
+    "M/"
+   ],
+   "prereq": [
+    "d+",
+    "M/"
+   ],
+   "teachingRefs": [
+    "d×",
+    "M/"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "5 +/ 1 0 1 2 2 0 1 2",
+    "regex": "^ *5 *\\+ */ *1 +0 +1 +2 +2 +0 +1 +2 *$"
+   }
+  },
+  "F6": {
+   "round": "F",
+   "problem": 6,
+   "title": "Tag Along",
+   "file": "challenge-site/F/docs/6.md",
+   "chars": "∊'(×/+",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "d>",
+    "d<"
+   ],
+   "prereq": [
+    "d>",
+    "d<"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "'<IMG>'",
+    "regex": "^ *'<' *, *'IMG' *, *'>' *$"
+   }
+  },
+  "F7": {
+   "round": "F",
+   "problem": 7,
+   "title": "Tag me",
+   "file": "challenge-site/F/docs/7.md",
+   "chars": "∊'(×/+{⍵",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "d,",
+    "j{",
+    "d>",
+    "d<"
+   ],
+   "prereq": [
+    "d,",
+    "j{",
+    "d>",
+    "d<"
+   ],
+   "teachingRefs": [
+    "d×"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{'<',⍵,'>'}",
+    "a": [
+     "'BUTTON'",
+     "'INPUT'",
+     "'IMG'",
+     "'PRE'",
+     "'P'",
+     "⎕A[?26]",
+     "⎕A[?(1+?5)⍴26]"
+    ]
+   }
+  },
+  "F8": {
+   "round": "F",
+   "problem": 8,
+   "title": "Play Tag",
+   "file": "challenge-site/F/docs/8.md",
+   "chars": "∊'(×/+{⍵",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "d,",
+    "M/",
+    "j{",
+    "d>",
+    "d<"
+   ],
+   "prereq": [
+    "d,",
+    "M/",
+    "j{",
+    "d>",
+    "d<"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "function",
+    "f": "{'<',⍵,'>',⍺,'</',⍵,'>'}",
+    "a": [
+     [
+      "'USE IT WISELY'",
+      "'HEAD'"
+     ],
+     [
+      "'HEAVY LIFTING'",
+      "'STRONG'"
+     ],
+     [
+      "'A BRIDGE TOO FAR'",
+      "'SPAN'"
+     ],
+     [
+      "'GONE IN A MOMENT'",
+      "'BLINK'"
+     ],
+     [
+      "'(^ +)|( +$)' ' +'⎕R'' ' '⊢(50↑⎕A)[?(6+?6)⍴50]",
+      "⎕A[?(1+?5)⍴26]"
+     ]
+    ]
+   }
+  },
+  "F9": {
+   "round": "F",
+   "problem": 9,
+   "title": "DNA",
+   "file": "challenge-site/F/docs/9.md",
+   "chars": "∊'(×/+{⍵",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "d,",
+    "M/",
+    "j{"
+   ],
+   "prereq": [
+    "d,",
+    "M/",
+    "j{"
+   ],
+   "teachingRefs": [
+    "M/",
+    "M/"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{3,/⍵}",
+    "a": [
+     "'GTTTCGGTG'",
+     "'CCCACT'",
+     "'GATTACA'",
+     "'ACGT'[?(6+3×?4)⍴4]",
+     "'ACGT'[?(6+?12)⍴4]"
+    ]
+   }
+  },
+  "F10": {
+   "round": "F",
+   "problem": 10,
+   "title": "Wolfram Rules",
+   "file": "challenge-site/F/docs/10.md",
+   "chars": "∊'(×/+{⍵",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "d,",
+    "M/",
+    "j{",
+    "j(",
+    "d∊"
+   ],
+   "prereq": [
+    "d,",
+    "M/",
+    "j{",
+    "j(",
+    "d∊"
+   ],
+   "teachingRefs": [
+    "d×",
+    "d+"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{(3,/0,⍵,0)∊⍺}",
+    "a": [
+     [
+      "(1 1 0)(1 0 0)(0 1 1)(0 0 1)",
+      "0 1 1 0 1"
+     ],
+     [
+      "(1 0 0)(0 1 1)(0 1 0)(0 0 1)",
+      "0 1 0 0 1 0 1 0"
+     ],
+     [
+      "(1 1 0)(1 0 1)(0 1 1)(0 1 0)(0 0 1)",
+      "0 0 0 0 1"
+     ],
+     [
+      "(1 1 0)(1 0 1)(0 1 1)(0 1 0)(0 0 1)",
+      "0 0 0 1 1"
+     ],
+     [
+      "(1 1 0)(1 0 1)(0 1 1)(0 1 0)(0 0 1)",
+      "0 0 1 1 1"
+     ],
+     [
+      "(1 1 0)(1 0 1)(0 1 1)(0 1 0)(0 0 1)",
+      "0 1 1 0 1"
+     ],
+     [
+      "(1 1 0)(1 0 1)(0 1 1)(0 1 0)(0 0 1)",
+      "1 1 1 1 1"
+     ],
+     [
+      ",⌿2 2 2⊤¯1+{⍵[⍒⍵]}(1+?7)?8",
+      "2=?(5+?10)⍴2"
+     ],
+     [
+      ",⌿2 2 2⊤¯1+{⍵[⍒⍵]}(1+?7)?8",
+      "2=?(5+?10)⍴2"
+     ],
+     [
+      ",⌿2 2 2⊤¯1+{⍵[⍒⍵]}(1+?7)?8",
+      "2=?(5+?10)⍴2"
+     ]
+    ]
+   }
+  },
+  "G1": {
+   "round": "G",
+   "problem": 1,
+   "title": "Plus-good",
+   "file": "challenge-site/G/docs/1.md",
+   "chars": "+",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "d+"
+   ],
+   "prereq": [
+    "d+"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "31 41 59 26+100",
+    "regex": "^ *31 +41 +59 +26 *\\+ *100 *$|^ *100 *\\+ *31 +41 +59 +26 *$"
+   }
+  },
+  "G2": {
+   "round": "G",
+   "problem": 2,
+   "title": "What is The Matrix?",
+   "file": "challenge-site/G/docs/2.md",
+   "chars": "+⋄[]",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "j["
+   ],
+   "prereq": [
+    "j["
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "[1 1 ⋄ 1 1]",
+    "regex": "^ *\\[[1⋄ ]+\\] *$"
+   }
+  },
+  "G3": {
+   "round": "G",
+   "problem": 3,
+   "title": "Comparatively Easy",
+   "file": "challenge-site/G/docs/3.md",
+   "chars": "⋄[]+<≤=≥>≠",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "d≠"
+   ],
+   "prereq": [
+    "d≠"
+   ],
+   "teachingRefs": [
+    "d<",
+    "d≤",
+    "d=",
+    "d≥",
+    "d>",
+    "d≠"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "2 7 1 8 2 8 2≠1 6 1 8 0 3 4",
+    "regex": "^ *1 +6 +1 +8 +0 +3 +4 *≠ *2 +7 +1 +8 +2 +8 +2 *$|^ *2 +7 +1 +8 +2 +8 +2 *≠ *1 +6 +1 +8 +0 +3 +4 *$"
+   }
+  },
+  "G4": {
+   "round": "G",
+   "problem": 4,
+   "title": "Grand Gesture",
+   "file": "challenge-site/G/docs/4.md",
+   "chars": "⋄[]+<≤=≥>≠/",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "M/",
+    "j["
+   ],
+   "prereq": [
+    "M/",
+    "j["
+   ],
+   "teachingRefs": [
+    "d+"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "+/+/[1 2 ⋄ 3 4]",
+    "regex": "^ *\\+ */ *\\+ */ *\\[( *⋄)* *1 +2( *⋄)* *3 +4( *⋄)* *\\] *$"
+   }
+  },
+  "G5": {
+   "round": "G",
+   "problem": 5,
+   "title": "Turn Around",
+   "file": "challenge-site/G/docs/5.md",
+   "chars": "⋄[]+<≤=≥>≠/⌽",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "M/",
+    "d=",
+    "m⌽"
+   ],
+   "prereq": [
+    "M/",
+    "d=",
+    "m⌽"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "+/3 1 4 1 5=⌽3 1 4 1 5",
+    "regex": "^ *\\+ */ *3 +1 +4 +1 +5 *= *⌽ *3 +1 +4 +1 +5 *$"
+   }
+  },
+  "G6": {
+   "round": "G",
+   "problem": 6,
+   "title": "And That’s The Way It Is",
+   "file": "challenge-site/G/docs/6.md",
+   "chars": "⋄[]+<≤=≥>≠/⌽∧",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "M/",
+    "d=",
+    "m⌽",
+    "j["
+   ],
+   "prereq": [
+    "M/",
+    "d=",
+    "m⌽",
+    "j["
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "∧/∧/[1 2 1 ⋄ 3 4 3 ⋄ 5 5 5]=⌽[1 2 1 ⋄ 3 4 3 ⋄ 5 5 5]",
+    "regex": "^ *∧ */ *∧ */ *\\[( *⋄)? *1 +2 +1( *⋄)+ *3 +4 +3( *⋄)+ *5 +5 +5( *⋄)? *\\] *= *⌽ *\\[( *⋄)? *1 +2 +1( *⋄)+ *3 +4 +3( *⋄)+ *5 +5 +5( *⋄)? *\\] *$"
+   }
+  },
+  "G7": {
+   "round": "G",
+   "problem": 7,
+   "title": "Mirror Mirror",
+   "file": "challenge-site/G/docs/7.md",
+   "chars": "⋄[]+<≤=≥>≠/⌽∧{⍵",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "M/",
+    "j{",
+    "d=",
+    "m⌽"
+   ],
+   "prereq": [
+    "M/",
+    "j{",
+    "d=",
+    "m⌽"
+   ],
+   "teachingRefs": [
+    "d×",
+    "d+"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{∧/∧/⍵=⌽⍵}",
+    "a": [
+     "[1 2 1 ⋄ 3 4 3 ⋄ 5 5 5]",
+     "[1 2 3 ⋄ 4 5 6]",
+     "[1 1 ⋄ 0 0]",
+     "[1 0 ⋄ 1 1]",
+     "?20⍴⍨1+?4 4",
+     "{⍵[;?⍨⊃⌽⍴⍵]}(+\\?5⍴⍨1+?4 4)",
+     "⌽⍛⌊?20⍴⍨1+?4 4"
+    ],
+    "p": ","
+   }
+  },
+  "G8": {
+   "round": "G",
+   "problem": 8,
+   "title": "Totally",
+   "file": "challenge-site/G/docs/8.md",
+   "chars": "⋄[]+<≤=≥>≠/⌽∧{⍵,",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "d,",
+    "M/",
+    "j{"
+   ],
+   "prereq": [
+    "d,",
+    "M/",
+    "j{"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "function",
+    "f": "{⍵,+/⍵}",
+    "a": [
+     "[1 0 1 0 ⋄ 1 1 1 1 ⋄ 1 1 0 1]",
+     "[1 2 3 ⋄ 7 8 9]",
+     "?20⍴⍨1+?4 4"
+    ]
+   }
+  },
+  "G9": {
+   "round": "G",
+   "problem": 9,
+   "title": "Grand Total",
+   "file": "challenge-site/G/docs/9.md",
+   "chars": "⋄[]+<≤=≥>≠/⌽∧{⍵,(",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "d,",
+    "M/",
+    "j{",
+    "j("
+   ],
+   "prereq": [
+    "d,",
+    "M/",
+    "j{",
+    "j("
+   ],
+   "teachingRefs": [
+    "d×",
+    "d+"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{(+/⍵),+/+/⍵}",
+    "a": [
+     "[1 2 ⋄ 3 4]",
+     "[1 3 ⋄ 2 4 ⋄ 7 8]",
+     "[1 0 1 0 ⋄ 1 1 1 1 ⋄ 1 1 0 1]",
+     "?20⍴⍨1+?4 4"
+    ]
+   }
+  },
+  "G10": {
+   "round": "G",
+   "problem": 10,
+   "title": "Pure Magic",
+   "file": "challenge-site/G/docs/10.md",
+   "chars": "⋄[]+<≤=≥>≠/⌽∧{⍵,(⍉",
+   "kind": "function",
+   "introduces": [
+    "d⍉"
+   ],
+   "uses": [
+    "d,",
+    "M/",
+    "j{",
+    "j(",
+    "d=",
+    "m⌽",
+    "d⍉"
+   ],
+   "prereq": [
+    "d,",
+    "M/",
+    "j{",
+    "j(",
+    "d=",
+    "m⌽"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "function",
+    "f": "{∧/(+/1 1⍉⍵)=(+/⍵),(+/2 1⍉⍵),(+/1 1⍉⌽⍵)}",
+    "a": [
+     "[2 7 6 ⋄ 9 5 1 ⋄ 4 3 8]",
+     "[1 2 ⋄ 3 4]",
+     "[1 1 ⋄ 1 1]",
+     "[2 3 5 8 ⋄ 5 8 2 3 ⋄ 4 1 7 6 ⋄ 7 6 4 1]",
+     "?20⍴⍨2⍴1+?4",
+     "⌽⍣(?2)⊖⍣(?2)⍉⍣(?2)({1 ¯1 1 ¯1+,⊖2 2⍴⍵},{¯2 2 2 ¯2+,⌽2 2⍴⍵},(1 ¯1 ¯3 3+⌽),⍪)2+?4⍴18",
+     "¯2+(?13)+⌽⍣(?2)⊖⍣(?2)⍉⍣(?2)⊢[2 7 6 ⋄ 9 5 1 ⋄ 4 3 8]",
+     "¯2+(?13)+⌽⍣(?2)⊖⍣(?2)⍉⍣(?2)⊢[1 7 6 ⋄ 9 4 1 ⋄ 4 3 7]",
+     "3+(?13)+⌽⍣(?2)⊖⍣(?2)⊢[1 ¯3 2 ⋄ 4 0 ¯4 ⋄ ¯2 3 ¯1]",
+     "3+(?13)+⌽⍣(?2)⊖⍣(?2)⍉[1 ¯3 2 ⋄ 4 0 ¯4 ⋄ ¯2 3 ¯1]",
+     "¯1+(?6)+⌽⍣(?2)⊖⍣(?2)⍉⍣(?2)⊢[21 3 4 12 25 ⋄ 15 17 6 19 8 ⋄ 10 24 13 2 16 ⋄ 18 7 20 9 11 ⋄ 1 14 22 23 5]",
+     "¯1+(?6)+⌽⍣(?2)⊖⍣(?2)⍉⍣(?2)⊢[1 2 2 3 ⋄ 2 3 3 0 ⋄ 2 1 3 2 ⋄ 3 2 0 3]"
+    ],
+    "p": ","
+   }
+  },
+  "H1": {
+   "round": "H",
+   "problem": 1,
+   "title": "Easy as 1-2-3",
+   "file": "challenge-site/H/docs/1.md",
+   "chars": "⍳",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "m⍳"
+   ],
+   "prereq": [
+    "m⍳"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "⍳12",
+    "regex": "^ *⍳ *\\d+$"
+   }
+  },
+  "H2": {
+   "round": "H",
+   "problem": 2,
+   "title": "Comparing This to That",
+   "file": "challenge-site/H/docs/2.md",
+   "chars": "⍳<≤=≥>≠",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "d>",
+    "m≠"
+   ],
+   "prereq": [
+    "d>",
+    "m≠"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "3 5 4 8 6>3 4 5 3 9⍝<≤=≥>≠",
+    "regex": "^ *3 +5 +4 +8 +6 *> *3 +4 +5 +3 +9 *$|^ *3 +4 +5 +3 +9 *< *3 +5 +4 +8 +6 *$"
+   }
+  },
+  "H3": {
+   "round": "H",
+   "problem": 3,
+   "title": "Selection",
+   "file": "challenge-site/H/docs/3.md",
+   "chars": "⍳<≤=≥>≠[]'",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "j["
+   ],
+   "prereq": [
+    "j["
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "'DYALOG APL'[6 5 7 9 5 4 4 2]",
+    "regex": "^ *'DYALOG APL' *\\[ *(\\d+ +)*\\d *+\\] *$"
+   }
+  },
+  "H4": {
+   "round": "H",
+   "problem": 4,
+   "title": "The Final Countdown",
+   "file": "challenge-site/H/docs/4.md",
+   "chars": "⍳<≤=≥>≠[]'⌽+×",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "m⍳",
+    "d+",
+    "m⌽"
+   ],
+   "prereq": [
+    "m⍳",
+    "d+",
+    "m⌽"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "⌽100+⍳7",
+    "regex": "^ *⌽ *100 *\\+ *⍳ *7 *$|^ *100 *\\+ *⌽ *⍳ *7 *$"
+   }
+  },
+  "H5": {
+   "round": "H",
+   "problem": 5,
+   "title": "Cards on the Table",
+   "file": "challenge-site/H/docs/5.md",
+   "chars": "⍳<≤=≥>≠[]'⌽+×∘.",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "D∘"
+   ],
+   "prereq": [
+    "D∘"
+   ],
+   "teachingRefs": [
+    "d×"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "3 1 4∘.+3 1 4",
+    "regex": "^ *3 +1 +4 *∘ *\\. *\\+ *3 +1 +4 *$"
+   }
+  },
+  "H6": {
+   "round": "H",
+   "problem": 6,
+   "title": "Identity Matrix",
+   "file": "challenge-site/H/docs/6.md",
+   "chars": "⍳<≤=≥>≠[]'⌽+×(",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "m⍳",
+    "D∘",
+    "j("
+   ],
+   "prereq": [
+    "m⍳",
+    "D∘",
+    "j("
+   ],
+   "teachingRefs": [
+    "d×",
+    "d+"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "(⍳5)∘.=⍳5",
+    "regex": "^ *\\( *⍳ *5 *\\) *∘ *\\. *= *\\(? *⍳ *5 *\\)? *$"
+   }
+  },
+  "H7": {
+   "round": "H",
+   "problem": 7,
+   "title": "More Identity Matrices",
+   "file": "challenge-site/H/docs/7.md",
+   "chars": "⍳<≤=≥>≠[]'⌽+×({⍵",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "m⍳",
+    "D∘"
+   ],
+   "prereq": [
+    "m⍳",
+    "D∘"
+   ],
+   "teachingRefs": [
+    "m⍳",
+    "d×"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "∘.=⍨⍳",
+    "a": [
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "6+?5"
+    ]
+   }
+  },
+  "H8": {
+   "round": "H",
+   "problem": 8,
+   "title": "Just Drop It",
+   "file": "challenge-site/H/docs/8.md",
+   "chars": "⍳<≤=≥>≠[]'⌽+×({⍵↓",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "j{",
+    "d↓",
+    "m⌽"
+   ],
+   "prereq": [
+    "j{",
+    "d↓",
+    "m⌽"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "function",
+    "f": "{1↓⌽1↓⌽⍵}",
+    "a": [
+     "'ACRONYM'",
+     "'DINNERS'",
+     "'ACUTE'",
+     "'THIN'",
+     "'TIP'",
+     "⎕A[?(2+?6)⍴26]"
+    ]
+   }
+  },
+  "H9": {
+   "round": "H",
+   "problem": 9,
+   "title": "Up and Down",
+   "file": "challenge-site/H/docs/9.md",
+   "chars": "⍳<≤=≥>≠[]'⌽+×({⍵,",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "m⍳",
+    "d,",
+    "j{",
+    "j(",
+    "d↓",
+    "m⌽"
+   ],
+   "prereq": [
+    "m⍳",
+    "d,",
+    "j{",
+    "j(",
+    "d↓",
+    "m⌽"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "function",
+    "f": "{(⍳⍵),1↓⌽⍳⍵}",
+    "a": [
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "6+?5"
+    ]
+   }
+  },
+  "H10": {
+   "round": "H",
+   "problem": 10,
+   "title": "Pyramid Scheme",
+   "file": "challenge-site/H/docs/10.md",
+   "chars": "⍳<≤=≥>≠[]'⌽+×({⍵,",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "m⍳",
+    "d,",
+    "d+",
+    "D∘",
+    "j{",
+    "j(",
+    "d↓",
+    "m⌽",
+    "j["
+   ],
+   "prereq": [
+    "m⍳",
+    "d,",
+    "d+",
+    "D∘",
+    "j{",
+    "j(",
+    "d↓",
+    "m⌽",
+    "j["
+   ],
+   "teachingRefs": [
+    "d+",
+    "d<",
+    "d≤",
+    "d=",
+    "d≥",
+    "d>"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{' A'[1+(⍳⍵)∘.≥(⌽⍳⍵),1↓⍳⍵]}",
+    "a": [
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "6+?5"
+    ],
+    "p": "((∨\\∧∘⌽∨\\∘⌽)' '∨.≠⊢)⍛/"
+   }
+  },
+  "I1": {
+   "round": "I",
+   "problem": 1,
+   "title": "Counting on You",
+   "file": "challenge-site/I/docs/1.md",
+   "chars": "≢'",
+   "kind": "value",
+   "introduces": [
+    "m≢"
+   ],
+   "uses": [
+    "m≢"
+   ],
+   "prereq": [],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "≢'HELLO'",
+    "regex": "^ *≢ *'HELLO' *$"
+   }
+  },
+  "I2": {
+   "round": "I",
+   "problem": 2,
+   "title": "Heads Up!",
+   "file": "challenge-site/I/docs/2.md",
+   "chars": "≢'⌈",
+   "kind": "value",
+   "introduces": [
+    "m⌈"
+   ],
+   "uses": [
+    "m⌈"
+   ],
+   "prereq": [],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "⌈6.2",
+    "regex": "^ *⌈ *6\\.20* *$"
+   }
+  },
+  "I3": {
+   "round": "I",
+   "problem": 3,
+   "title": "Star Power",
+   "file": "challenge-site/I/docs/3.md",
+   "chars": "≢'⌈⍴",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "d⍴"
+   ],
+   "prereq": [
+    "d⍴"
+   ],
+   "teachingRefs": [
+    "m≢"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "7⍴'*'",
+    "regex": "^ *7 *⍴ *'\\*' *$"
+   }
+  },
+  "I4": {
+   "round": "I",
+   "problem": 4,
+   "title": "Half the Battle",
+   "file": "challenge-site/I/docs/4.md",
+   "chars": "≢'⌈⍴-÷(",
+   "kind": "value",
+   "introduces": [
+    "d-",
+    "d÷"
+   ],
+   "uses": [
+    "j(",
+    "d÷",
+    "d-"
+   ],
+   "prereq": [
+    "j("
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "(9-4)÷2",
+    "regex": "^ *\\( *9 *- *4 *\\) *÷ *2 *$"
+   }
+  },
+  "I5": {
+   "round": "I",
+   "problem": 5,
+   "title": "Down to Earth",
+   "file": "challenge-site/I/docs/5.md",
+   "chars": "≢'⌈⍴-÷(⌊",
+   "kind": "value",
+   "introduces": [
+    "m⌊"
+   ],
+   "uses": [
+    "d÷",
+    "m⌊"
+   ],
+   "prereq": [
+    "d÷"
+   ],
+   "teachingRefs": [
+    "m⌈"
+   ],
+   "validation": {
+    "type": "value",
+    "expr": "⌊22÷7",
+    "regex": "^ *⌊ *\\(? *22 *÷ *7 *\\)? *$"
+   }
+  },
+  "I6": {
+   "round": "I",
+   "problem": 6,
+   "title": "Stuck Together",
+   "file": "challenge-site/I/docs/6.md",
+   "chars": "≢'⌈⍴-÷(⌊,",
+   "kind": "value",
+   "introduces": [],
+   "uses": [
+    "d,"
+   ],
+   "prereq": [
+    "d,"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "value",
+    "expr": "'***','HI','***'⍝⍴",
+    "regex": "^ *(\\( *3 *⍴ *'\\*' *\\)|'\\*\\*\\*') *, *'HI' *, *(\\(? *3 *⍴ *'\\*' *\\)?|'\\*\\*\\*') *$"
+   }
+  },
+  "I7": {
+   "round": "I",
+   "problem": 7,
+   "title": "Stick it Together",
+   "file": "challenge-site/I/docs/7.md",
+   "chars": "≢'⌈⍴-÷(⌊,{⍵",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "d,",
+    "j{"
+   ],
+   "prereq": [
+    "d,",
+    "j{"
+   ],
+   "teachingRefs": [
+    "d÷"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{'***',⍵,'***'}",
+    "a": [
+     "'HI'",
+     "'APL'",
+     "'HELLO'",
+     "'WORLD'",
+     "⎕A[26?⍨3+?7]",
+     "⎕A[26?⍨3+?7]"
+    ]
+   }
+  },
+  "I8": {
+   "round": "I",
+   "problem": 8,
+   "title": "It Takes Two",
+   "file": "challenge-site/I/docs/8.md",
+   "chars": "≢'⌈⍴-÷(⌊,{⍵⍺",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "j{",
+    "j(",
+    "m⌈",
+    "d-",
+    "d÷"
+   ],
+   "prereq": [
+    "j{",
+    "j(",
+    "m⌈",
+    "d-",
+    "d÷"
+   ],
+   "teachingRefs": [
+    "d-",
+    "d÷"
+   ],
+   "validation": {
+    "type": "function",
+    "f": "{⌈(⍺-⍵)÷2}",
+    "a": [
+     [
+      "11",
+      "4"
+     ],
+     [
+      "20",
+      "7"
+     ],
+     [
+      "9",
+      "2"
+     ],
+     [
+      "100",
+      "37"
+     ],
+     [
+      "50+?50",
+      "?50"
+     ],
+     [
+      "100+?100",
+      "?100"
+     ]
+    ]
+   }
+  },
+  "I9": {
+   "round": "I",
+   "problem": 9,
+   "title": "Take the Lead",
+   "file": "challenge-site/I/docs/9.md",
+   "chars": "≢'⌈⍴-÷(⌊,{⍵⍺",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "j{",
+    "j(",
+    "d⍴",
+    "m≢",
+    "m⌈",
+    "d-",
+    "d÷"
+   ],
+   "prereq": [
+    "j{",
+    "j(",
+    "d⍴",
+    "m≢",
+    "m⌈",
+    "d-",
+    "d÷"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "function",
+    "f": "{(⌈(⍺-≢⍵)÷2)⍴'*'}",
+    "a": [
+     [
+      "10",
+      "'HI'"
+     ],
+     [
+      "9",
+      "'APL'"
+     ],
+     [
+      "10",
+      "'APL'"
+     ],
+     [
+      "10",
+      "'DYALOG'"
+     ],
+     [
+      "19",
+      "'DYALOG'"
+     ],
+     [
+      "20+?20",
+      "⎕A[26?⍨3+?7]"
+     ]
+    ]
+   }
+  },
+  "I10": {
+   "round": "I",
+   "problem": 10,
+   "title": "Centre Stage",
+   "file": "challenge-site/I/docs/10.md",
+   "chars": "≢'⌈⍴-÷(⌊,{⍵⍺",
+   "kind": "function",
+   "introduces": [],
+   "uses": [
+    "d,",
+    "j{",
+    "j(",
+    "d⍴",
+    "m≢",
+    "m⌈",
+    "d-",
+    "d÷",
+    "m⌊"
+   ],
+   "prereq": [
+    "d,",
+    "j{",
+    "j(",
+    "d⍴",
+    "m≢",
+    "m⌈",
+    "d-",
+    "d÷",
+    "m⌊"
+   ],
+   "teachingRefs": [],
+   "validation": {
+    "type": "function",
+    "f": "{((⌈(⍺-≢⍵)÷2)⍴'*'),⍵,(⌊(⍺-≢⍵)÷2)⍴'*'}",
+    "a": [
+     [
+      "10",
+      "'HI'"
+     ],
+     [
+      "10",
+      "'APL'"
+     ],
+     [
+      "11",
+      "'APL'"
+     ],
+     [
+      "15",
+      "'DYALOG'"
+     ],
+     [
+      "7",
+      "'HELLO'"
+     ],
+     [
+      "14",
+      "'DYALOG'"
+     ],
+     [
+      "8",
+      "'HELLO'"
+     ],
+     [
+      "2×5+?10",
+      "⎕A[26?⍨3+2×?3]"
+     ],
+     [
+      "2×5+?10",
+      "⎕A[26?⍨4+2×?3]"
+     ],
+     [
+      "1+2×5+?10",
+      "⎕A[26?⍨3+2×?3]"
+     ],
+     [
+      "1+2×5+?10",
+      "⎕A[26?⍨4+2×?3]"
+     ]
+    ]
+   }
+  }
+ }
+}

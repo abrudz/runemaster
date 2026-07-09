@@ -52,12 +52,15 @@ sweep over all JS including the new UI code.
 - **Belt / rune taxonomy**: colored rows keyed by **(gemstone, glyph)** — the gemstone encodes
   the syntactic type, so the *same glyph* in different roles is *different* runes (never merged):
   - `m` **emerald** = monadic function, `d` **ruby** = dyadic function,
-    `M` **sapphire** = monadic operator, `D` **amethyst** = dyadic operator.
+    `M` **sapphire** = monadic operator (operand on the left), `D` **amethyst** = the `∘.`
+    (outer product) operator — unusual in taking its single operand on the *right*. (There are
+    no ordinary dyadic operators in the content, so amethyst is repurposed for `∘.`.)
   - **Rune visual grammar** (already in `index.css:70-73`, `border-radius: TL TR BR BL`, `0em`
     = sharp): *bottom* corners = arguments, *top* corners = operands. Monadic fn = BR sharp only
-    (one right arg); dyadic fn = both bottom sharp (infix); monadic operator = TL sharp only
-    (lone left operand); dyadic operator = both top sharp. Functions round at `1em`, operators
-    at `.5em`. **Preserve this when authoring** — a rune's class must match its true APL arity.
+    (one right arg); dyadic fn = both bottom sharp (infix); monadic operator/sapphire = TL sharp
+    only (lone left operand); `∘.`/amethyst = TR sharp only (lone right operand). Functions round
+    at `1em`, operators at `.5em`. **Preserve this when authoring** — a rune's class must match
+    its true APL arity.
   - **Diamonds** (new 5th category): the enclosure syntax `()`, `[]`, `{}`. They take neither
     arguments nor operands, so **no sharp corners** — fully round (`border-radius:50%`, round
     brilliant cut) with a **neutral faded-rainbow radial gradient** fill (no gemstone border

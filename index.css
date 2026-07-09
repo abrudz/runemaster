@@ -70,7 +70,7 @@ b {
 .m {border-radius:1em  1em  0em  1em;color:var(--emerald );-webkit-text-stroke-color:var(--emerald );background:var(--l-emerald );border-color:rgba(255,255,255,0.25)}
 .d {border-radius:1em  1em  0em  0em;color:var(--ruby    );-webkit-text-stroke-color:var(--ruby    );background:var(--l-ruby    );border-color:rgba(255,255,255,0.25)}
 .M {border-radius:0em .5em .5em .5em;color:var(--sapphire);-webkit-text-stroke-color:var(--sapphire);background:var(--l-sapphire);border-color:rgba(255,255,255,0.25)}
-.D {border-radius:0em  0em .5em .5em;color:var(--amethyst);-webkit-text-stroke-color:var(--amethyst);background:var(--l-amethyst);border-color:rgba(255,255,255,0.25)}
+.D {border-radius:.5em 0em .5em .5em;color:var(--amethyst);-webkit-text-stroke-color:var(--amethyst);background:var(--l-amethyst);border-color:rgba(255,255,255,0.25)}
 i {
   height:var(--size);
   width:var(--size);
