@@ -72,7 +72,41 @@ const restore=()=>{
   return s
 }
 window.reset=()=>{localStorage.removeItem(KEY);location.reload()}   // playtesting: wipe saved progress
-addEventListener('keydown', async e=>{
+async function step(newR,newC){                        // move to / interact with (newR,newC); shared by keyboard + tap
+  if($$("dialog").some(e=>e.hasAttribute("open")))return
+  if(newR<0   &&newC==i.c){mr-=1;await loadM(mr,mc);jump(rMax,newC);show()}else
+  if(newR>rMax&&newC==i.c){mr+=1;await loadM(mr,mc);jump(0   ,newC);show()}else
+  if(newC<0   &&newR==i.r){mc-=1;await loadM(mr,mc);jump(newR,cMax);show()}else
+  if(newC>cMax&&newR==i.r){mc+=1;await loadM(mr,mc);jump(newR,0   );show()}else  // only orthogonal steps switch maps; a diagonal move off an edge is ignored (would land on a wall)
+  if(0<=newR&&newR<=rMax&&0<=newC&&newC<=cMax){
+    let t=td(newR,newC).children[0]
+    if(t&&t.style.visibility!="hidden"){
+      if(t.className=="l"){
+        msgp.innerHTML="This door requires mastery of the following runes:<br>"+bs(j[t.id].req).join(" ")
+        msg.showModal()
+      }else if(t.className=="o"){
+        askp.innerHTML=md(j[t.id].task)
+        let tinf=j[t.id]
+        lb(tinf.req+tinf.add+dfnkeys(tinf)+[...tinf.task.matchAll(/`\w`/g)].join("").replace(/`(\w)`/g,"$1 "))
+        ask.b=t
+        ask.r=newR;ask.c=newC
+        aski.value=""
+        ask.showModal()
+      }else if(~(g="mdMDj".indexOf(t.className))){
+        show(i.r=newR,i.c=newC)
+        c=t
+        askp.innerHTML=md(j[c.id].task)
+        let tinf=j[c.id]
+        lb(c.id+tinf.req+tinf.add+dfnkeys(tinf)+[...tinf.task.matchAll(/`\w`/g)].join("").replace(/`(\w)`/g,"$1 "))
+        ask.b=c
+        aski.value=""
+        ask.showModal()
+      }
+    }else show(i.r=newR,i.c=newC)
+  }
+  save()
+}
+addEventListener('keydown', e=>{
   const up   =()=>newR=i.r-1
   const down =()=>newR=i.r+1
   const left =()=>newC=i.c-1
@@ -88,40 +122,7 @@ addEventListener('keydown', async e=>{
   e.key=="End"       ||e.key=="1"||e.key=="z"||e.key=="m"    ?down(left(moved=1)):0
   e.key=="ArrowDown" ||e.key=="2"||e.key=="s"||e.key=="k"    ?down(moved=1):0
   e.key=="PageDown"  ||e.key=="3"||e.key=="c"||e.key=="."    ?down(right(moved=1)):0
-  if(moved&&!$$("dialog").some(e=>e.hasAttribute("open"))){
-    e.preventDefault()
-    if(newR<0   &&newC==i.c){mr-=1;await loadM(mr,mc);jump(rMax,newC);show()}else
-    if(newR>rMax&&newC==i.c){mr+=1;await loadM(mr,mc);jump(0   ,newC);show()}else
-    if(newC<0   &&newR==i.r){mc-=1;await loadM(mr,mc);jump(newR,cMax);show()}else
-    if(newC>cMax&&newR==i.r){mc+=1;await loadM(mr,mc);jump(newR,0   );show()}else  // only orthogonal steps switch maps; a diagonal move off an edge is ignored (would land on a wall)
-    if(0<=newR&&newR<=rMax&&0<=newC&&newC<=cMax){
-      let t=td(newR,newC).children[0]
-      if(t&&t.style.visibility!="hidden"){
-        if(t.className=="l"){
-          msgp.innerHTML="This door requires mastery of the following runes:<br>"+bs(j[t.id].req).join(" ")
-          msg.showModal()
-        }else if(t.className=="o"){
-          askp.innerHTML=md(j[t.id].task)
-          let tinf=j[t.id]
-          lb(tinf.req+tinf.add+dfnkeys(tinf)+[...tinf.task.matchAll(/`\w`/g)].join("").replace(/`(\w)`/g,"$1 "))
-          ask.b=t
-          ask.r=newR;ask.c=newC
-          aski.value=""
-          ask.showModal()
-        }else if(~(g="mdMDj".indexOf(t.className))){
-          show(i.r=newR,i.c=newC)
-          c=t
-          askp.innerHTML=md(j[c.id].task)
-          let tinf=j[c.id]
-          lb(c.id+tinf.req+tinf.add+dfnkeys(tinf)+[...tinf.task.matchAll(/`\w`/g)].join("").replace(/`(\w)`/g,"$1 "))
-          ask.b=c
-          aski.value=""
-          ask.showModal()
-        }
-      }else show(i.r=newR,i.c=newC)
-    }
-    save()
-  }
+  if(moved&&!$$("dialog").some(x=>x.hasAttribute("open"))){e.preventDefault();step(newR,newC)}
 });
 async function loadM(mr,mc) {
   if(cur!=null)mem[cur].html=M.innerHTML
@@ -167,6 +168,16 @@ document.addEventListener('DOMContentLoaded', async function main() {
   Object.defineProperty(i, 'c', {get: ()=>i.cVal, set: v=> place(i,i.rVal  ,i.cVal=v)})
   i.r=i.rVal;i.c=i.cVal
   show()
+  document.onclick=e=>{                    // click a tile to step toward it; click outside the map to step that way (even across an edge)
+    if(e.target.closest("dialog,button,#belt"))return   // leave the UI controls alone
+    const t=e.target.closest("#M td")
+    let dr,dc
+    if(t){dr=Math.sign(getR(t)-i.r);dc=Math.sign(getC(t)-i.c)}   // inside the map: head toward the tapped tile
+    else{const b=M.getBoundingClientRect()                       // outside the map: general direction (diagonal in the corners)
+      dr=e.clientY<b.top?-1:e.clientY>b.bottom?1:0
+      dc=e.clientX<b.left?-1:e.clientX>b.right?1:0}
+    if(dr||dc)step(i.r+dr,i.c+dc)
+  }
 })
 window.ans=t=>{
   const q=j[ask.b.id]
