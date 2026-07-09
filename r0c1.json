@@ -1,0 +1,81 @@
+{
+ "theme": {
+  "w": "🪨",
+  "wall": "rgba(96,96,128,0.38)",
+  "back": "#0e0e18",
+  "spot": "#e0e0f4"
+ },
+ "M": [
+  "w w w w w w w w w w w ",
+  "w   d↓  d∩  d⌊  d⌈  w ",
+  "w                   w ",
+  "w   d⌿  d=  m≠      w ",
+  "w                   w ",
+  "w   d∧  d∨  m⌽      w ",
+  "w                   w ",
+  "w                   w ",
+  "                    w ",
+  "w                   w ",
+  "w w w w w w w w w w w "
+ ],
+ "d↓": {
+  "req": "",
+  "add": "",
+  "task": "{d↓} is the _ruby rune of dropping_, casting away from the start of the list on its right as many items as the number on its left. A rockfall has buried the first `n` runes of the vein `w` — recite what still shows.",
+  "expr": "(n←2)↓w←'STALAGMITE'"
+ },
+ "d∩": {
+  "req": "",
+  "add": "",
+  "task": "{d∩} is the _ruby rune of commonality_, keeping (in order) the items on its left that also appear on its right. Which runes of the inscription `a` are echoed in the warding word `b`?",
+  "expr": "(a←'DRAKE MALLARD')∩b←'DARK'"
+ },
+ "d⌊": {
+  "req": "",
+  "add": "",
+  "task": "{d⌊} is the _ruby rune of the lesser_, giving the smaller of each pair it stands between. A vaulted ceiling of `c` caps the crystal heights `v`; no crystal may rise above it.",
+  "expr": "(c←7)⌊v←?⍨9"
+ },
+ "d⌈": {
+  "req": "",
+  "add": "",
+  "task": "{d⌈} is the _ruby rune of the greater_, giving the larger of each pair it stands between. A risen floor of `f` lifts the crystal heights `v`; none may sink below it.",
+  "expr": "(f←3)⌈v←?⍨9"
+ },
+ "d⌿": {
+  "req": "",
+  "add": "",
+  "task": "{d⌿} is the _ruby rune of copying_, repeating each item on its right as many times as the matching count on its left. Sound the runes `w`, each echoing by its count in `c`.",
+  "expr": "(c←2 0 3 1 2 3)⌿w←'DYALOG'"
+ },
+ "d=": {
+  "req": "",
+  "add": "",
+  "task": "{d=} is the _ruby rune of equality_, marking 1 where its left and right agree and 0 where they differ. Where do the twin tallies `a` and `b` match?",
+  "expr": "(a←3 1 4 1 5)=b←2 1 4 1 3"
+ },
+ "m≠": {
+  "req": "",
+  "add": "",
+  "task": "{m≠} is the _emerald rune of first sightings_, marking each item of the list on its right that has not been seen earlier in it. Mark the first appearance of every rune in the chant `w`.",
+  "expr": "≠w←'BOOKKEEPER'"
+ },
+ "d∧": {
+  "req": "",
+  "add": "",
+  "task": "{d∧} is the _ruby rune of conjunction_, kindling a light only where both its sides are lit. Where are both the wards `a` and `b` aglow at once?",
+  "expr": "(a←1 1 0 0)∧b←0 1 0 1"
+ },
+ "d∨": {
+  "req": "",
+  "add": "",
+  "task": "{d∨} is the _ruby rune of disjunction_, kindling a light where either of its sides is lit. Where is either ward `a` or `b` aglow?",
+  "expr": "(a←1 1 0 0)∨b←0 1 0 1"
+ },
+ "m⌽": {
+  "req": "",
+  "add": "",
+  "task": "{m⌽} is the _emerald rune of reversal_, mirroring the order of the list on its right. The watchtowers along the shore report their heights as `l`; recite them from last to first.",
+  "expr": "⌽l←5?99"
+ }
+}
