@@ -1,0 +1,51 @@
+{
+ "theme": {
+  "w": "🧱",
+  "wall": "rgba(200,120,60,0.4)",
+  "back": "#1a0f08",
+  "spot": "#ffe8d0"
+ },
+ "M": [
+  "w w w w w w w w w w w ",
+  "w m≢    w       w   w ",
+  "w   w   w   w   w   w ",
+  "w   w       w       w ",
+  "w       w m⌈w w w   w ",
+  "w w w   w             ",
+  "w m⌊    w   w w w w w ",
+  "w   w           d-  w ",
+  "w   w w w w w   w   w ",
+  "w d÷            w   w ",
+  "w w w w w w w w w w w "
+ ],
+ "m≢": {
+  "req": "",
+  "add": "",
+  "task": "{m≢} is the _emerald rune of tallying_, telling how many items lie in the list on its right — a tally-scratch of a rune, counting what it is set before. How many letters are struck into the ingot-mark `w`?",
+  "expr": "≢w←⎕A[?⍨6+?9]"
+ },
+ "m⌈": {
+  "req": "",
+  "add": "",
+  "task": "{m⌈} is the _emerald rune of raising_, lifting the number on its right up to the next whole number, and leaving whole numbers be. The molten readings `v` must each be rounded up to a whole ingot — raise them.",
+  "expr": "⌈v←(?6⍴99)÷4"
+ },
+ "m⌊": {
+  "req": "",
+  "add": "d÷",
+  "task": "{m⌊} is the _emerald rune of lowering_, dropping the number on its right down to the previous whole number. Drawing on {d÷}, reckon how many whole times the measure `b` can be drawn from the hoard `a`.",
+  "expr": "⌊(a←20+?80)÷b←2+?8"
+ },
+ "d-": {
+  "req": "",
+  "add": "",
+  "task": "{d-} is the _ruby rune of taking-away_, subtracting what lies on its right from what lies on its left. A purse holds `a` coins when a debt of `b` is called in — what remains in each reckoning?",
+  "expr": "(a←?6⍴99)-b←?6⍴99"
+ },
+ "d÷": {
+  "req": "",
+  "add": "",
+  "task": "{d÷} is the _ruby rune of sharing_, dividing what lies on its left by what lies on its right. Share `a` coins evenly among `b` hands — what falls to each?",
+  "expr": "(a←?6⍴99)÷b←1+?6⍴9"
+ }
+}
