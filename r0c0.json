@@ -6,7 +6,7 @@
   "spot": "#dff0df"
  },
  "M": [
-  "w w w w w w w w w w w ",
+  "w w w w l4w w w w w w ",
   "w   m⍳    d×    m∪  w ",
   "w   w w     w       w ",
   "w   d+    d,w   M/  w ",
@@ -130,5 +130,11 @@
   "add": "",
   "task": "A soot-blackened door seals the western tunnel to the forge, its face scored with an empty lattice. Raise a multiplication table from the tallies `v`, each times each, to kindle the iron and pass.",
   "expr": "v∘.×v←2+?4"
+ },
+ "l4": {
+  "req": "m∪d,",
+  "add": "",
+  "task": "A curtain of knotted threads hangs across the northern arch. Join the two skeins `a` and `b` into a single strand, then keep only its distinct fibres, and the curtain parts.",
+  "expr": "∪(a←'ELD'),b←'FIRE'"
  }
 }
