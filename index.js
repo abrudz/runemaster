@@ -4,10 +4,12 @@ let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={}
 const $=s=>document.querySelector(s)
 const $$=s=>[...document.querySelectorAll(s)]
 const td=(r,c)=>$("#r"+r+"c"+c)
-const b=r=>`<b tabindex='0' class='${r[0]}'>${r[1]}</b>`
+const ins={"(":"()","[":"[]","{":"{}","∘":"∘."}   // rune glyph -> displayed / typed form (multi-char)
+const mid={"()":1,"[]":1,"{}":1}                   // enclosure pairs: cursor sits between
+const b=r=>`<b tabindex='0' class='${r[0]}'>${ins[r[1]]??r[1]}</b>`
 const bs=s=>(s.match(/../g)??[]).map(b)
 const reqs=t=>j[t.id].req.match(/../g)??[]
-const dfnkeys=q=>q.f?(Array.isArray(q.a[0])?"{ } ⍺ ⍵ ":"{ } ⍵ "):""  // dfn scaffold keys for function challenges
+const dfnkeys=q=>q.f?(Array.isArray(q.a[0])?"⍺ ⍵ ":"⍵ "):""  // dfn arg keys for function challenges (braces come from the {} diamond)
 const md=s=>s.replace(/\{(\w\W)\}/g,(_,m)=>b(m)).replace(/(?<!\\)`(.*?[^\\])`/g,"<code>$1</code>").replace(/(?<!\\)_(.*?[^\\])_/g,"<em>$1</em>").replace(/\\([`_])/g,"$1")
 const exec=s=>fetch("https://tryapl.org/Exec",{
   method:"POST",
@@ -31,18 +33,16 @@ const jump=(r,c)=>{
   void i.offsetWidth
   i.style.transition=""
 }
-const cls={"(":")","[":"]","{":"}"}          // enclosure openers -> closers
 const lb=ch=>{
-  const bi=$$("#belt b").map(e=>e.id)
-  const a=ch.match(/../g,"")
-  aski.pattern="["+a.map(t=>t[0]=="j"?t[1]+cls[t[1]]:t[1]==" "?t[0]:t[1]).join("").replace(/[-^$\\.*+?()[\]{}|\/&!#%,:;<=>@~`]/g,"\\$&")+" ]*"
+  const a=[...new Set(ch.match(/../g)??[])]                       // the challenge's allowed runes, deduped
+  aski.pattern="["+a.map(t=>t[1]==" "?t[0]:(ins[t[1]]??t[1])).join("").replace(/[-^$\\.*+?()[\]{}|\/&!#%,:;<=>@~`]/g,"\\$&")+" ]*"
   askb.innerHTML=a.sort(_=>Math.random()-0.5).
-            map(s=>s[1]==" "?`<button>${s[0]}</button>`:s==c.id||~bi.indexOf(s)?b(s):"").join("")
+            map(s=>s[1]==" "?`<button>${s[0]}</button>`:b(s)).join("")
   $$("#askb>*").forEach(e=>e.onclick=()=>{
-    const ins=e.innerText+(cls[e.innerText]??"")   // enclosures insert as a pair, cursor between
-    let se=aski.selectionStart+1
-    aski.value=aski.value.slice(0,aski.selectionStart)+ins+aski.value.slice(aski.selectionEnd)
-    aski.selectionStart=aski.selectionEnd=se
+    const txt=e.innerText,off=mid[txt]??txt.length   // enclosure pairs put the cursor between; others after
+    const at=aski.selectionStart
+    aski.value=aski.value.slice(0,at)+txt+aski.value.slice(aski.selectionEnd)
+    aski.selectionStart=aski.selectionEnd=at+off
     aski.focus()
   })
 }
@@ -124,9 +124,7 @@ async function loadM(mr,mc) {
             (t[0]!="w"?" id='"+t+"'":"")+
             " class='"+t[0]+"'"+
             ">"+
-            t.replace("w "," "+jj.theme.w)
-             .replace(/o\d/," 🚪")
-             .replace(/l\d/," ⛔").slice(1)+
+            (t[0]=="w"?jj.theme.w:t[0]=="l"?"⛔":t[0]=="o"?"🚪":ins[t[1]]??t[1])+
             "</b>":"")+"</td>"
         ).join("\n")+"\n</tr>"
     ).join("\n")+"</tbody>"}
