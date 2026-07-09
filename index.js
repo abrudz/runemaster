@@ -48,7 +48,7 @@ const lb=ch=>{
     aski.focus()
   })
 }
-window.addEventListener('resize',()=>jump(i.r,i.c))
+window.addEventListener('resize',()=>{fit();jump(i.r,i.c)})
 const show=()=>{                                       // reveal the 3×3 around the player, and remember it
   let s=seen[cur]??=[]
   for(let r=i.r-1;r<=i.r+1;r++)for(let c=i.c-1;c<=i.c+1;c++){
@@ -63,6 +63,13 @@ const chk=()=>{
 }
 const count=()=>{let n=$$("#M b.m,#M b.d,#M b.M,#M b.D,#M b.j").length   // uncollected rune stones in this room
   $("#left").textContent=n?`${n} rune${n-1?"s":""} yet to find here`:"all runes here are yours"}
+const fit=()=>{                                        // scale tiles so board (+1-tile margin) + controls + belt fit the viewport (no scroll)
+  let chrome=0
+  for(const el of document.body.children)if(el!=M&&el!=i&&el.tagName!="DIALOG")chrome+=el.offsetHeight
+  root.style.setProperty("--cols",cMax+1)              // map width in tiles (used for belt min-width)
+  let s=Math.min((innerWidth-8)/(cMax+3),(innerHeight-chrome-12)/(rMax+3))   // +3 = cols/rows plus a tile of margin each side
+  root.style.setProperty("--size",Math.max(14,s)+"px")
+}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({mr,mc,r:i.r,c:i.c,belt:$$("#belt b").map(e=>e.id),doors,seen}))}catch(_){}}
 const restore=()=>{
   let s;try{s=JSON.parse(localStorage.getItem(KEY))}catch(_){s=null}
@@ -154,6 +161,7 @@ async function loadM(mr,mc) {
   let last =$$("#M td").pop();rMax=getR(last );cMax=getC(last )
   chk()
   count()
+  fit()
 }
 document.addEventListener('DOMContentLoaded', async function main() {
   i=$("#i");M=$("#M");root=$("#root")
