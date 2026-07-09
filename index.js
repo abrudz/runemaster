@@ -7,6 +7,7 @@ const td=(r,c)=>$("#r"+r+"c"+c)
 const b=r=>`<b tabindex='0' class='${r[0]}'>${r[1]}</b>`
 const bs=s=>(s.match(/../g)??[]).map(b)
 const reqs=t=>j[t.id].req.match(/../g)??[]
+const dfnkeys=q=>q.f?(Array.isArray(q.a[0])?"{ } ⍺ ⍵ ":"{ } ⍵ "):""  // dfn scaffold keys for function challenges
 const md=s=>s.replace(/\{(\w\W)\}/g,(_,m)=>b(m)).replace(/(?<!\\)`(.*?[^\\])`/g,"<code>$1</code>").replace(/(?<!\\)_(.*?[^\\])_/g,"<em>$1</em>").replace(/\\([`_])/g,"$1")
 const exec=s=>fetch("https://tryapl.org/Exec",{
   method:"POST",
@@ -92,7 +93,7 @@ addEventListener('keydown', async e=>{
         }else if(t.className=="o"){
           askp.innerHTML=md(j[t.id].task)
           let tinf=j[t.id]
-          lb(tinf.req+tinf.add+[...tinf.task.matchAll(/`\w`/g)].join("").replace(/`(\w)`/g,"$1 "))
+          lb(tinf.req+tinf.add+dfnkeys(tinf)+[...tinf.task.matchAll(/`\w`/g)].join("").replace(/`(\w)`/g,"$1 "))
           ask.b=t
           ask.r=newR;ask.c=newC
           aski.value=""
@@ -102,7 +103,7 @@ addEventListener('keydown', async e=>{
           c=t
           askp.innerHTML=md(j[c.id].task)
           let tinf=j[c.id]
-          lb(c.id+tinf.req+tinf.add+[...tinf.task.matchAll(/`\w`/g)].join("").replace(/`(\w)`/g,"$1 "))
+          lb(c.id+tinf.req+tinf.add+dfnkeys(tinf)+[...tinf.task.matchAll(/`\w`/g)].join("").replace(/`(\w)`/g,"$1 "))
           ask.b=c
           aski.value=""
           ask.showModal()
@@ -152,8 +153,17 @@ document.addEventListener('DOMContentLoaded', async function main() {
   show()
 })
 window.ans=t=>{
-  if(!RegExp("^"+aski.pattern+"$").test(aski.value))return
-  const expr="{0::0 ⋄ ("+t+")≡⍵}"+j[ask.b.id].expr
+  const q=j[ask.b.id]
+  if(!q.f&&!RegExp("^"+aski.pattern+"$").test(aski.value))return
+  let expr
+  if(q.f){                              // function challenge: test player dfn G against reference F over cases
+    const dyad=Array.isArray(q.a[0]),pf=q.p??"⊢"
+    const cmp=dyad
+      ?`{((${pf})((⊃⍵)F(⊃⌽⍵)))≡((${pf})((⊃⍵)G(⊃⌽⍵)))}`
+      :`{((${pf})(F ⍵))≡((${pf})(G ⍵))}`
+    const terms=q.a.map(x=>dyad?`(C((${x[0]})(${x[1]})))`:`(C(${x}))`).join``
+    expr=`{0::0 ⋄ F←(${q.f}) ⋄ G←(${t}) ⋄ C←${cmp} ⋄ ∧/${terms}}0`
+  }else expr="{0::0 ⋄ ("+t+")≡⍵}"+q.expr
   exec(expr)
 }
 const react=b=>{
