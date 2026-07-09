@@ -8,6 +8,8 @@ Implementation: Adám Brudzewsky & Claude (Opus 4.8)
 
 [Play in your browser now!](https://abrudz.github.io/runemaster/) Explore the maze, solve the APL puzzles, and collect every rune.
 
+<img width="727" height="727" alt="image" src="https://github.com/user-attachments/assets/2547dbf3-ca4b-4d33-aa08-b28075cdeb22" />
+
 ## Gameplay
 
 - Move with the arrow keys, numpad, or WASD (and QEZC for diagonals), or IJKL (and UOM for diagonals).
