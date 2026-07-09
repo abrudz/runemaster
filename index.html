@@ -14,7 +14,7 @@
     <dialog id="ask">
       <p id="askp">question</p>
       <form method="dialog">
-        <input id="aski" autofocus autocomplete="off" spellcheck="false">
+        <input id="aski" inputmode="none" autofocus autocomplete="off" spellcheck="false">
         <p><button onclick="ans(aski.value)">submit</button> <button value="cancel" onclick="aski.value=''">cancel</button></p>
       </form>
       <fieldset><legend> allowed runes — click to insert </legend><div id="askb"></div></fieldset>
