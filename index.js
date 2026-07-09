@@ -26,10 +26,14 @@ const getR=e=>parseInt(e.id.replace(/r|c\d+/g,""))
 const getC=e=>parseInt(e.id.replace(/r\d+c/,""))
 const place=(e,y,x)=>{const t=td(y,x);e.style.top=getTop(t);e.style.left=getLeft(t)}
 const jump=(r,c)=>{i.style.transition="none";i.r=r;i.c=c;void i.offsetWidth;i.style.transition=""}
-const lb=ch=>{
+const lb=(ch,sol)=>{
   const a=[...new Set(ch.match(/../g)??[])]          // allowed runes, deduped
-  aski.pattern="["+a.map(t=>t[1]==" "?t[0]:(ins[t[1]]??t[1])).join``.replace(/[-^$\\.*+?()[\]{}|\/&!#%,:;<=>@~`]/g,"\\$&")+" ]*"
-  askb.innerHTML=a.sort(_=>Math.random()-0.5).map(s=>s[1]==" "?`<button>${s[0]}</button>`:b(s)).join``
+  const gl=t=>t[1]==" "?t[0]:(ins[t[1]]??t[1])       // token -> shown glyph
+  aski.pattern="["+a.map(gl).join``.replace(/[-^$\\.*+?()[\]{}|\/&!#%,:;<=>@~`]/g,"\\$&")+" ]*"
+  const ans=[...(sol??"")].filter(x=>a.some(t=>gl(t)==x)).join``   // what the buttons spell if left in solution order
+  let sh=[...a]
+  do sh.sort(_=>Math.random()-0.5);while(a.length>1&&sh.map(gl).join``==ans)   // never hand over the answer
+  askb.innerHTML=sh.map(s=>s[1]==" "?`<button>${s[0]}</button>`:b(s)).join``
   $$("#askb>*").forEach(e=>e.onclick=()=>{
     const txt=e.innerText,off=mid[txt]??txt.length    // pairs: cursor between; else after
     const at=aski.selectionStart
@@ -73,7 +77,7 @@ const restore=()=>{
   return s
 }
 window.reset=()=>{localStorage.removeItem(KEY);location.reload()}   // wipe saved progress
-const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k);ask.b=el;aski.value="";ask.showModal()}   // open a challenge dialog
+const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";ask.showModal()}   // open a challenge dialog
 async function step(newR,newC){                      // move to / interact with cell; keyboard + tap
   if($$("dialog").some(e=>e.hasAttribute("open")))return
   if(newR<0   &&newC==i.c){mr-=1;await loadM(mr,mc);jump(rMax,newC);show()}else
