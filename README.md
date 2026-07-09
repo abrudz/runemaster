@@ -1,16 +1,19 @@
 # RuneMaster
 
-*Explore the maze and master the runes*
+_Explore the maze and master the runes_
 
 Concept: Brian Becker
 
-Implementation: Adám Brudzewsky
+Implementation: Adám Brudzewsky & Claude (Opus 4.8)
 
-Note that RuneMaster is work in progress, and not very playable yet.
+[Play in your browser now!](https://abrudz.github.io/runemaster/) Explore the maze, solve the APL puzzles, and collect every rune.
 
 ## Gameplay
-- Use arrow keys or numpad or WASD (and QEZC for diagonals) or IJKL (and UOM. for diagonals) to move.
+
+- Move with the arrow keys, numpad, or WASD (and QEZC for diagonals), or IJKL (and UOM for diagonals).
+- On a touchscreen or with a mouse, tap a tile to step toward it, or tap outside the map to step that way — even across an edge.
 - Move about the map to uncover it and collect coloured rune gems.
 - When prompted for an APL expression, either type it or click the rune gems and buttons to insert.
-- Closed passages (⛔) turn into doors (🚪) when all required rune gems have been collected.
-- Move across the edges of the map to swithc to the next map.
+- Closed passages (⛔) turn into doors (🚪) once you have collected all the required rune gems.
+- Move across the edges of the map to switch to the neighbouring map.
+- Your progress is saved automatically; use _Restart Game_ to begin afresh.
