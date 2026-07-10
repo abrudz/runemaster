@@ -1,0 +1,66 @@
+{
+ "name": "Crossmark Vault",
+ "theme": {
+  "w": "🗺",
+  "wall": "rgba(170,130,60,0.42)",
+  "back": "#1a140a",
+  "spot": "#f6ead0"
+ },
+ "M": [
+  "w w w w w w w w w w w ",
+  "w   w w w w w w w w w ",
+  "w   w w w w w w w w w ",
+  "w   w w w w w w w w w ",
+  "w   w w w w       w w ",
+  "    l1    l2    aB  w ",
+  "w   w w w w       w w ",
+  "w   w w w w w w w w w ",
+  "w   w w w w w w w w w ",
+  "w     w w w w w w w w ",
+  "w w l0w w w w w w w w "
+ ],
+ "l0": {
+  "req": "j{d≡j(",
+  "add": "",
+  "task": "A floor-hatch drops from the vault to the caverns below. Match the twin tallies `a` and `b` — 1 where alike, 0 where not — to unbar it.",
+  "expr": "(a←5?9)≡b←5?9"
+ },
+ "l1": {
+  "req": "d∨m⌽j{",
+  "add": "",
+  "task": "The vault's warded lattice lights where a glyph or its mirror shines. Forge a rune that lights each ward of `⍵` wherever it, or its reflection, is lit.\n\n`{answer} 0 0 1 0` gives `0 1 1 0`.",
+  "f": "{⍵∨⌽⍵}",
+  "a": [
+   "0 0 1 0",
+   "1 0 0 1",
+   "0 1 1 0 1",
+   "1 0 0 0 1"
+  ]
+ },
+ "l2": {
+  "req": "m⍳D∘d=j{j(",
+  "add": "",
+  "task": "Chart the vault's true diagonal: forge a rune that raises an identity table of size `⍵` — 1s down the diagonal, 0s elsewhere.\n\n`{answer} 3` gives a 3×3 identity grid.",
+  "f": "{(⍳⍵)∘.=⍳⍵}",
+  "a": [
+   "2",
+   "3",
+   "4",
+   "5"
+  ]
+ },
+ "aB": {
+  "req": "m⍳D∘j{j(d∨m⌽d=",
+  "add": "",
+  "task": "_X marks the spot._ Forge a rune that draws an `⍵`×`⍵` grid bearing 1s on _both_ diagonals and 0s elsewhere.\n\n`{answer} 3` marks a 3×3 cross.",
+  "f": "{{⍵∨⌽⍵}(⍳⍵)∘.=⍳⍵}",
+  "a": [
+   "3",
+   "4",
+   "5",
+   "10",
+   "1",
+   "2"
+  ]
+ }
+}
