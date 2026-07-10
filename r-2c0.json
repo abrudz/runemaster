@@ -1,0 +1,66 @@
+{
+ "name": "The Automaton Loom",
+ "theme": {
+  "w": "🧬",
+  "wall": "rgba(60,150,130,0.42)",
+  "back": "#08140f",
+  "spot": "#dafaf0"
+ },
+ "M": [
+  "w w w w w w w w w w w ",
+  "w                   w ",
+  "w         aF        w ",
+  "w                   w ",
+  "w w w w w   w w w w w ",
+  "w w w w w l2w w w w w ",
+  "w w w w w   w w w w w ",
+  "w w w w w   w w w w w ",
+  "w w w w w l1w w w w w ",
+  "w w w w w   w w w w w ",
+  "w w w w w   w w w w w "
+ ],
+ "l1": {
+  "req": "d,j{",
+  "add": "0 ",
+  "task": "Before the loom weaves, it hems the thread with a blank at each end. Fringe the row `⍵` with a 0 on either side.\n\n`{answer} 1 0 1` gives `0 1 0 1 0`.",
+  "f": "{0,⍵,0}",
+  "a": [
+   "1 0 1",
+   "0 0 1 1",
+   "1",
+   "1 1 0 1 1"
+  ]
+ },
+ "l2": {
+  "req": "d,M/j{",
+  "add": "3 ",
+  "task": "The loom reads three neighbours at a time. Gather every run of three from `⍵`.\n\n`{answer} 0 1 1 0` gives the triplets `(0 1 1)(1 1 0)`.",
+  "f": "{3,/⍵}",
+  "a": [
+   "0 1 1 0 1",
+   "1 0 0 1",
+   "0 0 0",
+   "1 1 0 1 1"
+  ]
+ },
+ "aF": {
+  "req": "d,M/d∊j{j(",
+  "add": "0 3 ",
+  "task": "_Wolfram rules._ For the world `⍵` — with unseen 0s beyond its ends — a cell lives in the next generation if its three-neighbour pattern is one of the rule-triplets `⍺`. Forge the rune that weaves the next generation of the world.",
+  "f": "{(3,/0,⍵,0)∊⍺}",
+  "a": [
+   [
+    "(1 1 0)(1 0 0)(0 1 1)(0 0 1)",
+    "0 1 1 0 1"
+   ],
+   [
+    "(1 0 0)(0 1 1)(0 1 0)(0 0 1)",
+    "0 1 0 0 1 0 1 0"
+   ],
+   [
+    "(1 1 0)(1 0 1)(0 1 1)(0 1 0)(0 0 1)",
+    "0 0 0 0 1"
+   ]
+  ]
+ }
+}
