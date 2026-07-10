@@ -1,0 +1,66 @@
+{
+ "name": "The Great Pyramid",
+ "theme": {
+  "w": "🔺",
+  "wall": "rgba(200,170,90,0.42)",
+  "back": "#181206",
+  "spot": "#f7ecc8"
+ },
+ "M": [
+  "w w w w w w w w w w w ",
+  "w w w w w w w       w ",
+  "w w w w w w w   aH  w ",
+  "w w w w w w w w l2w w ",
+  "w w w w w w w w l1w w ",
+  "                    w ",
+  "w w w w w   w w w w w ",
+  "w w w w w   w w w w w ",
+  "w w w w w   w w w w w ",
+  "w w w w w   w w w w w ",
+  "w w w w w l0w w w w w "
+ ],
+ "l0": {
+  "req": "d⌊d⌈m⌽",
+  "add": "",
+  "task": "A shaft drops from the pyramid to the frozen scales below. Bound the readings `v` between floor `f` and ceiling `c`, then recite them reversed, to descend.",
+  "expr": "⌽(f←3)⌈(c←7)⌊v←?⍨9"
+ },
+ "l1": {
+  "req": "j[d+j{",
+  "add": "1 ' A   ",
+  "task": "The blocks are hewn from a mask: sky for 0, stone for 1. Paint the mask `⍵` — a space for each 0, an `A` for each 1.\n\n`{answer} 0 1 1 0` gives ` AA `.",
+  "f": "{' A'[1+⍵]}",
+  "a": [
+   "0 1 1 0",
+   "1 0 1",
+   "0 0 1",
+   "1 1 1 0"
+  ]
+ },
+ "l2": {
+  "req": "m⍳D∘d≥j{j(",
+  "add": "",
+  "task": "The rising steps: forge a rune raising a lower-triangular table of size `⍵` — 1 where a row's rank is at least its column's, else 0.\n\n`{answer} 3` gives the stepped triangle.",
+  "f": "{(⍳⍵)∘.≥⍳⍵}",
+  "a": [
+   "3",
+   "4",
+   "5"
+  ]
+ },
+ "aH": {
+  "req": "m⍳d+d,D∘d≥m⌽d↓j{j(j[",
+  "add": "1 ' A   ",
+  "p": "((∨\\∧∘⌽∨\\∘⌽)' '∨.≠⊢)⍛/",
+  "task": "_Pyramid scheme._ Forge a rune that builds a pyramid of `⍵` rows of `A`s — one at the apex, widening by two each course, centred and space-padded to a rectangle.\n\n`{answer} 3` raises a three-course pyramid.",
+  "f": "{' A'[1+(⍳⍵)∘.≥(⌽⍳⍵),1↓⍳⍵]}",
+  "a": [
+   "2",
+   "3",
+   "4",
+   "5",
+   "6",
+   "6+?5"
+  ]
+ }
+}
