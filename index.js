@@ -1,6 +1,6 @@
 'use strict'
 let i,M,root,aski,askb,askp,ask,msg,msgp
-let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={},doors={},seen={}
+let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={},doors={},seen={},apples=[]
 const KEY="runemaster"                             // saved-progress key
 const $=s=>document.querySelector(s)
 const $$=s=>[...document.querySelectorAll(s)]
@@ -61,6 +61,8 @@ const count=()=>{let n=$$("#M b.m,#M b.d,#M b.M,#M b.D,#M b.j").length   // unco
 const favico=w=>{                                    // dynamic svg favicon of the wall emoji
   let l=$("link[rel=icon]")??document.head.appendChild(Object.assign(document.createElement("link"),{rel:"icon"}))
   l.href="data:image/svg+xml,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="82" font-size="88" text-anchor="middle">${w}</text></svg>`)}
+const apx=()=>$("#apples").textContent="🍎 "+apples.length+" / 9"   // apple tally (win at 9)
+const win=()=>{msgp.innerHTML="🍎 Nine apples gathered — you are the RuneMaster! 🍎";msg.showModal()}
 const fit=()=>{                                      // fit board+margin+chrome to viewport (no scroll)
   let chrome=0
   for(const el of document.body.children)if(el!=M&&el!=i&&el.tagName!="DIALOG")chrome+=el.offsetHeight
@@ -68,11 +70,11 @@ const fit=()=>{                                      // fit board+margin+chrome 
   let s=Math.min((innerWidth-8)/(cMax+3),(innerHeight-chrome-12)/(rMax+3))   // +3: cols/rows + 1-tile margin each side
   root.style.setProperty("--size",Math.max(14,s)+"px")
 }
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({mr,mc,r:i.r,c:i.c,belt:$$("#belt b").map(e=>e.id),doors,seen}))}catch(_){}}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({mr,mc,r:i.r,c:i.c,belt:$$("#belt b").map(e=>e.id),doors,seen,apples}))}catch(_){}}
 const restore=()=>{
   let s;try{s=JSON.parse(localStorage.getItem(KEY))}catch(_){s=null}
   if(!s)return null
-  doors=s.doors??{};seen=s.seen??{}
+  doors=s.doors??{};seen=s.seen??{};apples=s.apples??[]
   ;(s.belt??[]).forEach(id=>{let g="mdMDj".indexOf(id[0]);if(~g)$$("#belt td")[g].appendChild(mkb(id))})
   return s
 }
@@ -93,6 +95,9 @@ async function step(newR,newC){                      // move to / interact with 
         msg.showModal()
       }else if(t.className=="o"){ask.r=newR;ask.c=newC;openask(t,keys(j[t.id]))}
       else if(~(g="mdMDj".indexOf(t.className))){show(i.r=newR,i.c=newC);c=t;openask(c,c.id+keys(j[c.id]))}
+      else if(t.className=="a"){show(i.r=newR,i.c=newC)   // free-standing 🍎: req-gated but non-blocking
+        let bi=$$("#belt b").map(e=>e.id)
+        reqs(t).every(r=>~bi.indexOf(r))?openask(t,keys(j[t.id])):(msgp.innerHTML="This apple is still guarded; you still need:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `,msg.showModal())}
     }else show(i.r=newR,i.c=newC)
   }
   save()
@@ -126,7 +131,7 @@ async function loadM(mr,mc){
             (t[0]!="w"?" id='"+t+"'":"")+
             " class='"+t[0]+"'"+
             ">"+
-            (t[0]=="w"?jj.theme.w:t[0]=="l"?"⛔":t[0]=="o"?"🚪":ins[t[1]]??t[1])+
+            (t[0]=="w"?jj.theme.w:t[0]=="l"?"⛔":t[0]=="o"?"🚪":t[0]=="a"?"🍎":ins[t[1]]??t[1])+
             "</b>":"")+"</td>"
         ).join`\n`+"\n</tr>"
     ).join`\n`+"</tbody>"}
@@ -135,7 +140,7 @@ async function loadM(mr,mc){
   j=mem[key].j
   M.innerHTML=mem[key].html
   let got=new Set($$("#belt b").map(e=>e.id))          // already collected
-  $$("#M b").forEach(e=>got.has(e.id)?e.remove():doors[key]?.includes(e.id)?e.style.visibility="hidden":0)   // collected gone; passed doors open
+  $$("#M b").forEach(e=>got.has(e.id)||apples.includes(e.id)?e.remove():doors[key]?.includes(e.id)?e.style.visibility="hidden":0)   // collected runes/apples gone; passed doors open
   ;(seen[key]??[]).forEach(k=>{let[r,c]=k.split`,`;let e=td(r,c)?.children[0];if(e)e.style.opacity=1})        // restore revealed fog
   if(j.theme.wall)root.style.setProperty("--wall",j.theme.wall)
   if(j.theme.back)root.style.setProperty("--back",j.theme.back)
@@ -143,7 +148,7 @@ async function loadM(mr,mc){
   favico(j.theme.w)
   let first=$$("#M td")[0]     ;rMin=getR(first);cMin=getC(first)
   let last =$$("#M td").at(-1) ;rMax=getR(last );cMax=getC(last )
-  chk();count();fit()
+  chk();count();apx();fit()
 }
 document.addEventListener('DOMContentLoaded',async function main(){
   i=$("#i");M=$("#M");root=$("#root")
@@ -189,6 +194,10 @@ const react=b=>{
     ask.b.style.visibility="hidden"
     ;(doors[cur]??=[]).push(ask.b.id)   // remember door passed
     save()
+  }else if(b&&ask.b.id[0]=="a"){         // 🍎 collected
+    if(!apples.includes(ask.b.id))apples.push(ask.b.id)
+    ask.b.remove();apx();save()
+    if(apples.length>=9)win()
   }else if(b){
     $$("#belt td")[g].appendChild(c)
     chk();count();save()

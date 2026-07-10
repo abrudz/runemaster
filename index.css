@@ -224,6 +224,13 @@ i {
   width: var(--size);
   border-radius: calc(var(--size) / 2.5);
 }
+.a {
+  font-size: calc(var(--size) * 0.72);   /* free-standing apple (P10) */
+}
+#apples {
+  font-family: Text;
+  letter-spacing: 0.25ex;
+}
 #belt b {                 /* belt runes are a fixed size (uncoupled from --size) so the belt height is stable */
   width: 1.5rem;
   height: 1.5rem;

@@ -16,7 +16,7 @@
   "w l0w w w w w w w w w ",
   "w   j{  w d≡    j(  w ",
   "w w w   w   w   w   l1",
-  "w               w   w ",
+  "w               w aAw ",
   "w w w w w w w w w w w "
  ],
  "m⍳": {
@@ -101,16 +101,9 @@
  },
  "l1": {
   "req": "j{d≡j(",
-  "add": "m∪D∘d+M/",
-  "task": "An ancient warden seals the eastern arch. It speaks a final riddle: for a hoard `⍵`, forge a rune that tallies how many times each _distinct_ treasure appears within it. Answer truly, and the way onward opens.\n\n`{answer} 'MISSISSIPPI'` gives `1 4 4 2` — one M, four I, four S, two P.",
-  "f": "{+/(∪⍵)∘.≡⍵}",
-  "a": [
-   "2 7 1 8 2 8 1 8 2 8",
-   "'MISSISSIPPI'",
-   "5 3 6 6 3 5 5 4 1 6 1 6 4 6 3 2 3 2 6 3 1 4 4 3 5",
-   "{⍵[?(5+?5)⍴≢⍵]}'AEIOUY'",
-   "?5⍴⍨5+?5"
-  ]
+  "add": "d,",
+  "task": "The eastern arch of the grove yields to a wayfarer who can bind two words into one — weave `x` onto `y`.",
+  "expr": "(x←'GROVE'),y←'GATE'"
  },
  "j(": {
   "req": "",
@@ -137,5 +130,18 @@
   "add": "",
   "task": "A curtain of knotted threads hangs across the northern arch. Join the two skeins `a` and `b` into a single strand, then keep only its distinct fibres, and the curtain parts.",
   "expr": "∪(a←'ELD'),b←'FIRE'"
+ },
+ "aA": {
+  "req": "d+M/m∪D∘d≡j{j(",
+  "add": "",
+  "task": "An ancient warden seals the eastern arch. It speaks a final riddle: for a hoard `⍵`, forge a rune that tallies how many times each _distinct_ treasure appears within it. Answer truly, and the way onward opens.\n\n`{answer} 'MISSISSIPPI'` gives `1 4 4 2` — one M, four I, four S, two P.",
+  "f": "{+/(∪⍵)∘.≡⍵}",
+  "a": [
+   "2 7 1 8 2 8 1 8 2 8",
+   "'MISSISSIPPI'",
+   "5 3 6 6 3 5 5 4 1 6 1 6 4 6 3 2 3 2 6 3 1 4 4 3 5",
+   "{⍵[?(5+?5)⍴≢⍵]}'AEIOUY'",
+   "?5⍴⍨5+?5"
+  ]
  }
 }
