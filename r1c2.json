@@ -1,0 +1,66 @@
+{
+ "name": "The Roll Call",
+ "theme": {
+  "w": "🔤",
+  "wall": "rgba(120,110,170,0.42)",
+  "back": "#0e0c18",
+  "spot": "#e8e4f8"
+ },
+ "M": [
+  "w w w l0w w w w w w w ",
+  "w                   w ",
+  "w w l1w w w w w w w w ",
+  "w w   w w w w w w w w ",
+  "w w   w w w w w w w w ",
+  "w w l2w w w w w w w w ",
+  "w   aC  w w w w w w w ",
+  "w       w w w w w w w ",
+  "w w w w w w w w w w w ",
+  "w w w w w w w w w w w ",
+  "w w w w w w w w w w w "
+ ],
+ "l0": {
+  "req": "d⌊d⌈m⌽",
+  "add": "",
+  "task": "The muster-gate back up to the scales is barred. Bound the readings `v` between floor `f` and ceiling `c`, then recite them reversed, to climb out.",
+  "expr": "⌽(f←3)⌈(c←7)⌊v←?⍨9"
+ },
+ "l1": {
+  "req": "D∘d=d∨M/j{",
+  "add": "' A E I O U ",
+  "task": "Sound off the vowels: forge a rune giving 1 for each letter of the word `⍵` that is a vowel (one of AEIOU), else 0.\n\n`{answer} 'CAT'` gives `0 1 0`.",
+  "f": "{∨/⍵∘.='AEIOU'}",
+  "a": [
+   "'CAT'",
+   "'SKY'",
+   "'AEIOU'",
+   "'RHYTHM'"
+  ]
+ },
+ "l2": {
+  "req": "d=d∧M\\M/d+j{",
+  "add": "1 0 ",
+  "task": "Who answers first? Given a roll of 0s and 1s `⍵`, give the position of its first 1.\n\n`{answer} 0 0 1 0` gives `3`.",
+  "f": "{1++/∧\\0=⍵}",
+  "a": [
+   "0 0 1 0",
+   "1 0 0",
+   "0 0 0 1",
+   "0 1 1"
+  ]
+ },
+ "aC": {
+  "req": "d+M/d∧M\\D∘d≠d⊃d∨d=j{j(",
+  "add": "1 ' A E I O U ",
+  "task": "_Who's on first?_ Forge a rune that answers the roll: from the word `⍵`, take its first vowel followed by its first consonant.\n\n`{answer} 'SPHRAGISTIC'` gives `AS`.",
+  "f": "{((1++/∧\\∧/⍵∘.≠'AEIOU')⊃⍵)((1++/∧\\∨/⍵∘.='AEIOU')⊃⍵)}",
+  "a": [
+   "'SPHRAGISTIC'",
+   "'SEAL'",
+   "'EAGER'",
+   "'ICONOGRAPH'",
+   "'DYALOG'",
+   "'HELLO'"
+  ]
+ }
+}
