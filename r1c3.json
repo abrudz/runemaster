@@ -1,0 +1,65 @@
+{
+ "name": "The Sundered Cross",
+ "theme": {
+  "w": "✖",
+  "wall": "rgba(180,80,80,0.42)",
+  "back": "#160a0a",
+  "spot": "#fadede"
+ },
+ "M": [
+  "w l0w w w w w w w w w ",
+  "                    w ",
+  "w w l1w w w w w w w w ",
+  "w w   w w w w w w w w ",
+  "w w   w w w w w w w w ",
+  "w w l2w w w w w w w w ",
+  "w   aD  w w w w w w w ",
+  "w       w w w w w w w ",
+  "w w w w w w w w w w w ",
+  "w w w w w w w w w w w ",
+  "w w w w w w w w w w w "
+ ],
+ "l0": {
+  "req": "d,M/j{j(d=m⌽",
+  "add": "",
+  "task": "The southern stair climbs to the Hall of Mirrors. Join the words `a` and `b`, then recite the strand reversed, to ascend.",
+  "expr": "⌽(a←'SUNDER'),b←'CROSS'"
+ },
+ "l1": {
+  "req": "m⍳D∘d=j{j(",
+  "add": "",
+  "task": "The falling stroke: forge a rune raising an identity table of size `⍵` — 1s down the main diagonal, 0s elsewhere.\n\n`{answer} 3` gives a 3×3 identity.",
+  "f": "{(⍳⍵)∘.=⍳⍵}",
+  "a": [
+   "3",
+   "4",
+   "5"
+  ]
+ },
+ "l2": {
+  "req": "m⍳D∘d=m⌽j{j(",
+  "add": "",
+  "task": "The rising stroke: forge a rune raising the anti-diagonal table of size `⍵` — the identity, mirrored left-for-right.\n\n`{answer} 3` marks the other stroke.",
+  "f": "{⌽(⍳⍵)∘.=⍳⍵}",
+  "a": [
+   "3",
+   "4",
+   "5"
+  ]
+ },
+ "aD": {
+  "req": "m⍳d+d×D∘d=m⌽j{j(j[",
+  "add": "1 2 ' \\ / X   ",
+  "p": "⎕C",
+  "task": "_X marks the spot._ Forge a rune that draws a large `X` of size `⍵` — a backslash for the falling stroke, a slash for the rising stroke, and an `X` where they cross.\n\n`{answer} 3` draws a 3×3 cross.",
+  "f": "{' \\/X'[1+(∘.=⍨⍳⍵)+2×⌽(∘.=⍨⍳⍵)]}",
+  "a": [
+   "2",
+   "3",
+   "4",
+   "5",
+   "4+2×?9",
+   "5+2×?9"
+  ]
+ }
+}
