@@ -100,8 +100,8 @@
   ]
  },
  "l1": {
-  "req": "j{d≡j(",
-  "add": "d,",
+  "req": "d,",
+  "add": "",
   "task": "The eastern arch of the grove yields to a wayfarer who can bind two words into one — weave `x` onto `y`.",
   "expr": "(x←'GROVE'),y←'GATE'"
  },

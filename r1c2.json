@@ -20,10 +20,10 @@
   "w w w w w w w w w w w "
  ],
  "l0": {
-  "req": "d⌊d⌈m⌽",
+  "req": "M/d⌊",
   "add": "",
-  "task": "The muster-gate back up to the scales is barred. Bound the readings `v` between floor `f` and ceiling `c`, then recite them reversed, to climb out.",
-  "expr": "⌽(f←3)⌈(c←7)⌊v←?⍨9"
+  "task": "The muster-gate back up to the scales is barred. Name the least of the readings `a` to climb out.",
+  "expr": "⌊/a←6?20"
  },
  "l1": {
   "req": "D∘d=d∨M/j{",
@@ -40,7 +40,7 @@
  "l2": {
   "req": "d=d∧M\\M/d+j{",
   "add": "1 0 ",
-  "task": "Who answers first? Given a roll of 0s and 1s `⍵`, give the position of its first 1.\n\n`{answer} 0 0 1 0` gives `3`.",
+  "task": "Who answers first? Given a roll of 0s and 1s `⍵`, give the position of its first 1.\n\n`{answer} 0 0 1 0` gives the position 3.",
   "f": "{1++/∧\\0=⍵}",
   "a": [
    "0 0 1 0",

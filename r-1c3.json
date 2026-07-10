@@ -20,10 +20,10 @@
   "w w w w w w w w l0w w "
  ],
  "l0": {
-  "req": "d,M/j{j(d=m⌽",
+  "req": "M/d+d,",
   "add": "",
-  "task": "The northern stair descends to the Hall of Mirrors. Join the towers `a` and `b`, then recite the strand reversed, to descend.",
-  "expr": "⌽(a←'TALLY'),b←'SPIRE'"
+  "task": "The northern stair descends to the Hall of Mirrors. Join the tallies `a` and `b`, then sum the whole strand, to descend.",
+  "expr": "+/(a←5?20),b←5?20"
  },
  "l1": {
   "req": "m⍳D∘d=M/d+j{j(",
@@ -51,7 +51,7 @@
  "aE": {
   "req": "m⍳d+M/D∘d≥d⌈d=j{j(j[",
   "add": "1 6 ' -   ",
-  "task": "_Histogram._ For the dice throws `⍵` (each 1–6), draw a histogram: row `k` bears a dash for each time face `k` was thrown, space-padded to a rectangle.",
+  "task": "_Histogram._ For the dice throws `⍵` (each 1–6), draw a histogram: row k bears a dash for each time face k was thrown, space-padded to a rectangle.",
   "f": "{' -'[1+{⍵∘.≥⍳⌈/⍵}+/(⍳6)∘.=⍵]}",
   "a": [
    "6 2 1 3 5 6 6 4 1 2",

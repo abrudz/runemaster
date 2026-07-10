@@ -56,7 +56,7 @@
   "expr": "+\\t←?6⍴20"
  },
  "l0": {
-  "req": "d,M/j{j(d=m⌽",
+  "req": "m⌽d,",
   "add": "",
   "task": "Beyond the eastern arch lies the Hall of Mirrors, and its seal yields only to broad mastery. Take the names `a` and `b`, join them into one strand, and speak it mirrored end to end.",
   "expr": "⌽(a←'STAR'),b←'GATE'"

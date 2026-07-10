@@ -20,10 +20,10 @@
   "w w w w w l0w w w w w "
  ],
  "l0": {
-  "req": "d×D∘",
+  "req": "D∘d≠",
   "add": "",
-  "task": "A trapdoor to the forge glows with a lattice; raise a times-table from the tallies `v`, each by each, to descend.",
-  "expr": "v∘.×v←2+?4"
+  "task": "A trapdoor to the forge glows with a lattice of disagreements; from the tallies `v`, raise a table marking where each reading differs from each, to descend.",
+  "expr": "v∘.≠v←4?9"
  },
  "l1": {
   "req": "m⌈m⌊d÷d,j{j(",

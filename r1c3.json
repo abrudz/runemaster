@@ -20,20 +20,21 @@
   "w w w w w w w w w w w "
  ],
  "l0": {
-  "req": "d,M/j{j(d=m⌽",
+  "req": "M/d×d,",
   "add": "",
-  "task": "The southern stair climbs to the Hall of Mirrors. Join the words `a` and `b`, then recite the strand reversed, to ascend.",
-  "expr": "⌽(a←'SUNDER'),b←'CROSS'"
+  "task": "The southern stair climbs to the Hall of Mirrors. Join the tallies `a` and `b`, then multiply the whole strand together, to ascend.",
+  "expr": "×/(a←3?9),b←3?9"
  },
  "l1": {
-  "req": "m⍳D∘d=j{j(",
-  "add": "",
-  "task": "The falling stroke: forge a rune raising an identity table of size `⍵` — 1s down the main diagonal, 0s elsewhere.\n\n`{answer} 3` gives a 3×3 identity.",
-  "f": "{(⍳⍵)∘.=⍳⍵}",
+  "req": "j[d+j{",
+  "add": "1 ' / X   ",
+  "task": "Paint the crossing: for a row `⍵` of 0s, 1s and 2s, draw a space for each 0, a slash for each 1, and an X for each 2.\n\n`{answer} 0 1 2` gives ` /X`.",
+  "f": "{' /X'[1+⍵]}",
   "a": [
-   "3",
-   "4",
-   "5"
+   "0 1 2 1 0",
+   "2 0 1",
+   "1 1 2",
+   "2 2 0 1"
   ]
  },
  "l2": {

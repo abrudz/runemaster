@@ -20,7 +20,7 @@
   "w w l0w w w w w w w w "
  ],
  "l0": {
-  "req": "j{d≡j(",
+  "req": "d≡",
   "add": "",
   "task": "A floor-hatch drops from the vault to the caverns below. Match the twin tallies `a` and `b` — 1 where alike, 0 where not — to unbar it.",
   "expr": "(a←5?9)≡b←5?9"

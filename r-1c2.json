@@ -20,10 +20,10 @@
   "w w w w w l0w w w w w "
  ],
  "l0": {
-  "req": "d⌊d⌈m⌽",
+  "req": "M/d⌈",
   "add": "",
-  "task": "A shaft drops from the pyramid to the frozen scales below. Bound the readings `v` between floor `f` and ceiling `c`, then recite them reversed, to descend.",
-  "expr": "⌽(f←3)⌈(c←7)⌊v←?⍨9"
+  "task": "A shaft drops from the pyramid to the frozen scales below. Name the greatest of the readings `a` to descend.",
+  "expr": "⌈/a←6?20"
  },
  "l1": {
   "req": "j[d+j{",
