@@ -26,6 +26,17 @@
   "expr": "v∘.≠v←4?9"
  },
  "l1": {
+  "req": "d,j{",
+  "add": "' * ",
+  "task": "The stage is lit by torches. A torch is the glyph `*` — a text rune, written between quote marks. Flank the players `⍵` with a torch on each side.\n\n`{answer} 'HI'` gives `*HI*`.",
+  "f": "{'*',⍵,'*'}",
+  "a": [
+   "'HI'",
+   "'APL'",
+   "'DYALOG'"
+  ]
+ },
+ "l2": {
   "req": "m⌈m⌊d÷d,j{j(",
   "add": "2 ",
   "task": "The odd share. Given `⍵` seats, give the two halves — rounded up, then rounded down.\n\n`{answer} 5` gives `3 2`.",
@@ -35,17 +46,6 @@
    "6",
    "7",
    "10"
-  ]
- },
- "l2": {
-  "req": "d,j{",
-  "add": "' * ",
-  "task": "Flank the players `⍵` with a torch on each side.\n\n`{answer} 'HI'` gives `*HI*`.",
-  "f": "{'*',⍵,'*'}",
-  "a": [
-   "'HI'",
-   "'APL'",
-   "'DYALOG'"
   ]
  },
  "aI": {

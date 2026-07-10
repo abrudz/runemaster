@@ -20,26 +20,26 @@
   "w w w w w   w w w w w "
  ],
  "l1": {
+  "req": "d,M/j{",
+  "add": "2 ",
+  "task": "Before it can read three cells at a time, the loom learns to read two. Slide a window of two along `⍵`, catenating each neighbouring pair — an _n-wise reduce_.\n\n`{answer} 0 1 1 0` gives the pairs `(0 1)(1 1)(1 0)`.",
+  "f": "{2,/⍵}",
+  "a": [
+   "0 1 1 0",
+   "1 0 0 1",
+   "1 1 1",
+   "0 0 1 0 1"
+  ]
+ },
+ "l2": {
   "req": "d,j{",
   "add": "0 ",
-  "task": "Before the loom weaves, it hems the thread with a blank at each end. Fringe the row `⍵` with a 0 on either side.\n\n`{answer} 1 0 1` gives `0 1 0 1 0`.",
+  "task": "The loom hems each thread with a blank at either end. Fringe the row `⍵` with a 0 on each side.\n\n`{answer} 1 0 1` gives `0 1 0 1 0`.",
   "f": "{0,⍵,0}",
   "a": [
    "1 0 1",
    "0 0 1 1",
    "1",
-   "1 1 0 1 1"
-  ]
- },
- "l2": {
-  "req": "d,M/j{",
-  "add": "3 ",
-  "task": "The loom reads three neighbours at a time. Gather every run of three from `⍵`.\n\n`{answer} 0 1 1 0` gives the triplets `(0 1 1)(1 1 0)`.",
-  "f": "{3,/⍵}",
-  "a": [
-   "0 1 1 0 1",
-   "1 0 0 1",
-   "0 0 0",
    "1 1 0 1 1"
   ]
  },
