@@ -62,10 +62,16 @@
   "expr": "×/⍳n←3+?6"
  },
  "l0": {
-  "req": "m⍳d+M/",
-  "add": "",
-  "task": "A mossy gate bars the way deeper into the grove. Its worn inscription asks for _the sum of the first `n` whole numbers_. Speak the total to pass.",
-  "expr": "+/⍳n←5+?9"
+  "req": "d,j{",
+  "add": "' O A K ",
+  "task": "Deeper in the grove, the old oaks answer only to their kin. A word set between quote-marks is a _text rune_. Forge a spell that brands any word `⍵` with the oak-mark, setting `OAK` before it.\n\n`{answer} 'LEAF'` gives `OAKLEAF`.",
+  "f": "{'OAK',⍵}",
+  "a": [
+   "'LEAF'",
+   "'ROOT'",
+   "'TREE'",
+   "'FERN'"
+  ]
  },
  "j{": {
   "req": "",
@@ -126,10 +132,16 @@
   "expr": "v∘.×v←2+?4"
  },
  "l4": {
-  "req": "m∪d,",
-  "add": "",
-  "task": "A curtain of knotted threads hangs across the northern arch. Join the two skeins `a` and `b` into a single strand, then keep only its distinct fibres, and the curtain parts.",
-  "expr": "∪(a←'ELD'),b←'FIRE'"
+  "req": "d,j{",
+  "add": "' H A L ",
+  "task": "The north road runs to the Hall. A word set between quote-marks is a _text rune_. Forge a spell that names a hall by setting `HALL` after any word `⍵`.\n\n`{answer} 'MEAD'` gives `MEADHALL`.",
+  "f": "{⍵,'HALL'}",
+  "a": [
+   "'MEAD'",
+   "'GREAT'",
+   "'WAR'",
+   "'DINING'"
+  ]
  },
  "aA": {
   "req": "d+M/m∪D∘d≡j{j(",
