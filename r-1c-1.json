@@ -1,0 +1,79 @@
+{
+ "name": "The Amphitheatre",
+ "theme": {
+  "w": "🎭",
+  "wall": "rgba(150,120,90,0.42)",
+  "back": "#141008",
+  "spot": "#f1e6d2"
+ },
+ "M": [
+  "w w w w w w w w w w w ",
+  "w w w w w w w w w w w ",
+  "w                     ",
+  "w w l1w w   w w w w w ",
+  "w w   w w   w w w w w ",
+  "w w   w w   w w w w w ",
+  "w w l2w w   w w w w w ",
+  "w       w   w w w w w ",
+  "w   aI  w   w w w w w ",
+  "w       w   w w w w w ",
+  "w w w w w l0w w w w w "
+ ],
+ "l0": {
+  "req": "d×D∘",
+  "add": "",
+  "task": "A trapdoor to the forge glows with a lattice; raise a times-table from the tallies `v`, each by each, to descend.",
+  "expr": "v∘.×v←2+?4"
+ },
+ "l1": {
+  "req": "m⌈m⌊d÷d,j{j(",
+  "add": "2 ",
+  "task": "The odd share. Given `⍵` seats, give the two halves — rounded up, then rounded down.\n\n`{answer} 5` gives `3 2`.",
+  "f": "{(⌈⍵÷2),⌊⍵÷2}",
+  "a": [
+   "5",
+   "6",
+   "7",
+   "10"
+  ]
+ },
+ "l2": {
+  "req": "d,j{",
+  "add": "' * ",
+  "task": "Flank the players `⍵` with a torch on each side.\n\n`{answer} 'HI'` gives `*HI*`.",
+  "f": "{'*',⍵,'*'}",
+  "a": [
+   "'HI'",
+   "'APL'",
+   "'DYALOG'"
+  ]
+ },
+ "aI": {
+  "req": "m⌈m⌊m≢d÷d-d⍴d,j{j(",
+  "add": "2 ' * ",
+  "task": "_Centre Stage._ Pad the name `⍵` with stars on both sides until it spans a width of `⍺`, giving the left side the extra star when an odd number is needed.\n\n`10 {answer} 'APL'` gives `****APL***`.",
+  "f": "{((⌈(⍺-≢⍵)÷2)⍴'*'),⍵,(⌊(⍺-≢⍵)÷2)⍴'*'}",
+  "a": [
+   [
+    "10",
+    "'HI'"
+   ],
+   [
+    "10",
+    "'APL'"
+   ],
+   [
+    "11",
+    "'APL'"
+   ],
+   [
+    "15",
+    "'DYALOG'"
+   ],
+   [
+    "7",
+    "'HELLO'"
+   ]
+  ]
+ }
+}
