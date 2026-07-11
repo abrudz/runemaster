@@ -28,14 +28,14 @@
  "d≤": {
   "req": "",
   "add": "",
-  "task": "{d≤} is the _ruby rune of at-most_, giving 1 where what lies on its left does not exceed what lies on its right. Mark where each reading `a` stands no higher than its warden-mark `b`.",
-  "expr": "(a←?6⍴9)≤b←?6⍴9"
+  "task": "{d≤} is the _ruby rune of at-most_, giving 1 where what lies on its left does not exceed what lies on its right. Mark where each reading `r` stands no higher than its warden-mark `w`.",
+  "expr": "(r←?6⍴9)≤w←?6⍴9"
  },
  "d≥": {
   "req": "",
   "add": "",
-  "task": "{d≥} is the _ruby rune of at-least_, giving 1 where what lies on its left is not surpassed by what lies on its right. Mark where each reading `a` reaches or clears the threshold `b`.",
-  "expr": "(a←?6⍴9)≥b←?6⍴9"
+  "task": "{d≥} is the _ruby rune of at-least_, giving 1 where what lies on its left is not surpassed by what lies on its right. Mark where each reading `r` reaches or clears the threshold `t`.",
+  "expr": "(r←?6⍴9)≥t←?6⍴9"
  },
  "d>": {
   "req": "",
@@ -46,8 +46,8 @@
  "d⊃": {
   "req": "",
   "add": "",
-  "task": "{d⊃} is the _ruby rune of picking_, lifting from the hoard on its right the single item whose place is named on its left. A row of frost-sealed chests `w` lines the vault — draw out the `n`th.",
-  "expr": "(n←?4)⊃w←'BERYL' 'ONYX' 'JADE' 'AMBER'"
+  "task": "{d⊃} is the _ruby rune of picking_, lifting from the hoard on its right the single item whose place is named on its left. A row of frost-sealed chests `c` lines the vault — draw out the `n`th.",
+  "expr": "(n←?4)⊃c←'BERYL' 'ONYX' 'JADE' 'AMBER'"
  },
  "M\\": {
   "req": "d+",

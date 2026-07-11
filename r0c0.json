@@ -34,8 +34,8 @@
  "m∪": {
   "req": "",
   "add": "",
-  "task": "{m∪} is the _emerald rune of distinction_, keeping only the first appearance of each item on its right. The old chant `w` echoes with repeated runes — distil it to its distinct runes.",
-  "expr": "∪w←'ABRACADABRA'"
+  "task": "{m∪} is the _emerald rune of distinction_, keeping only the first appearance of each item on its right. The old chant `c` echoes with repeated runes — distil it to its distinct runes.",
+  "expr": "∪c←'ABRACADABRA'"
  },
  "d+": {
   "req": "",
@@ -52,8 +52,8 @@
  "D∘": {
   "req": "d+",
   "add": "",
-  "task": "{D∘} is the _amethyst rune of tabulation_ — set to the left of another rune, it lays out a table, applying that rune between every value on one side and every value on the other. Using {d+}, raise an addition table from the numbers `v`, each summed with each.",
-  "expr": "v∘.+v←3?9"
+  "task": "{D∘} is the _amethyst rune of tabulation_ — set to the left of another rune, it lays out a table, applying that rune between every value on one side and every value on the other. Using {d+}, raise an addition table from the numbers `n`, each summed with each.",
+  "expr": "n∘.+n←3?9"
  },
  "M/": {
   "req": "d×m⍳",
@@ -122,8 +122,8 @@
  "l3": {
   "req": "d×D∘",
   "add": "",
-  "task": "A soot-blackened door seals the western tunnel to the forge, its face scored with an empty lattice. Raise a multiplication table from the tallies `v`, each times each, to kindle the iron and pass.",
-  "expr": "v∘.×v←2+?4"
+  "task": "A soot-blackened door seals the western tunnel to the forge, its face scored with an empty lattice. Raise a multiplication table from the tallies `t`, each times each, to kindle the iron and pass.",
+  "expr": "t∘.×t←2+?4"
  },
  "l4": {
   "req": "d,j{",

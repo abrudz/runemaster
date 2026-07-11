@@ -1,22 +1,22 @@
 {
  "name": "The Sundered Cross",
  "theme": {
-  "w": "✖",
+  "w": "❌",
   "wall": "rgba(180,80,80,0.42)",
   "back": "#160a0a",
   "spot": "#fadede"
  },
  "M": [
   "w l0w w w w w w w w w ",
-  "          w         w ",
-  "w w w   w w w   w   w ",
-  "w           w   w   w ",
-  "w   w w w   w       w ",
-  "w   w aDw   w w w   w ",
-  "w   w l2w       w   w ",
-  "w   w l1w   w       w ",
-  "w   w   w w w w w   w ",
-  "w                   w ",
+  "    w w aDl2  l1    w ",
+  "w     w w w w w     w ",
+  "w w     w w w     w w ",
+  "w w w     w     w w w ",
+  "w w w w       w w w w ",
+  "w w w w       w w w w ",
+  "w w w     w     w w w ",
+  "w w     w w w     w w ",
+  "w     w w w w w     w ",
   "w w w w w w w w w w w "
  ],
  "l0": {

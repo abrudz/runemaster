@@ -22,26 +22,26 @@
  "j[": {
   "req": "",
   "add": "",
-  "task": "{j[} is the _diamond of selection_ — a pair of brackets `[ ]` set to the right of a list, naming by position which items to draw from it. From the woven word `w`, draw the strands at the places `i`, in that order.",
-  "expr": "(w←'TAPESTRY')[i←4?8]"
+  "task": "{j[} is the _diamond of selection_ — a pair of brackets `[ ]` set to the right of a list, naming by position which items to draw from it. From the woven word `w`, draw the strands at the places `p`, in that order.",
+  "expr": "(w←'TAPESTRY')[p←4?8]"
  },
  "d⍴": {
   "req": "",
   "add": "",
-  "task": "{d⍴} is the _ruby rune of reshaping_, laying the strand on its right into a cloth of the rows and columns named on its left. Weave the thread `v` into a panel of shape `d` — so many rows, so many columns.",
-  "expr": "(d←2 6)⍴v←⍳12"
+  "task": "{d⍴} is the _ruby rune of reshaping_, laying the strand on its right into a cloth of the rows and columns named on its left. Weave the thread `t` into a panel of shape `s` — so many rows, so many columns.",
+  "expr": "(s←2 6)⍴t←⍳12"
  },
  "M¨": {
   "req": "m⌽",
   "add": "",
-  "task": "{M¨} is the _sapphire rune of everywhere_ — set to the right of a rune, it works that rune upon each item on its right in turn. Drawing on {m⌽}, mirror every strand of the skein `w`, each end for end.",
-  "expr": "⌽¨w←'MOOD' 'NET' 'POP'"
+  "task": "{M¨} is the _sapphire rune of everywhere_ — set to the right of a rune, it works that rune upon each item on its right in turn. Drawing on {m⌽}, mirror every strand of the skein `s`, each end for end.",
+  "expr": "⌽¨s←'MOOD' 'NET' 'POP'"
  },
  "d∊": {
   "req": "",
   "add": "",
-  "task": "{d∊} is the _ruby rune of belonging_, marking 1 for each item on its left that is found somewhere on its right, and 0 for each that is not. Which of the dyes `a` are steeped in the vat `b`?",
-  "expr": "(a←?8⍴9)∊b←5?9"
+  "task": "{d∊} is the _ruby rune of belonging_, marking 1 for each item on its left that is found somewhere on its right, and 0 for each that is not. Which of the dyes `d` are steeped in the vat `v`?",
+  "expr": "(d←?8⍴9)∊v←5?9"
  },
  "d≠": {
   "req": "",

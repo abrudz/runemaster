@@ -22,32 +22,32 @@
  "d↓": {
   "req": "",
   "add": "",
-  "task": "{d↓} is the _ruby rune of dropping_, casting away from the start of the list on its right as many items as the number on its left. A rockfall has buried the first `n` runes of the vein `w` — recite what still shows.",
-  "expr": "(n←2)↓w←'STALAGMITE'"
+  "task": "{d↓} is the _ruby rune of dropping_, casting away from the start of the list on its right as many items as the number on its left. A rockfall has buried the first `n` runes of the vein `v` — recite what still shows.",
+  "expr": "(n←2)↓v←'STALAGMITE'"
  },
  "d∩": {
   "req": "",
   "add": "",
-  "task": "{d∩} is the _ruby rune of commonality_, keeping (in order) the items on its left that also appear on its right. Which runes of the inscription `a` are echoed in the warding word `b`?",
-  "expr": "(a←'DRAKE MALLARD')∩b←'DARK'"
+  "task": "{d∩} is the _ruby rune of commonality_, keeping (in order) the items on its left that also appear on its right. Which runes of the inscription `i` are echoed in the warding word `w`?",
+  "expr": "(i←'DRAKE MALLARD')∩w←'DARK'"
  },
  "d⌊": {
   "req": "",
   "add": "",
-  "task": "{d⌊} is the _ruby rune of the lesser_, giving the smaller of each pair it stands between. A vaulted ceiling of `c` caps the crystal heights `v`; no crystal may rise above it.",
-  "expr": "(c←7)⌊v←?⍨9"
+  "task": "{d⌊} is the _ruby rune of the lesser_, giving the smaller of each pair it stands between. A vaulted ceiling of `c` caps the crystal heights `h`; no crystal may rise above it.",
+  "expr": "(c←7)⌊h←?⍨9"
  },
  "d⌈": {
   "req": "",
   "add": "",
-  "task": "{d⌈} is the _ruby rune of the greater_, giving the larger of each pair it stands between. A risen floor of `f` lifts the crystal heights `v`; none may sink below it.",
-  "expr": "(f←3)⌈v←?⍨9"
+  "task": "{d⌈} is the _ruby rune of the greater_, giving the larger of each pair it stands between. A risen floor of `f` lifts the crystal heights `h`; none may sink below it.",
+  "expr": "(f←3)⌈h←?⍨9"
  },
  "d⌿": {
   "req": "",
   "add": "",
-  "task": "{d⌿} is the _ruby rune of copying_, repeating each item on its right as many times as the matching count on its left. Sound the runes `w`, each echoing by its count in `c`.",
-  "expr": "(c←2 0 3 1 2 3)⌿w←'DYALOG'"
+  "task": "{d⌿} is the _ruby rune of copying_, repeating each item on its right as many times as the matching count on its left. Sound the runes `r`, each echoing by its count in `c`.",
+  "expr": "(c←2 0 3 1 2 3)⌿r←'DYALOG'"
  },
  "d=": {
   "req": "",
@@ -58,8 +58,8 @@
  "m≠": {
   "req": "",
   "add": "",
-  "task": "{m≠} is the _emerald rune of first sightings_, marking each item of the list on its right that has not been seen earlier in it. Mark the first appearance of every rune in the chant `w`.",
-  "expr": "≠w←'BOOKKEEPER'"
+  "task": "{m≠} is the _emerald rune of first sightings_, marking each item of the list on its right that has not been seen earlier in it. Mark the first appearance of every rune in the chant `c`.",
+  "expr": "≠c←'BOOKKEEPER'"
  },
  "d∧": {
   "req": "",
@@ -76,13 +76,13 @@
  "m⌽": {
   "req": "",
   "add": "",
-  "task": "{m⌽} is the _emerald rune of reversal_, mirroring the order of the list on its right. The watchtowers along the shore report their heights as `l`; recite them from last to first.",
-  "expr": "⌽l←5?99"
+  "task": "{m⌽} is the _emerald rune of reversal_, mirroring the order of the list on its right. The watchtowers along the shore report their heights as `h`; recite them from last to first.",
+  "expr": "⌽h←5?99"
  },
  "l2": {
   "req": "d⌊d⌈m⌽",
   "add": "",
-  "task": "A slab of granite seals the eastern tunnel, scored with a warden's demand: take the crystal readings `v`, let none sink beneath the floor `f` nor rise above the ceiling `c`, then recite them from last to first. Speak them so and the slab grinds aside.",
-  "expr": "⌽(f←3)⌈(c←7)⌊v←?⍨9"
+  "task": "A slab of granite seals the eastern tunnel, scored with a warden's demand: take the crystal readings `r`, let none sink beneath the floor `f` nor rise above the ceiling `c`, then recite them from last to first. Speak them so and the slab grinds aside.",
+  "expr": "⌽(f←3)⌈(c←7)⌊r←?⍨9"
  }
 }

@@ -1,10 +1,10 @@
 {
  "name": "The Roll Call",
  "theme": {
-  "w": "🔤",
-  "wall": "rgba(120,110,170,0.42)",
-  "back": "#0e0c18",
-  "spot": "#e8e4f8"
+  "w": "📜",
+  "wall": "rgba(161,171,111,0.42)",
+  "back": "#15170b",
+  "spot": "#f3f7e4"
  },
  "M": [
   "w w w l0w w w w w w w ",
@@ -22,8 +22,8 @@
  "l0": {
   "req": "M/d⌊",
   "add": "",
-  "task": "The muster-gate back up to the scales is barred. Name the least of the readings `a` to climb out.",
-  "expr": "⌊/a←6?20"
+  "task": "The muster-gate back up to the scales is barred. Name the least of the readings `r` to climb out.",
+  "expr": "⌊/r←6?20"
  },
  "l1": {
   "req": "D∘d=d∨M/j{",

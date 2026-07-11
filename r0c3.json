@@ -15,15 +15,15 @@
   "    w       w d⍉w   w ",
   "w w w   w       w   w ",
   "w       w w w   w   w ",
-  "w   w               w ",
-  "w   w w w   w w w w w ",
+  "w   w   w       w   w ",
+  "w   w       w       w ",
   "w   w w w w w w w w w "
  ],
  "d⍉": {
   "req": "",
   "add": "",
-  "task": "{d⍉} is the _ruby rune of transposition_ — with a mirror-order on its left it turns a grid about its axes; the order `a` of `2 1` flips it over its diagonal, trading rows for columns (its glyph a half-circle caught in a slanted mirror). Cast `a` upon the grid `m` and read back what the mirror shows.",
-  "expr": "(a←2 1)⍉m←3 4⍴⍳12"
+  "task": "{d⍉} is the _ruby rune of transposition_ — with a mirror-order on its left it turns a grid about its axes; the order `o` of `2 1` flips it over its diagonal, trading rows for columns (its glyph a half-circle caught in a slanted mirror). Cast `o` upon the grid `g` and read back what the mirror shows.",
+  "expr": "(o←2 1)⍉g←3 4⍴⍳12"
  },
  "aG": {
   "req": "d⍉d∧M/d+d=m⌽d,j{j(",

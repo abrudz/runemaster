@@ -1,29 +1,29 @@
 {
  "name": "The Great Pyramid",
  "theme": {
-  "w": "🔺",
+  "w": "🛕",
   "wall": "rgba(200,170,90,0.42)",
   "back": "#181206",
   "spot": "#f7ecc8"
  },
  "M": [
   "w w w w w w w w w w w ",
-  "w         w   w w aHw ",
-  "w   w w   w   w w l2w ",
-  "w   w         w w l1w ",
-  "w       w w   w     w ",
-  "    w                 ",
-  "w   w w w   w w w   w ",
-  "w       w       w   w ",
-  "w w w       w       w ",
-  "w       w   w   w   w ",
+  "w                   w ",
+  "w         w w       w ",
+  "w       w w w w     w ",
+  "w       w aH  w     w ",
+  "      w w     w w     ",
+  "w     w w w l2w w   w ",
+  "w   w w       w w w w ",
+  "w   w w l1w w w w w w ",
+  "w                   w ",
   "w w w w w l0w w w w w "
  ],
  "l0": {
   "req": "M/d⌈",
   "add": "",
-  "task": "A shaft drops from the pyramid to the frozen scales below. Name the greatest of the readings `a` to descend.",
-  "expr": "⌈/a←6?20"
+  "task": "A shaft drops from the pyramid to the frozen scales below. Name the greatest of the readings `r` to descend.",
+  "expr": "⌈/r←6?20"
  },
  "l1": {
   "req": "j[d+j{",

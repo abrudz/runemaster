@@ -1,21 +1,21 @@
 {
  "name": "Crossmark Vault",
  "theme": {
-  "w": "🗺",
+  "w": "🌐",
   "wall": "rgba(170,130,60,0.42)",
   "back": "#1a140a",
   "spot": "#f6ead0"
  },
  "M": [
   "w w w w w w w w w w w ",
-  "w     w   aB  w     w ",
-  "w   w w w l2w w w   w ",
-  "w     w w l1w       w ",
-  "w w   w       w w   w ",
-  "          w           ",
-  "w   w w   w w w   w w ",
-  "w   w               w ",
-  "w   w w w w w   w w w ",
+  "w   l2              w ",
+  "w l1w           w w w ",
+  "w   w w       w w   w ",
+  "w     w w aBw w     w ",
+  "        w w w         ",
+  "w       w w w       w ",
+  "w     w w   w w     w ",
+  "w   w w       w w   w ",
   "w                   w ",
   "w w l0w w w w w w w w "
  ],
