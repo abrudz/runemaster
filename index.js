@@ -9,7 +9,7 @@ const ins={"(":"()","[":"[]","{":"{}","∘":"∘."}    // glyph -> typed form
 const mid={"()":1,"[]":1,"{}":1}                   // pairs: cursor between
 const b=r=>`<b tabindex='0' class='${r[0]}'>${ins[r[1]]??r[1]}</b>`
 const mkb=id=>{const e=document.createElement("b");e.tabIndex=0;e.id=id;e.className=id[0];e.innerHTML=ins[id[1]]??id[1];return e}  // rebuild collected rune (keep id for chk)
-const reqs=t=>j[t.id].req.match(/../g)??[]
+const reqs=t=>(j[t.id].req??"").match(/../g)??[]
 const dfnkeys=q=>q.f?(Array.isArray(q.a[0])?"⍺ ⍵ ":"⍵ "):""   // dfn arg keys ({} from diamond)
 const keys=q=>q.req+q.add+dfnkeys(q)+[...q.task.matchAll(/`\w`/g)].join``.replace(/`(\w)`/g,"$1 ")   // a challenge's allowed runes
 const md=s=>s.replace(/\{(\w\W)\}/g,(_,m)=>b(m)).replace(/(?<!\\)`(.*?[^\\])`/g,"<code>$1</code>").replace(/(?<!\\)_(.*?[^\\])_/g,"<em>$1</em>").replace(/\\([`_])/g,"$1")
@@ -87,6 +87,10 @@ async function step(newR,newC){                      // move to / interact with 
   if(newC<0   &&newR==i.r){mc-=1;await loadM(mr,mc);jump(newR,cMax);show()}else
   if(newC>cMax&&newR==i.r){mc+=1;await loadM(mr,mc);jump(newR,0   );show()}else   // ignore diag move off edge (wall!)
   if(0<=newR&&newR<=rMax&&0<=newC&&newC<=cMax){
+    if(newR!=i.r&&newC!=i.c){                       // diagonal: never cut a wall/locked corner
+      const fl=(r,c)=>td(r,c)?.children[0]?.className
+      if(/^[wl]$/.test(fl(i.r,newC))||/^[wl]$/.test(fl(newR,i.c)))return
+    }
     let t=td(newR,newC).children[0]
     if(t&&t.style.visibility!="hidden"){
       if(t.className=="l"){
@@ -94,7 +98,9 @@ async function step(newR,newC){                      // move to / interact with 
         msgp.innerHTML="This door still needs:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `   // only the runes you lack
         msg.showModal()
       }else if(t.className=="o"){ask.r=newR;ask.c=newC;openask(t,keys(j[t.id]))}
-      else if(~(g="mdMDj".indexOf(t.className))){show(i.r=newR,i.c=newC);c=t;openask(c,c.id+keys(j[c.id]))}
+      else if(~(g="mdMDj".indexOf(t.className))){show(i.r=newR,i.c=newC)   // rune stone: req-gated (prerequisite runes)
+        let bi=$$("#belt b").map(e=>e.id)
+        reqs(t).every(r=>~bi.indexOf(r))?(c=t,openask(c,c.id+keys(j[c.id]))):(msgp.innerHTML="This rune stays sealed; you still need:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `,msg.showModal())}
       else if(t.className=="a"){show(i.r=newR,i.c=newC)   // free-standing 🍎: req-gated but non-blocking
         let bi=$$("#belt b").map(e=>e.id)
         reqs(t).every(r=>~bi.indexOf(r))?openask(t,keys(j[t.id])):(msgp.innerHTML="This apple is still guarded; you still need:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `,msg.showModal())}

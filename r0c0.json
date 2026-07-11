@@ -50,32 +50,26 @@
   "expr": "∊(x y)←'ELD' 'FIRE'"
  },
  "D∘": {
-  "req": "",
-  "add": "d+",
+  "req": "d+",
+  "add": "",
   "task": "{D∘} is the _amethyst rune of tabulation_ — set to the left of another rune, it lays out a table, applying that rune between every value on one side and every value on the other. Using {d+}, raise an addition table from the numbers `v`, each summed with each.",
   "expr": "v∘.+v←3?9"
  },
  "M/": {
-  "req": "",
-  "add": "d×m⍳",
+  "req": "d×m⍳",
+  "add": "",
   "task": "{M/} is the _sapphire rune of insertion_ — set to the right of a rune, it slips that rune between all the items on its right. The _factorial_ of `n` is every whole number from 1 to `n` multiplied together — weave {d×} through {m⍳}. Find the factorial of `n`.",
   "expr": "×/⍳n←3+?6"
  },
  "l0": {
-  "req": "d,j{",
-  "add": "' O A K ",
-  "task": "Deeper in the grove, the old oaks answer only to their kin. A word set between quote-marks is a _text rune_. Forge a spell that brands any word `⍵` with the oak-mark, setting `OAK` before it.\n\n`{answer} 'LEAF'` gives `OAKLEAF`.",
-  "f": "{'OAK',⍵}",
-  "a": [
-   "'LEAF'",
-   "'ROOT'",
-   "'TREE'",
-   "'FERN'"
-  ]
+  "req": "d,",
+  "add": "' E L D F I R ",
+  "task": "Deeper in the grove, the old oaks answer only to their kin. A word set between quote-marks is a text rune. Bind the two elder-words `'ELD'` and `'FIRE'` into the single strand `ELDFIRE`.",
+  "expr": "'ELD','FIRE'"
  },
  "j{": {
-  "req": "",
-  "add": "d×M/m⍳",
+  "req": "d×M/m⍳",
+  "add": "",
   "task": "{j{} is the _diamond of binding_ — a pair of braces `{ }` that captures an expression into a rune of your own making, with `⍵` standing for whatever is set on its right. Forge a rune that returns the factorial of its argument.\n\n`{answer} 4` gives `24`, and `{answer} 6` gives `720`.",
   "f": "{×/⍳⍵}",
   "a": [
@@ -92,8 +86,8 @@
   ]
  },
  "d≡": {
-  "req": "",
-  "add": "m∪j{",
+  "req": "m∪j{",
+  "add": "",
   "task": "{d≡} is the _ruby rune of matching_, giving 1 when what lies on its left is exactly the same as what lies on its right, and 0 otherwise. Calling on {j{} and {m∪}, forge a rune that tells whether a list is all distinct — 1 if every item differs, 0 if any repeats.\n\n`{answer} 1 2 3 2 1` gives 0; `{answer} 1 16 12` gives 1.",
   "f": "{⍵≡∪⍵}",
   "a": [
@@ -112,8 +106,8 @@
   "expr": "(x←'GROVE'),y←'GATE'"
  },
  "j(": {
-  "req": "",
-  "add": "m⍳D∘d≡j{",
+  "req": "m⍳D∘d≡j{",
+  "add": "",
   "task": "{j(} is the _diamond of precedence_ — a pair of parentheses `( )` binding an expression together so a rune takes it whole. An _identity matrix_ of size `⍵` is a square table of 0s bearing 1s on its diagonal. Drawing on {m⍳}, {D∘} and {d≡}, forge a rune that raises an identity matrix of the given size.\n\n`{answer} 3` gives a 3×3 identity table.",
   "f": "{(⍳⍵)∘.≡⍳⍵}",
   "a": [

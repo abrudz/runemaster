@@ -32,8 +32,8 @@
   "expr": "⌈v←(?6⍴99)÷4"
  },
  "m⌊": {
-  "req": "",
-  "add": "d÷",
+  "req": "d÷",
+  "add": "",
   "task": "{m⌊} is the _emerald rune of lowering_, dropping the number on its right down to the previous whole number. Drawing on {d÷}, reckon how many whole times the measure `b` can be drawn from the hoard `a`.",
   "expr": "⌊(a←20+?80)÷b←2+?8"
  },

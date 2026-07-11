@@ -50,8 +50,8 @@
   "expr": "(n←?4)⊃w←'BERYL' 'ONYX' 'JADE' 'AMBER'"
  },
  "M\\": {
-  "req": "",
-  "add": "d+",
+  "req": "d+",
+  "add": "",
   "task": "{M\\} is the _sapphire rune of scanning_ — set to the right of a rune, it sweeps that rune through the ever-growing prefixes of the list on its right, leaving a trail of running results. Drawing on {d+}, tally the running total of the tribute `t`, coin upon coin.",
   "expr": "+\\t←?6⍴20"
  },

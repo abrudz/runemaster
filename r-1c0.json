@@ -32,8 +32,8 @@
   "expr": "(d←2 6)⍴v←⍳12"
  },
  "M¨": {
-  "req": "",
-  "add": "m⌽",
+  "req": "m⌽",
+  "add": "",
   "task": "{M¨} is the _sapphire rune of everywhere_ — set to the right of a rune, it works that rune upon each item on its right in turn. Drawing on {m⌽}, mirror every strand of the skein `w`, each end for end.",
   "expr": "⌽¨w←'MOOD' 'NET' 'POP'"
  },
