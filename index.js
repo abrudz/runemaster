@@ -87,10 +87,6 @@ async function step(newR,newC){                      // move to / interact with 
   if(newC<0   &&newR==i.r){mc-=1;await loadM(mr,mc);jump(newR,cMax);show()}else
   if(newC>cMax&&newR==i.r){mc+=1;await loadM(mr,mc);jump(newR,0   );show()}else   // ignore diag move off edge (wall!)
   if(0<=newR&&newR<=rMax&&0<=newC&&newC<=cMax){
-    if(newR!=i.r&&newC!=i.c){                       // diagonal: never cut a wall/locked corner
-      const fl=(r,c)=>td(r,c)?.children[0]?.className
-      if(/^[wl]$/.test(fl(i.r,newC))||/^[wl]$/.test(fl(newR,i.c)))return
-    }
     let t=td(newR,newC).children[0]
     if(t&&t.style.visibility!="hidden"){
       if(t.className=="l"){
