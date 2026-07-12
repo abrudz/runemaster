@@ -1,6 +1,6 @@
 'use strict'
 let i,M,root,aski,askb,askp,ask,msg,msgp
-let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={},doors={},seen={},apples=[],atlas={}
+let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={},doors={},seen={},apples=[],atlas={},busy
 const KEY="runemaster"                             // saved-progress key
 const $=s=>document.querySelector(s)
 const $$=s=>[...document.querySelectorAll(s)]
@@ -13,13 +13,16 @@ const reqs=t=>(j[t.id].req??"").match(/../g)??[]
 const dfnkeys=q=>q.f?(Array.isArray(q.a[0])?"⍺ ⍵ ":"⍵ "):""   // dfn arg keys ({} from diamond)
 const keys=q=>q.req+q.add+dfnkeys(q)+[...q.task.matchAll(/`\w`/g)].join``.replace(/`(\w)`/g,"$1 ")   // a challenge's allowed runes
 const md=s=>s.replace(/\{(\w\W)\}/g,(_,m)=>b(m)).replace(/(?<!\\)`(.*?[^\\])`/g,"<code>$1</code>").replace(/(?<!\\)_(.*?[^\\])_/g,"<em>$1</em>").replace(/\\([`_])/g,"$1")
-const exec=s=>fetch("https://tryapl.org/Exec",{
-  method:"POST",
-  headers:{"Content-Type":"application/json;charset=utf-8"},
-  body:JSON.stringify([0,0,0,s]),
-  signal:AbortSignal.timeout(35e3)
-}).then(d=>d.json()).then(d=>react(+d[3][0]))
-  .catch(_=>{msgp.innerHTML="TryAPL isn't responding — please try again.";msg.showModal()})
+const exec=s=>{
+  busy=1;$("#asks").textContent="checking…";$$("#ask form button").forEach(b=>b.disabled=1)   // hold the challenge open + inert until the check resolves
+  return fetch("https://tryapl.org/Exec",{
+    method:"POST",
+    headers:{"Content-Type":"application/json;charset=utf-8"},
+    body:JSON.stringify([0,0,0,s]),
+    signal:AbortSignal.timeout(35e3)
+  }).then(d=>d.json()).then(d=>{busy=0;react(+d[3][0])})
+    .catch(_=>{busy=0;ask.close();msgp.innerHTML="TryAPL isn't responding — please try again.";msg.showModal()})
+}
 const getTop =e=>window.scrollY+e.getBoundingClientRect().top +"px"
 const getLeft=e=>window.scrollX+e.getBoundingClientRect().left+"px"
 const getR=e=>parseInt(e.id.replace(/r|c\d+/g,""))
@@ -94,7 +97,7 @@ const restore=()=>{
   return s
 }
 window.reset=()=>{localStorage.removeItem(KEY);location.reload()}   // wipe saved progress
-const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";ask.showModal()}   // open a challenge dialog
+const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";$("#asks").textContent="submit";$$("#ask form button").forEach(b=>b.disabled=0);ask.showModal()}   // open a challenge dialog
 async function step(newR,newC){                      // move to / interact with cell; keyboard + tap
   if($$("dialog").some(e=>e.hasAttribute("open")))return
   if(newR<0   &&newC==i.c){mr-=1;await loadM(mr,mc);jump(rMax,newC);show()}else
@@ -193,6 +196,7 @@ document.addEventListener('DOMContentLoaded',async function main(){
   }
 })
 window.ans=t=>{
+  if(busy)return                                     // a check is already in flight — ignore repeat submits
   const q=j[ask.b.id]
   if(!q.f&&!RegExp("^"+aski.pattern+"$").test(aski.value))return
   let expr
@@ -207,6 +211,7 @@ window.ans=t=>{
   exec(expr)
 }
 const react=b=>{
+  ask.close()                                        // the check resolved — dismiss the challenge
   if(b&&ask.b.id[0]=="l"){
     show(i.r=ask.r,i.c=ask.c)
     ask.b.style.visibility="hidden"
