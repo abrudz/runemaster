@@ -8,7 +8,7 @@
  },
  "M": [
   "w w w w l4w w w w w w ",
-  "w   m⍳    d×    m∪  w ",
+  "w   m⍳    d×        w ",
   "w   w w     w       w ",
   "w   d+    d,w   M/  w ",
   "w   w   D∘  w w w   w ",
@@ -30,12 +30,6 @@
   "add": "",
   "task": "{d×} is the _ruby rune of multiplication_, scaling each number on its right by the number on its left. Four runestones hold the powers `p`; a charm of strength `s` magnifies each. What powers result?",
   "expr": "(s←100)×p←4?90"
- },
- "m∪": {
-  "req": "",
-  "add": "",
-  "task": "{m∪} is the _emerald rune of distinction_, keeping only the first appearance of each item on its right. The old chant `c` echoes with repeated runes — distil it to its distinct runes.",
-  "expr": "∪c←'ABRACADABRA'"
  },
  "d+": {
   "req": "",

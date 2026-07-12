@@ -14,7 +14,7 @@
   "w w   w       w w   w ",
   "w         w         w ",
   "w   w w w w w w w   w ",
-  "w                   w ",
+  "w     m∪            w ",
   "w w w   w   w   w w w ",
   "w       w   w       w ",
   "w w w w w   w w w w w "
@@ -42,6 +42,12 @@
    "1",
    "1 1 0 1 1"
   ]
+ },
+ "m∪": {
+  "req": "",
+  "add": "",
+  "task": "{m∪} is the _emerald rune of distinction_, keeping only the first appearance of each item on its right. The old chant `c` echoes with repeated runes — distil it to its distinct runes.",
+  "expr": "∪c←'ABRACADABRA'"
  },
  "aF": {
   "req": "d,M/d∊j{j(",
