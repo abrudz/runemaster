@@ -173,12 +173,15 @@ th {
   font-size: 0.85rem;
 }
 #mini {                    /* 4×5 discovered-rooms table (row = mr+2, col = mc+1) */
+  table-layout: fixed;      /* columns exactly one tile wide, so cells stay square */
   border-collapse: separate;
   border-spacing: 0.15rem;  /* the gaps show the page background, drawing the grid lines */
 }
 #mini td {
+  box-sizing: border-box;
   width: var(--mini);
   height: var(--mini);
+  line-height: var(--mini); /* pin the cell height square (and centre the emoji) */
   padding: 0;
   text-align: center;
   font-size: calc(var(--mini) * 0.6);
@@ -192,10 +195,10 @@ th {
   #util {
     flex-direction: column;                      /* stacked; mini-map (+counters) on top, belt below */
     width: calc(var(--mini) * 5 + 2rem);
-    align-self: flex-start;                      /* pane hugs the top of the screen */
-    margin-inline-start: 1rem;                   /* a little more air from the map */
+    align-self: flex-start;                      /* top-aligned, then dropped to the map's tile row */
+    margin: var(--size) var(--size) 0 1rem;      /* top: match the map's top spacing; right: off the screen edge; left: air from the map */
     overflow-y: auto;
-    max-height: 100dvh;
+    max-height: calc(100dvh - var(--size));
   }
   #util > fieldset { flex: none; width: 100%; }
   #side { order: -1; width: 100%; }              /* mini-map (+counters) on top, belt below */
