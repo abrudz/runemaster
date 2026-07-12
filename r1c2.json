@@ -20,10 +20,10 @@
   "w w w w w w w w w w w "
  ],
  "l0": {
-  "req": "M/d⌊",
+  "req": "d⌊m⌽",
   "add": "",
-  "task": "The muster-gate back up to the scales is barred. Name the least of the readings `r` to climb out.",
-  "expr": "⌊/r←6?20"
+  "task": "The muster-gate back up to the scales is barred. Take the lesser of each paired reading — `a` against `b` — then recite them from last to first, to climb out.",
+  "expr": "⌽(a←6?9)⌊b←6?9"
  },
  "l1": {
   "req": "D∘d=d∨M/j{",
