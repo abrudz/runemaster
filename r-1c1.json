@@ -22,8 +22,8 @@
  "d∩": {
   "req": "",
   "add": "",
-  "task": "{d∩} is the _ruby rune of commonality_, keeping (in order) the items on its left that also appear on its right. Which runes of the inscription `i` are echoed in the warding word `w`?",
-  "expr": "(i←'DRAKE MALLARD')∩w←'DARK'"
+  "task": "{d∩} is the _ruby rune of commonality_, keeping (in order) the items on its left that also appear on its right. The vault opens only where two wards cross: keep the runes of the inscription `i` that the warding key `k` also bears.",
+  "expr": "(i←'DRAKE MALLARD')∩k←'DARK'"
  },
  "l0": {
   "req": "d≡",

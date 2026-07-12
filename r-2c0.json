@@ -46,8 +46,8 @@
  "m∪": {
   "req": "",
   "add": "",
-  "task": "{m∪} is the _emerald rune of distinction_, keeping only the first appearance of each item on its right. The old chant `c` echoes with repeated runes — distil it to its distinct runes.",
-  "expr": "∪c←'ABRACADABRA'"
+  "task": "{m∪} is the _emerald rune of distinction_, keeping only the first appearance of each item on its right. The loom has spun the strand `s` thick with repeats; card it down to its distinct threads.",
+  "expr": "∪s←'GATTACA'"
  },
  "aF": {
   "req": "d,M/d∊j{j(",
