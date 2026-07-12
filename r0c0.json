@@ -127,14 +127,14 @@
  },
  "l4": {
   "req": "d,j{",
-  "add": "' H A L ",
-  "task": "The north road runs to the Hall. A word set between quote-marks is a _text rune_. Forge a spell that names a hall by setting `HALL` after any word `⍵`.\n\n`{answer} 'MEAD'` gives `MEADHALL`.",
-  "f": "{⍵,'HALL'}",
+  "add": "",
+  "task": "The north road runs to Weaver's Hall, where each thread is doubled at the loom. Forge a spell that lays the strand `⍵` down, then again, end to end.\n\n`{answer} 1 2 3` gives `1 2 3 1 2 3`.",
+  "f": "{⍵,⍵}",
   "a": [
-   "'MEAD'",
-   "'GREAT'",
-   "'WAR'",
-   "'DINING'"
+   "1 2 3",
+   "5 9",
+   "3 1 4 1 5",
+   "2 7 1 8"
   ]
  },
  "aA": {
