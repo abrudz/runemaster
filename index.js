@@ -62,13 +62,13 @@ const favico=w=>{                                    // dynamic svg favicon of t
   let l=$("link[rel=icon]")??document.head.appendChild(Object.assign(document.createElement("link"),{rel:"icon"}))
   l.href="data:image/svg+xml,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="82" font-size="88" text-anchor="middle">${w}</text></svg>`)}
 const apx=()=>$("#apples").textContent="🍎 "+apples.length+" / 9"   // apple tally (win at 9)
-const mini=()=>{                                     // 4×5 discovered-rooms grid: row=mr+2, col=mc+1
+const mini=()=>{                                     // 4×5 discovered-rooms table: row=mr+2, col=mc+1
   let m=$("#mini");m.innerHTML=""
-  for(let r=-2;r<=1;r++)for(let cc=-1;cc<=3;cc++){    // row-major → matches grid auto-flow
-    let k=r+" "+cc,d=document.createElement("div")
-    d.className="cell"+(k==cur?" now":"")            // highlight the current room
-    if(atlas[k])d.textContent=atlas[k]               // wall emoji, revealed on first entry
-    m.appendChild(d)
+  for(let r=-2;r<=1;r++){let tr=m.insertRow()
+    for(let cc=-1;cc<=3;cc++){let k=r+" "+cc,d=tr.insertCell()
+      if(k==cur)d.className="now"                     // current room: bg cleared → reads as a highlight
+      if(atlas[k])d.textContent=atlas[k]              // wall emoji, revealed on first entry
+    }
   }
 }
 const win=()=>{msgp.innerHTML="🍎 Nine apples gathered — you are the RuneMaster! 🍎";msg.showModal()}
@@ -78,9 +78,10 @@ const fit=()=>{                                      // fit board+margin+utiliti
   let s=parseFloat(getComputedStyle(root).getPropertyValue("--size"))||24   // seed from current
   for(let p=0;p<4;p++){                              // fixed point: utilities' extent depends on --size
     root.style.setProperty("--size",Math.max(14,s)+"px")   // (reading offset* below forces a reflow)
-    s=land                                           // landscape: utilities right; else below
-      ?Math.min((innerWidth-8-util.offsetWidth)/(cMax+3),(innerHeight-12)/(rMax+3))
-      :Math.min((innerWidth-8)/(cMax+3),(innerHeight-util.offsetHeight-12)/(rMax+3))   // +3: cols/rows + 1-tile margin each side
+    if(land){                                        // landscape: utilities to the right (incl. their margin)
+      let cs=getComputedStyle(util),uw=util.offsetWidth+(parseFloat(cs.marginLeft)||0)+(parseFloat(cs.marginRight)||0)
+      s=Math.min((innerWidth-8-uw)/(cMax+3),(innerHeight-12)/(rMax+3))
+    }else s=Math.min((innerWidth-8)/(cMax+3),(innerHeight-util.offsetHeight-12)/(rMax+3))   // +3: cols/rows + 1-tile margin each side
   }
   root.style.setProperty("--size",Math.max(14,s)+"px")
 }

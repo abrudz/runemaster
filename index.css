@@ -34,7 +34,7 @@ html {
   --wall: rgb(146, 73, 0);
   --speed: 0.5s;
   --size: 2.5rem;
-  --mini: 1.5rem;   /* mini-map room tile (compact, uncoupled from the board's --size) */
+  --mini: 2.5rem;   /* mini-map room tile (fixed, uncoupled from the board's --size) */
 }
 body {
   background: var(--spot);
@@ -156,8 +156,7 @@ th {
   white-space: normal;
 }
 #side {                    /* right of the belt: counters/Restart above the mini-map */
-  flex: none;
-  width: calc(var(--mini) * 5);
+  flex: none;              /* hugs the mini-map table's own width */
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -173,36 +172,33 @@ th {
   letter-spacing: 0.25ex;
   font-size: 0.85rem;
 }
-#mini {                    /* 4×5 discovered-rooms grid (row = mr+2, col = mc+1) */
-  display: grid;
-  grid-template-columns: repeat(5, var(--mini));
-  grid-auto-rows: var(--mini);
+#mini {                    /* 4×5 discovered-rooms table (row = mr+2, col = mc+1) */
+  border-collapse: separate;
+  border-spacing: 0.15rem;  /* the gaps show the page background, drawing the grid lines */
 }
-#mini .cell {
-  box-sizing: border-box;
+#mini td {
   width: var(--mini);
   height: var(--mini);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(var(--mini) * 0.72);
-  background: var(--back);
-  border: 1px solid var(--spot);
+  padding: 0;
+  text-align: center;
+  font-size: calc(var(--mini) * 0.6);
+  background: var(--back);   /* dark tile; wall emoji appears here on first entry */
 }
-#mini .cell.now {          /* the room the player is currently in */
-  outline: 0.15rem solid gold;
-  outline-offset: -0.15rem;
+#mini td.now {             /* current room: no fill, so the page bg shows through as a highlight */
+  background: transparent;
 }
 @media (orientation: landscape) {
   body { flex-direction: row; }                  /* map on the left, utilities on the right */
   #util {
     flex-direction: column;                      /* stacked; mini-map (+counters) on top, belt below */
-    width: 13rem;
+    width: calc(var(--mini) * 5 + 2rem);
+    align-self: flex-start;                      /* pane hugs the top of the screen */
+    margin-inline-start: 1rem;                   /* a little more air from the map */
     overflow-y: auto;
     max-height: 100dvh;
   }
   #util > fieldset { flex: none; width: 100%; }
-  #side { order: -1; width: 100%; }
+  #side { order: -1; width: 100%; }              /* mini-map (+counters) on top, belt below */
 }
 td > * {
   z-index: 100;
