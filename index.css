@@ -114,11 +114,13 @@ fieldset {
   align-items: flex-start;
   width: calc(var(--size) * var(--cols));        /* portrait: exactly the map's width */
 }
-#util > fieldset {                               /* the belt (not the dialog's rune palette) */
+#belt {                                          /* the belt, now a direct child of #util (was inside a fieldset) */
   box-sizing: border-box;
   margin: 0;
   flex: 1 1 auto;
   min-width: 0;                                  /* allow shrink so stones wrap instead of scrolling */
+  font-family: Text;
+  letter-spacing: 0.25ex;                        /* restore the font the removed fieldset provided */
 }
 legend,
 th {
@@ -172,6 +174,16 @@ th {
   letter-spacing: 0.25ex;
   font-size: 0.85rem;
 }
+#left {                    /* room name; ellipsis so long names don't collide with Restart */
+  font-family: Text;
+  letter-spacing: 0.25ex;
+  font-size: 0.85rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 #mini {                    /* 4×5 discovered-rooms table (row = mr+2, col = mc+1) */
   table-layout: fixed;      /* columns exactly one tile wide, so cells stay square */
   border-collapse: separate;
@@ -219,7 +231,7 @@ th {
     overflow-y: auto;
     max-height: calc(100dvh - var(--size));
   }
-  #util > fieldset { flex: none; width: 100%; }
+  #belt { flex: none; }                          /* width:100% already set above */
   #side { order: -1; width: 100%; }              /* mini-map (+counters) on top, belt below */
 }
 td > * {
