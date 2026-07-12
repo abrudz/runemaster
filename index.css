@@ -190,6 +190,13 @@ th {
 #mini td.now {             /* current room: no fill, so the page bg shows through as a highlight */
   background: transparent;
 }
+#mini td .ap {             /* uncollected-apple badge, lower-left corner */
+  position: absolute;
+  left: 0.05rem;
+  bottom: 0;
+  font-size: calc(var(--mini) * 0.42);
+  line-height: 1;
+}
 @media (orientation: landscape) {
   body { flex-direction: row; }                  /* map on the left, utilities on the right */
   #util {
@@ -305,10 +312,6 @@ i {
 }
 .a {
   font-size: calc(var(--size) * 0.72);   /* free-standing apple (P10) */
-}
-#apples {
-  font-family: Text;
-  letter-spacing: 0.25ex;
 }
 #belt b {                 /* belt runes are a fixed size (uncoupled from --size) so the belt height is stable */
   width: 1.5rem;

@@ -64,7 +64,6 @@ const count=()=>{let n=$$("#M b.m,#M b.d,#M b.M,#M b.D,#M b.j").length   // unco
 const favico=w=>{                                    // dynamic svg favicon of the wall emoji
   let l=$("link[rel=icon]")??document.head.appendChild(Object.assign(document.createElement("link"),{rel:"icon"}))
   l.href="data:image/svg+xml,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="82" font-size="88" text-anchor="middle">${w}</text></svg>`)}
-const apx=()=>$("#apples").textContent="🍎 "+apples.length+" / 9"   // apple tally (win at 9)
 const mini=()=>{                                     // 4×5 discovered-rooms table: row=mr+2, col=mc+1
   let m=$("#mini");m.innerHTML=""
   const mk=(d,cls,txt)=>{let s=document.createElement("span");s.className=cls;s.textContent=txt;d.appendChild(s)}
@@ -74,6 +73,7 @@ const mini=()=>{                                     // 4×5 discovered-rooms ta
       let a=atlas[k];if(a==null)continue
       if(typeof a=="string")a={w:a,stones:[],apple:0} // migrate legacy save entries (bare wall emoji)
       mk(d,"wm",a.w)                                  // wall emoji, revealed on first entry
+      if(a.apple&&!apples.includes(a.apple))mk(d,"ap","🍎")   // uncollected apple → lower-left badge
     }
   }
 }
@@ -176,7 +176,7 @@ async function loadM(mr,mc){
   favico(j.theme.w)
   let first=$$("#M td")[0]     ;rMin=getR(first);cMin=getC(first)
   let last =$$("#M td").at(-1) ;rMax=getR(last );cMax=getC(last )
-  chk();count();apx();mini();fit()
+  chk();count();mini();fit()
 }
 document.addEventListener('DOMContentLoaded',async function main(){
   i=$("#i");M=$("#M");root=$("#root")
@@ -226,7 +226,7 @@ const react=b=>{
     save()
   }else if(b&&ask.b.id[0]=="a"){         // 🍎 collected
     if(!apples.includes(ask.b.id))apples.push(ask.b.id)
-    ask.b.remove();apx();save()
+    ask.b.remove();mini();save()
     if(apples.length>=9)win()
   }else if(b){
     $$("#belt td")[g].appendChild(c)
