@@ -145,7 +145,7 @@ async function loadM(mr,mc){
       (t,r)=>
         "<tr>\n"+t.match(/.{1,2}/g).map(
           (t,c)=>"  <td id='r"+r+"c"+c+"'>"+(t[0]!=" "?"<b"+
-            (t[0]!="w"?" id='"+t+"'":"")+
+            (t[0]!="w"?' id="'+t+'"':"")+   // double-quoted: a token may contain ' (the quote rune j')
             " class='"+t[0]+"'"+
             ">"+
             (t[0]=="w"?jj.theme.w:t[0]=="l"?"⛔":t[0]=="o"?"🚪":t[0]=="a"?"🍎":ins[t[1]]??t[1])+

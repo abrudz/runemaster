@@ -27,9 +27,9 @@
  },
  "aG": {
   "req": "d⍉d∧M/d+d=m⌽d,j{j(",
-  "add": "1 2   ",
-  "task": "The Mirror-Heart of the temple is sealed by the last and greatest trial. A _magic square_ is a square grid whose every row, every column, and both grand diagonals sum alike. Wield every art you have gathered — {d⍉} to turn its axes (`1 1⍉` reads the main diagonal and `2 1⍉` flips the grid, so `1 1⍉`{m⌽} reads the other diagonal), {M/} to gather each sum, {d=} and {d∧} to weigh them as one — and forge a rune that gives 1 if the grid `⍵` is a magic square, else 0.\n\nFor the ancient square `{answer} 3 3⍴2 7 6 9 5 1 4 3 8` the lines all balance, giving 1.",
-  "f": "{∧/(+/1 1⍉⍵)=(+/⍵),(+/2 1⍉⍵),(+/1 1⍉⌽⍵)}",
+  "add": "1 2 ",
+  "task": "The Mirror-Heart of the temple is sealed by the last and greatest trial. A _magic square_ is a square grid whose every row, every column, and both grand diagonals sum alike. Wield every art you have gathered — {d⍉} to turn its axes (`(1,1)⍉` reads the main diagonal and `(2,1)⍉` flips the grid, so `(1,1)⍉`{m⌽} reads the other diagonal), {M/} to gather each sum, {d=} and {d∧} to weigh them as one — and forge a rune that gives 1 if the grid `⍵` is a magic square, else 0.\n\nFor the ancient square `{answer} 3 3⍴2 7 6 9 5 1 4 3 8` the lines all balance, giving 1.",
+  "f": "{∧/(+/(1,1)⍉⍵)=(+/⍵),(+/(2,1)⍉⍵),(+/(1,1)⍉⌽⍵)}",
   "p": ",",
   "a": [
    "3 3⍴2 7 6 9 5 1 4 3 8",

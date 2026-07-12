@@ -8,7 +8,7 @@
  },
  "M": [
   "w w w w w w w w w w w ",
-  "w                   w ",
+  "w         j'        w ",
   "w   w w w l1w w w     ",
   "w   w           w   w ",
   "w   w   w w w   w   w ",
@@ -75,5 +75,11 @@
     "'HELLO'"
    ]
   ]
+ },
+ "j'": {
+  "req": "",
+  "add": "F I R E ",
+  "task": "{j'} is the _diamond of quotation_ — a pair of quote-marks `' '` bounding letters into a text rune, a word the runes may grasp whole. Speak the elder-word FIRE as a text rune.",
+  "expr": "'FIRE'"
  }
 }

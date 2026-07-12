@@ -62,8 +62,8 @@
   "expr": "×/⍳n←3+?6"
  },
  "l0": {
-  "req": "d,",
-  "add": "' E L D F I R ",
+  "req": "d,j'",
+  "add": "E L D F I R ",
   "task": "Deeper in the grove, the old oaks answer only to their kin. A word set between quote-marks is a text rune. Bind the two elder-words `'ELD'` and `'FIRE'` into the single strand `ELDFIRE`.",
   "expr": "'ELD','FIRE'"
  },
