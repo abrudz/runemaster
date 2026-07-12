@@ -67,10 +67,13 @@ const favico=w=>{                                    // dynamic svg favicon of t
 const apx=()=>$("#apples").textContent="🍎 "+apples.length+" / 9"   // apple tally (win at 9)
 const mini=()=>{                                     // 4×5 discovered-rooms table: row=mr+2, col=mc+1
   let m=$("#mini");m.innerHTML=""
+  const mk=(d,cls,txt)=>{let s=document.createElement("span");s.className=cls;s.textContent=txt;d.appendChild(s)}
   for(let r=-2;r<=1;r++){let tr=m.insertRow()
     for(let cc=-1;cc<=3;cc++){let k=r+" "+cc,d=tr.insertCell()
       if(k==cur)d.className="now"                     // current room: bg cleared → reads as a highlight
-      if(atlas[k])d.textContent=atlas[k]              // wall emoji, revealed on first entry
+      let a=atlas[k];if(a==null)continue
+      if(typeof a=="string")a={w:a,stones:[],apple:0} // migrate legacy save entries (bare wall emoji)
+      mk(d,"wm",a.w)                                  // wall emoji, revealed on first entry
     }
   }
 }
@@ -158,7 +161,11 @@ async function loadM(mr,mc){
   }
   cur=key
   j=mem[key].j
-  atlas[key]??=j.theme.w                               // remember this room's wall the first time entered
+  atlas[key]={w:j.theme.w,stones:[],apple:0}           // remember this room's wall + inventory (idempotent; migrates legacy entries)
+  j.M.forEach(row=>(row.match(/.{1,2}/g)||[]).forEach(t=>{
+    if("mdMDj".includes(t[0]))atlas[key].stones.push(t)   // rune stones (ids globally unique)
+    else if(t[0]=="a")atlas[key].apple=t                  // the room's apple, if any
+  }))
   M.innerHTML=mem[key].html
   let got=new Set($$("#belt b").map(e=>e.id))          // already collected
   $$("#M b").forEach(e=>got.has(e.id)||apples.includes(e.id)?e.remove():doors[key]?.includes(e.id)?e.style.visibility="hidden":0)   // collected runes/apples gone; passed doors open
