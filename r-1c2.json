@@ -27,9 +27,9 @@
  },
  "l1": {
   "req": "j[d+j{",
-  "add": "1 ' A   ",
-  "task": "The blocks are hewn from a mask: sky for 0, stone for 1. Paint the mask `⍵` — a space for each 0, an `A` for each 1.\n\n`{answer} 0 1 1 0` gives ` AA `.",
-  "f": "{' A'[1+⍵]}",
+  "add": "1 ' S R ",
+  "task": "The blocks are hewn from a mask: sky for 0, rock for 1. Paint the mask `⍵` — an `S` for each 0, an `R` for each 1.\n\n`{answer} 0 1 1 0` gives `SRRS`.",
+  "f": "{'SR'[1+⍵]}",
   "a": [
    "0 1 1 0",
    "1 0 1",
