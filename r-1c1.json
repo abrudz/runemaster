@@ -16,9 +16,15 @@
   "w       w w w       w ",
   "w     w w   w w     w ",
   "w   w w       w w   w ",
-  "w                   w ",
+  "w         d∩        w ",
   "w w l0w w w w w w w w "
  ],
+ "d∩": {
+  "req": "",
+  "add": "",
+  "task": "{d∩} is the _ruby rune of commonality_, keeping (in order) the items on its left that also appear on its right. Which runes of the inscription `i` are echoed in the warding word `w`?",
+  "expr": "(i←'DRAKE MALLARD')∩w←'DARK'"
+ },
  "l0": {
   "req": "d≡",
   "add": "",

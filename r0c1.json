@@ -8,7 +8,7 @@
  },
  "M": [
   "w w   w w w w w w w w ",
-  "w d↓    w   d∩    w w ",
+  "w d↓    w         w w ",
   "w   w   w   w w     l2",
   "w d⌿w         w   w w ",
   "w   w w w w   w     w ",
@@ -24,12 +24,6 @@
   "add": "",
   "task": "{d↓} is the _ruby rune of dropping_, casting away from the start of the list on its right as many items as the number on its left. A rockfall has buried the first `n` runes of the vein `v` — recite what still shows.",
   "expr": "(n←2)↓v←'STALAGMITE'"
- },
- "d∩": {
-  "req": "",
-  "add": "",
-  "task": "{d∩} is the _ruby rune of commonality_, keeping (in order) the items on its left that also appear on its right. Which runes of the inscription `i` are echoed in the warding word `w`?",
-  "expr": "(i←'DRAKE MALLARD')∩w←'DARK'"
  },
  "d⌊": {
   "req": "",
