@@ -58,14 +58,15 @@ const chk=()=>{
   let bi=$$("#belt b").map(e=>e.id)
   $$(".l").forEach(e=>reqs(e).every(r=>~bi.indexOf(r))?(e.className="o",e.innerText="🚪"):0)
 }
-const count=()=>{let n=$$("#M b.m,#M b.d,#M b.M,#M b.D,#M b.j").length   // uncollected stones here
-  $("#left").textContent=`${j.name}: ${n?`${n} rune${n-1?"s":""} here`:"no runes here"}`
+const count=()=>{let n=$$("#M b.m,#M b.d,#M b.M,#M b.D,#M b.j").length   // uncollected stones here (for the tab title)
+  $("#left").textContent=j.name;$("#left").title=j.name                 // room name (rune count now lives on the mini-map tile)
   document.title=`${j.name} (${n}) - RuneMaster`}
 const favico=w=>{                                    // dynamic svg favicon of the wall emoji
   let l=$("link[rel=icon]")??document.head.appendChild(Object.assign(document.createElement("link"),{rel:"icon"}))
   l.href="data:image/svg+xml,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="82" font-size="88" text-anchor="middle">${w}</text></svg>`)}
 const mini=()=>{                                     // 4×5 discovered-rooms table: row=mr+2, col=mc+1
   let m=$("#mini");m.innerHTML=""
+  let belt=$$("#belt b").map(e=>e.id)                 // collected rune ids (globally unique)
   const mk=(d,cls,txt)=>{let s=document.createElement("span");s.className=cls;s.textContent=txt;d.appendChild(s)}
   for(let r=-2;r<=1;r++){let tr=m.insertRow()
     for(let cc=-1;cc<=3;cc++){let k=r+" "+cc,d=tr.insertCell()
@@ -74,6 +75,8 @@ const mini=()=>{                                     // 4×5 discovered-rooms ta
       if(typeof a=="string")a={w:a,stones:[],apple:0} // migrate legacy save entries (bare wall emoji)
       mk(d,"wm",a.w)                                  // wall emoji, revealed on first entry
       if(a.apple&&!apples.includes(a.apple))mk(d,"ap","🍎")   // uncollected apple → lower-left badge
+      let n=a.stones.filter(s=>!belt.includes(s)).length     // runes left in this room
+      if(n)mk(d,"rc",n)                               // remaining-rune count → bottom-right badge
     }
   }
 }
@@ -230,6 +233,6 @@ const react=b=>{
     if(apples.length>=9)win()
   }else if(b){
     $$("#belt td")[g].appendChild(c)
-    chk();count();save()
+    chk();count();mini();save()
   }
 }

@@ -197,6 +197,17 @@ th {
   font-size: calc(var(--mini) * 0.42);
   line-height: 1;
 }
+#mini td .rc {             /* remaining-rune count, bottom-right corner (legible on dark tile AND the transparent .now tile) */
+  position: absolute;
+  right: 0.1rem;
+  bottom: 0.02rem;
+  font-size: calc(var(--mini) * 0.4);
+  line-height: 1;
+  font-family: Text;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 2px #000;
+}
 @media (orientation: landscape) {
   body { flex-direction: row; }                  /* map on the left, utilities on the right */
   #util {
