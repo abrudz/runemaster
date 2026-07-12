@@ -21,15 +21,21 @@
     </dialog>
     <i id="i">🧍‍</i>
     <table id="M"></table>
-    <fieldset>
-      <legend><span id="left"></span> <span id="apples"></span> <button onclick="reset()">Restart Game</button></legend>
-      <table id="belt">
-        <tr><th>emerald: &ensp;</th><td></td></tr>
-        <tr><th>ruby:    &ensp;</th><td></td></tr>
-        <tr><th>sapphire:&ensp;</th><td></td></tr>
-        <tr><th>amethyst:&ensp;</th><td></td></tr>
-        <tr><th>diamond: &ensp;</th><td></td></tr>
-      </table>
-    </fieldset>
+    <div id="util">
+      <fieldset>
+        <legend><span id="left"></span></legend>
+        <table id="belt">
+          <tr><th>emerald: &ensp;</th><td></td></tr>
+          <tr><th>ruby:    &ensp;</th><td></td></tr>
+          <tr><th>sapphire:&ensp;</th><td></td></tr>
+          <tr><th>amethyst:&ensp;</th><td></td></tr>
+          <tr><th>diamond: &ensp;</th><td></td></tr>
+        </table>
+      </fieldset>
+      <div id="side">
+        <div id="topbar"><span id="apples"></span> <button onclick="reset()">Restart Game</button></div>
+        <div id="mini"></div>
+      </div>
+    </div>
   </body>
 </html>

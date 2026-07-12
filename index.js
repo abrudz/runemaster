@@ -1,6 +1,6 @@
 'use strict'
 let i,M,root,aski,askb,askp,ask,msg,msgp
-let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={},doors={},seen={},apples=[]
+let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={},doors={},seen={},apples=[],atlas={}
 const KEY="runemaster"                             // saved-progress key
 const $=s=>document.querySelector(s)
 const $$=s=>[...document.querySelectorAll(s)]
@@ -56,25 +56,39 @@ const chk=()=>{
   $$(".l").forEach(e=>reqs(e).every(r=>~bi.indexOf(r))?(e.className="o",e.innerText="🚪"):0)
 }
 const count=()=>{let n=$$("#M b.m,#M b.d,#M b.M,#M b.D,#M b.j").length   // uncollected stones here
-  $("#left").textContent=`${j.name}: ${n?`${n} rune${n-1?"s":""} yet to find here`:"all runes here are yours"}`
+  $("#left").textContent=`${j.name}: ${n?`${n} rune${n-1?"s":""} here`:"no runes here"}`
   document.title=`${j.name} (${n}) - RuneMaster`}
 const favico=w=>{                                    // dynamic svg favicon of the wall emoji
   let l=$("link[rel=icon]")??document.head.appendChild(Object.assign(document.createElement("link"),{rel:"icon"}))
   l.href="data:image/svg+xml,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="82" font-size="88" text-anchor="middle">${w}</text></svg>`)}
 const apx=()=>$("#apples").textContent="🍎 "+apples.length+" / 9"   // apple tally (win at 9)
+const mini=()=>{                                     // 4×5 discovered-rooms grid: row=mr+2, col=mc+1
+  let m=$("#mini");m.innerHTML=""
+  for(let r=-2;r<=1;r++)for(let cc=-1;cc<=3;cc++){    // row-major → matches grid auto-flow
+    let k=r+" "+cc,d=document.createElement("div")
+    d.className="cell"+(k==cur?" now":"")            // highlight the current room
+    if(atlas[k])d.textContent=atlas[k]               // wall emoji, revealed on first entry
+    m.appendChild(d)
+  }
+}
 const win=()=>{msgp.innerHTML="🍎 Nine apples gathered — you are the RuneMaster! 🍎";msg.showModal()}
-const fit=()=>{                                      // fit board+margin+chrome to viewport (no scroll)
-  let chrome=0
-  for(const el of document.body.children)if(el!=M&&el!=i&&el.tagName!="DIALOG")chrome+=el.offsetHeight
-  root.style.setProperty("--cols",cMax+1)            // map width in tiles (belt min-width)
-  let s=Math.min((innerWidth-8)/(cMax+3),(innerHeight-chrome-12)/(rMax+3))   // +3: cols/rows + 1-tile margin each side
+const fit=()=>{                                      // fit board+margin+utilities to viewport (no scroll)
+  root.style.setProperty("--cols",cMax+1)            // map width in tiles (portrait #util width)
+  const land=matchMedia("(orientation: landscape)").matches, util=$("#util")
+  let s=parseFloat(getComputedStyle(root).getPropertyValue("--size"))||24   // seed from current
+  for(let p=0;p<4;p++){                              // fixed point: utilities' extent depends on --size
+    root.style.setProperty("--size",Math.max(14,s)+"px")   // (reading offset* below forces a reflow)
+    s=land                                           // landscape: utilities right; else below
+      ?Math.min((innerWidth-8-util.offsetWidth)/(cMax+3),(innerHeight-12)/(rMax+3))
+      :Math.min((innerWidth-8)/(cMax+3),(innerHeight-util.offsetHeight-12)/(rMax+3))   // +3: cols/rows + 1-tile margin each side
+  }
   root.style.setProperty("--size",Math.max(14,s)+"px")
 }
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({mr,mc,r:i.r,c:i.c,belt:$$("#belt b").map(e=>e.id),doors,seen,apples}))}catch(_){}}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({mr,mc,r:i.r,c:i.c,belt:$$("#belt b").map(e=>e.id),doors,seen,apples,atlas}))}catch(_){}}
 const restore=()=>{
   let s;try{s=JSON.parse(localStorage.getItem(KEY))}catch(_){s=null}
   if(!s)return null
-  doors=s.doors??{};seen=s.seen??{};apples=s.apples??[]
+  doors=s.doors??{};seen=s.seen??{};apples=s.apples??[];atlas=s.atlas??{}
   ;(s.belt??[]).forEach(id=>{let g="mdMDj".indexOf(id[0]);if(~g)$$("#belt td")[g].appendChild(mkb(id))})
   return s
 }
@@ -140,6 +154,7 @@ async function loadM(mr,mc){
   }
   cur=key
   j=mem[key].j
+  atlas[key]??=j.theme.w                               // remember this room's wall the first time entered
   M.innerHTML=mem[key].html
   let got=new Set($$("#belt b").map(e=>e.id))          // already collected
   $$("#M b").forEach(e=>got.has(e.id)||apples.includes(e.id)?e.remove():doors[key]?.includes(e.id)?e.style.visibility="hidden":0)   // collected runes/apples gone; passed doors open
@@ -150,7 +165,7 @@ async function loadM(mr,mc){
   favico(j.theme.w)
   let first=$$("#M td")[0]     ;rMin=getR(first);cMin=getC(first)
   let last =$$("#M td").at(-1) ;rMax=getR(last );cMax=getC(last )
-  chk();count();apx();fit()
+  chk();count();apx();mini();fit()
 }
 document.addEventListener('DOMContentLoaded',async function main(){
   i=$("#i");M=$("#M");root=$("#root")

@@ -34,6 +34,7 @@ html {
   --wall: rgb(146, 73, 0);
   --speed: 0.5s;
   --size: 2.5rem;
+  --mini: 1.5rem;   /* mini-map room tile (compact, uncoupled from the board's --size) */
 }
 body {
   background: var(--spot);
@@ -106,10 +107,18 @@ fieldset {
   letter-spacing: 0.25ex;
   padding: 0.1rem 0.5rem 0.4rem;
 }
-body > fieldset {                                /* the belt (not the dialog's rune palette) */
+#util {                                          /* belt + mini-map, together as wide as the map */
   box-sizing: border-box;
-  min-width: calc(var(--size) * var(--cols));    /* at least as wide as the map */
-  overflow-x: auto;                              /* a full row scrolls instead of wrapping (height stays fixed) */
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  width: calc(var(--size) * var(--cols));        /* portrait: exactly the map's width */
+}
+#util > fieldset {                               /* the belt (not the dialog's rune palette) */
+  box-sizing: border-box;
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;                                  /* allow shrink so stones wrap instead of scrolling */
 }
 legend,
 th {
@@ -119,11 +128,81 @@ th {
   text-align: left;
   font-weight: normal;
 }
-#belt th,
-#belt td {
-  height: 1.9rem;          /* fixed & >= rune box; nowrap: belt never grows/jumps */
-  font-size: 1rem;         /* uncouple belt row height from the map's --size-based font */
+#belt,
+#belt tbody {
+  display: block;
+  width: 100%;
+}
+#belt tr {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+#belt th {                 /* gem-category label, kept on one line */
+  flex: none;
   white-space: nowrap;
+  font-size: 1rem;
+  line-height: 1.9rem;
+}
+#belt td {                 /* stone container: rune gems wrap to more lines when narrow */
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: auto;            /* override global td{height:var(--size)} or wrapped rows clip */
+  min-height: 1.9rem;
+  font-size: 1rem;         /* uncouple belt row height from the map's --size-based font */
+  white-space: normal;
+}
+#side {                    /* right of the belt: counters/Restart above the mini-map */
+  flex: none;
+  width: calc(var(--mini) * 5);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+#topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+#topbar button {           /* Restart left the legend, so restyle it here */
+  font-family: Text;
+  letter-spacing: 0.25ex;
+  font-size: 0.85rem;
+}
+#mini {                    /* 4×5 discovered-rooms grid (row = mr+2, col = mc+1) */
+  display: grid;
+  grid-template-columns: repeat(5, var(--mini));
+  grid-auto-rows: var(--mini);
+}
+#mini .cell {
+  box-sizing: border-box;
+  width: var(--mini);
+  height: var(--mini);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--mini) * 0.72);
+  background: var(--back);
+  border: 1px solid var(--spot);
+}
+#mini .cell.now {          /* the room the player is currently in */
+  outline: 0.15rem solid gold;
+  outline-offset: -0.15rem;
+}
+@media (orientation: landscape) {
+  body { flex-direction: row; }                  /* map on the left, utilities on the right */
+  #util {
+    flex-direction: column;                      /* stacked; mini-map (+counters) on top, belt below */
+    width: 13rem;
+    overflow-y: auto;
+    max-height: 100dvh;
+  }
+  #util > fieldset { flex: none; width: 100%; }
+  #side { order: -1; width: 100%; }
 }
 td > * {
   z-index: 100;
