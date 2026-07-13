@@ -238,7 +238,7 @@ const react=b=>{
   }else{
     $$("#belt td")[g].appendChild(c)    // gem into its belt slot, then fly it in from the dialog (FLIP)
     const f=c.getBoundingClientRect()
-    c.animate([{transform:`translate(${o.left+o.width/2-f.left-f.width/2}px,${o.top+o.height/2-f.top-f.height/2}px) scale(2)`,opacity:.4},{transform:"none",opacity:1}],{duration:500,easing:"ease-in-out"})
+    c.animate?.([{transform:`translate(${o.left+o.width/2-f.left-f.width/2}px,${o.top+o.height/2-f.top-f.height/2}px) scale(2)`,opacity:.4},{transform:"none",opacity:1}],{duration:500,easing:"ease-in-out"})
     chk();count();mini();save()
   }
 }
