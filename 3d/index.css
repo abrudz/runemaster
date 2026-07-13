@@ -4,7 +4,7 @@
 }
 @font-face {
   font-family: Text;
-  src: url("../Almendra-Italic.ttf");
+  src: url("../Almendra-BoldItalic.ttf");
   font-style: italic;
 }
 @font-face {
@@ -277,7 +277,6 @@ th {
 }
 #left {                    /* room name; ellipsis so long names don't collide with Restart */
   font-family: Text;
-  font-size: 0.85rem;
   flex: 1 1 auto;
   min-width: 0;
   overflow: hidden;

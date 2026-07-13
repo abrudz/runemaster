@@ -16,7 +16,7 @@ const dfnkeys=q=>q.f?(Array.isArray(q.a[0])?"⍺ ⍵ ":"⍵ "):""   // dfn arg k
 const keys=q=>q.req+q.add+dfnkeys(q)+[...q.task.matchAll(/`\w`/g)].join``.replace(/`(\w)`/g,"$1 ")   // a challenge's allowed runes
 const md=s=>s.replace(/\{(\w\W)\}/g,(_,m)=>b(m)).replace(/(?<!\\)`(.*?[^\\])`/g,"<code>$1</code>").replace(/(?<!\\)_(.*?[^\\])_/g,"<em>$1</em>").replace(/\\([`_])/g,"$1")
 const exec=s=>{
-  busy=1;$("#asks").textContent="checking…";$$("#ask form button").forEach(b=>b.disabled=1)   // hold the challenge open + inert until the check resolves
+  busy=1;$("#asks").textContent="Checking…";$$("#ask form button").forEach(b=>b.disabled=1)   // hold the challenge open + inert until the check resolves
   return fetch("https://tryapl.org/Exec",{
     method:"POST",
     headers:{"Content-Type":"application/json;charset=utf-8"},
@@ -125,7 +125,7 @@ const restore=()=>{
 window.reset=()=>{localStorage.removeItem(KEY);location.reload()}   // wipe saved progress
 const turn=d=>{if(busy)return;dir=(dir+d)&3;ang+=d==3?-90:90;i.style.rotate=ang+"deg";show();save()}   // rotate 90° (d: +1 CW, +3 CCW); ang is continuous so the marker turns the short way; frozen mid-transition
 const inw=(r,c,dr,dc)=>{let t=td(r+dr,c+dc);return t&&!t.children[0]?[r+dr,c+dc]:[r,c]}   // one cell inward onto open ground, so entering a room lands you inside (not on the border)
-const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";$("#asks").textContent="submit";$$("#ask form button").forEach(b=>b.disabled=0);ask.showModal()}   // open a challenge dialog
+const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";$("#asks").textContent="Submit";$$("#ask form button").forEach(b=>b.disabled=0);ask.showModal()}   // open a challenge dialog
 async function step(newR,newC){                      // move to / interact with cell; keyboard + tap
   if(busy||$$("dialog").some(e=>e.hasAttribute("open")))return
   if(newR<0||newR>rMax||newC<0||newC>cMax)return      // never walk off the grid — border portals do the crossing

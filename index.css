@@ -1,11 +1,11 @@
 @font-face {
   font-family: Text;
-  src: url("Almendra-Regular.ttf");
+  src: url("Almendra-BoldItalic.ttf");
+  font-style: italic;
 }
 @font-face {
   font-family: Text;
-  src: url("Almendra-Italic.ttf");
-  font-style: italic;
+  src: url("Almendra-Regular.ttf");
 }
 @font-face {
   font-family: APL;
@@ -176,7 +176,6 @@ th {
 }
 #left {                    /* room name; ellipsis so long names don't collide with Restart */
   font-family: Text;
-  font-size: 0.85rem;
   flex: 1 1 auto;
   min-width: 0;
   overflow: hidden;
@@ -228,7 +227,7 @@ th {
     margin: 0 var(--size) 0 1rem;                /* right: off the screen edge; left: air from the map */
     transform: translateY(var(--size));          /* drop to the map's tile row WITHOUT enlarging the box (which would shove the centred map down) */
     overflow-y: auto;
-    max-height: calc(100dvh - var(--size));
+    max-height: calc(100dvh - 2 * var(--size));
   }
   #belt { flex: none; }                          /* width:100% already set above */
   #side { order: -1; width: 100%; }              /* mini-map (+counters) on top, belt below */
@@ -238,7 +237,7 @@ th {
     zoom: 2;
     transform: translateY(calc(var(--size) / 2));   /* zoom:2 doubles it → one map square down, aligned with the board */
     align-self: flex-start;
-    max-height: 50dvh;                           /* halved because zoom:2 doubles it back to the viewport height */
+    max-height: calc(50dvh - var(--size));       /* halved because zoom:2 doubles it back to the viewport height */
   }
 }
 td > * {
