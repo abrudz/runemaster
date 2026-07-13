@@ -9,7 +9,7 @@
 }
 @font-face {
   font-family: APL;
-  src: local("SAX2"), url("APL387.ttf");
+  src: local("SAX2"), url("SAX2.ttf");
 }
 * {
   user-select: none;
@@ -267,6 +267,7 @@ b {
   width: calc(var(--size) * 0.6);
   height: calc(var(--size) * 0.6);
   line-height: calc(var(--size) * 0.6);
+  font-size: 0.667em;              /* glyph ≈ 2/3 of the stone, matching the belt (1rem glyph in a 1.5rem stone) */
   -webkit-text-stroke: 0.05rem;
   border-width: 0.33rem;
   border-style: outset;
@@ -295,14 +296,12 @@ b {
   color: var(--amethyst);
   -webkit-text-stroke-color: var(--amethyst);
   background: var(--l-amethyst);
-  font-size: 0.72em;
   letter-spacing: -0.18em;
   text-indent: -0.18em;
 }
 .j {
   border-radius: 50%;
   color: var(--diamond);
-  font-size: 0.72em;
   letter-spacing: -0.18em;
   text-indent: -0.18em;
   background: radial-gradient(
