@@ -1,19 +1,19 @@
 @font-face {
   font-family: Text;
   letter-spacing: 0.25ex;
-  src: url("Gemcut Bold.otf");
+  src: url("../Gemcut Bold.otf");
 }
 @font-face {
   font-family: Text;
   letter-spacing: 0.25ex;
-  src: url("Gemcut Bold Italic.otf");
+  src: url("../Gemcut Bold Italic.otf");
   font-style: italic;
 }
 @font-face {
   font-family: APL;
   src:
     local("APL387 Unicode"), local("APL386 Unicode"), local("APL385 Unicode"),
-    url("APL387.ttf");
+    url("../APL387.ttf");
 }
 * {
   user-select: none;
@@ -23,18 +23,22 @@ html {
   --ruby: rgb(146, 0, 0);
   --sapphire: rgb(0, 109, 219);
   --amethyst: rgb(73, 0, 146);
-  --l-emerald: rgba(140, 214, 209, 0.85);
-  --l-ruby: rgba(240, 184, 184, 0.85);
-  --l-sapphire: rgba(158, 205, 250, 0.85);
-  --l-amethyst: rgba(206, 176, 236, 0.85);
+  --l-emerald: rgba(140, 214, 209);
+  --l-ruby: rgba(240, 184, 184);
+  --l-sapphire: rgba(158, 205, 250);
+  --l-amethyst: rgba(206, 176, 236);
   --diamond: #222;
-  --gem-edge: rgba(255, 255, 255, 0.6);
+  --gem-edge: rgba(255, 255, 255, 0.4);
   --back: #222;
   --spot: #999;
   --wall: rgb(146, 73, 0);
   --speed: 0.5s;
   --size: 2.5rem;
   --mini: 2.5rem;   /* mini-map room tile (fixed, uncoupled from the board's --size) */
+  --cell: 46vmin;   /* first-person world-cell edge (fit() tunes it) */
+  --persp: 54vmin;  /* camera focal length (≈1.15·--cell) */
+  --amap: 1.4rem;   /* automap tile (fixed, uncoupled from the first-person --cell) */
+  --sky: #7ec0ee;   /* ceiling: a constant sky */
 }
 body {
   background: var(--spot);
@@ -46,6 +50,100 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
+}
+/* ── first-person view ────────────────────────────────────────── */
+#view {                                  /* the stage: a perspective window into the room */
+  position: relative;
+  flex: 1 1 auto;
+  align-self: stretch;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  perspective: var(--persp);
+  perspective-origin: 50% 50%;           /* eye at vertical centre → walls span the horizon */
+  background: linear-gradient(var(--sky) 0 50%, var(--back) 50%);   /* sky above the horizon, dark below (floor plane covers it) */
+}
+#view::after {                           /* black curtain: held down while the next room loads */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9;
+  transition: opacity 0.14s ease;
+}
+#view.dark::after { opacity: 1; }
+#scene {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.p {                                     /* a cell-sized panel, centred on the eye at z=0 */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--cell);
+  height: var(--cell);
+  margin: calc(var(--cell) / -2);
+  transform-style: preserve-3d;
+  text-align: center;
+}
+.p.w::after {                            /* gentle depth cue: distant walls dim but stay visible (no pop-in) */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--back);
+  opacity: calc(var(--f) / 18);
+  pointer-events: none;
+}
+.p.w {                                   /* wall face: solid-backed tint, wall-emoji textured */
+  background-color: var(--back);         /* opaque base so translucent --wall themes still read as wall */
+  background-image: linear-gradient(var(--wall), var(--wall));
+  line-height: var(--cell);
+  font-size: calc(var(--cell) * 0.86);
+  box-shadow: 0 0 0 1px #0008;           /* dark bleed masks the bright seam where panels meet at the vanishing point */
+  box-sizing: border-box;
+}
+.p.w.f { transform: translate3d(calc(var(--cell) * var(--o)),         0px, calc(var(--cell) * (0.5 - var(--f)))); }
+.p.w.l { transform: translate3d(calc(var(--cell) * (var(--o) - 0.5)), 0px, calc(var(--cell) * var(--f) * -1)) rotateY( 90deg); }
+.p.w.r { transform: translate3d(calc(var(--cell) * (var(--o) + 0.5)), 0px, calc(var(--cell) * var(--f) * -1)) rotateY(-90deg); }
+.p.floor, .p.ceil {                      /* ground & sky slabs, in perspective */
+  width: calc(var(--cell) * 13);
+  height: calc(var(--cell) * 13);
+  margin: 0;
+}
+.p.floor {                               /* same tint as the walls, but bare (no emoji) */
+  background-color: var(--back);
+  background-image: linear-gradient(var(--wall), var(--wall));
+  transform: translate(-50%, -50%) translate3d(0, calc(var(--cell) * 0.5), calc(var(--cell) * -5)) rotateX(90deg);
+}
+.p.ceil {
+  background: var(--sky);
+  transform: translate(-50%, -50%) translate3d(0, calc(var(--cell) * -0.5), calc(var(--cell) * -5)) rotateX(-90deg);
+}
+.p.door > .lk {                          /* small padlock overlaid on the door: 🔒 locked / 🔓 ready */
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  transform: translate(-50%, -50%);
+  font-size: 0.5em;                      /* relative to the door's glyph */
+  line-height: 1;
+}
+.p.bill {                                /* stone / apple, hanging in the air (no pane) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--cell) * 0.5);    /* free-standing apple */
+  transform: translate3d(calc(var(--cell) * var(--o)), 0px, calc(var(--cell) * var(--f) * -1));
+}
+.p.bill > b { opacity: 1; }
+#scene .m, #scene .d, #scene .M, #scene .D, #scene .j {   /* gems render mid-size in the scene, with a proportional bevel */
+  width: calc(var(--cell) * 0.34);
+  height: calc(var(--cell) * 0.34);
+  line-height: calc(var(--cell) * 0.34);
+  font-size: calc(var(--cell) * 0.24);
+  border-width: calc(var(--cell) * 0.045);
 }
 dialog {
   z-index: 150;
@@ -86,20 +184,20 @@ dialog input {
   font-family: APL;
   font-size: calc(var(--size) * 0.6);
 }
-#M {
-  margin: var(--size);           /* one tile of clearance all round: for the counter, the belt, and touch room */
+#M {                             /* now the small top-down automap (cells flush, no grid gaps) */
+  margin: 0.25rem 0 0;
   border-collapse: collapse;
-  box-shadow: 0 0 calc(var(--size) / 4) calc(var(--size) / 4) var(--back);
+  table-layout: fixed;
 }
 td {
-  height: var(--size);
-  font-size: calc(var(--size) * 0.6);
+  height: var(--amap);
+  font-size: calc(var(--amap) * 0.6);
   position: relative;
   padding: 0;
 }
 #M td {
   background: var(--back);
-  width: var(--size);
+  width: var(--amap);
 }
 fieldset {
   border: 0.15rem solid currentColor;
@@ -107,12 +205,15 @@ fieldset {
   letter-spacing: 0.25ex;
   padding: 0.1rem 0.5rem 0.4rem;
 }
-#util {                                          /* belt + mini-map, together as wide as the map */
+#util {                                          /* belt + mini-map + automap, below the view (portrait) */
   box-sizing: border-box;
   display: flex;
   gap: 0.5rem;
   align-items: flex-start;
-  width: calc(var(--size) * var(--cols));        /* portrait: exactly the map's width */
+  justify-content: center;
+  flex: none;
+  width: 100%;
+  padding: 0 0.5rem 0.25rem;
 }
 #belt {                                          /* the belt, now a direct child of #util (was inside a fieldset) */
   box-sizing: border-box;
@@ -259,15 +360,21 @@ b {
 .d,
 .M,
 .D,
-.j {
+.j {                               /* default stone size = dialog/prose scale (--size); #M & #scene override below */
   width: calc(var(--size) * 0.6);
   height: calc(var(--size) * 0.6);
   line-height: calc(var(--size) * 0.6);
   -webkit-text-stroke: 0.05rem;
-  border-width: 0.33rem;
+  border-width: calc(var(--size) * 0.08);
   border-style: outset;
   border-color: var(--gem-edge);   /* one place sets every stone's bevel colour */
   letter-spacing: normal;          /* cancel the fieldset/dialog 0.25ex that shifts single glyphs off-centre */
+}
+#M .m, #M .d, #M .M, #M .D, #M .j {   /* automap stones: tiny, thin proportional bevel */
+  width: calc(var(--amap) * 0.6);
+  height: calc(var(--amap) * 0.6);
+  line-height: calc(var(--amap) * 0.6);
+  border-width: calc(var(--amap) * 0.08);
 }
 .m {
   border-radius: 1em 1em 0em 1em;
@@ -313,28 +420,29 @@ b {
     rgba(255, 255, 255, 0.55)
   );
 }
-i {
-  height: var(--size);
-  width: var(--size);
-  line-height: var(--size);
-  font-size: calc(var(--size) * 0.7);   /* scale the player with the tiles */
+i {                                    /* the automap "you are here" arrow, pointing where you face */
+  height: var(--amap);
+  width: var(--amap);
+  line-height: var(--amap);
+  font-size: calc(var(--amap) * 0.8);
+  color: var(--spot);
   display: block;
   font-style: normal;
-  z-index: 50;
-  box-shadow: 0 0 calc(var(--size) * 0.8) var(--size) var(--spot);
-  background: var(--spot);
+  z-index: 120;                        /* over automap tiles, under dialogs (150) */
+  text-shadow: 0 0 0.2rem var(--back);   /* just enough contrast to read the arrow; no 3×3 lantern */
+  background: none;
   position: absolute;
   text-align: center;
   transition: var(--speed);
 }
-.w {
+#M .w {                                /* automap wall tile (scene walls are .p.w, sized off --cell) */
   background: var(--wall);
-  height: var(--size);
-  width: var(--size);
-  border-radius: calc(var(--size) / 2.5);
+  height: var(--amap);
+  width: var(--amap);
+  border-radius: calc(var(--amap) / 2.5);
 }
-.a {
-  font-size: calc(var(--size) * 0.72);   /* free-standing apple (P10) */
+#M .a {
+  font-size: calc(var(--amap) * 0.72);   /* free-standing apple (P10) */
 }
 #belt b {                 /* belt runes are a fixed size (uncoupled from --size) so the belt height is stable */
   width: 1.5rem;
