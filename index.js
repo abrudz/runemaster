@@ -1,6 +1,6 @@
 'use strict'
 let i,M,root,aski,askb,askp,ask,msg,msgp
-let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,dir=0,cur,mem={},doors={},seen={},apples=[],atlas={},busy
+let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,dir=0,ang=0,cur,mem={},doors={},seen={},apples=[],atlas={},busy
 const KEY="runemaster"                             // saved-progress key
 const $=s=>document.querySelector(s)
 const $$=s=>[...document.querySelectorAll(s)]
@@ -29,7 +29,7 @@ const getTop =e=>window.scrollY+e.getBoundingClientRect().top +"px"
 const getLeft=e=>window.scrollX+e.getBoundingClientRect().left+"px"
 const getR=e=>parseInt(e.id.replace(/r|c\d+/g,""))
 const getC=e=>parseInt(e.id.replace(/r\d+c/,""))
-const place=(e,y,x)=>{const t=td(y,x);e.style.top=getTop(t);e.style.left=getLeft(t);e.style.rotate=dir*90+"deg"}   // automap marker points where you face
+const place=(e,y,x)=>{const t=td(y,x);e.style.top=getTop(t);e.style.left=getLeft(t)}   // (facing is set by turn(), continuously, so the arrow spins the short way)
 const jump=(r,c)=>{i.style.transition="none";i.r=r;i.c=c;void i.offsetWidth;i.style.transition=""}
 const lb=(ch,sol)=>{
   const a=[...new Set(ch.match(/../g)??[])]          // allowed runes, deduped
@@ -62,14 +62,24 @@ const draw=()=>{                                     // project the visible cell
   let R=(dir+1)&3,h=[]                                // R: "right" facing (lateral offset)
   const at=(f,o)=>[i.r+DR[dir]*f+DR[R]*o,i.c+DC[dir]*f+DC[R]*o]       // camera(f ahead,o right) → world r,c
   const p=(cl,f,o,g)=>`<b class="p ${cl}" style="--f:${f};--o:${o}">${g}</b>`
+  const border=(r,c)=>r==0||r==rMax||c==0||c==cMax
+  const seenAt=(r,c)=>seen[cur]?.includes(r+","+c)
+  const door=(r,c,f,o,lk)=>`<b class="p w door f" data-r="${r}" data-c="${c}" style="--f:${f};--o:${o}">🚪${lk?`<b class="lk">${lk}</b>`:""}</b>`   // 🚪 on a solid wall pane
   for(let f=MAXV;f>=0;f--)for(let o=-VW;o<=VW;o++){    // far→near
-    let[r,c]=at(f,o),e=td(r,c)?.children[0]
+    let[r,c]=at(f,o),t=td(r,c),e=t?.children[0]
+    if(!t){                                           // off-grid: an open edge = a doorway into the neighbouring room
+      let[pr,pc]=at(f-1,o),pt=td(pr,pc)
+      if(f&&pt&&!pt.children[0]&&border(pr,pc)&&seenAt(pr,pc))h.push(door(pr,pc,f,o,""))   // plain 🚪, no challenge
+      continue
+    }
     if(!e||e.style.visibility=="hidden"||e.style.opacity!="1")continue   // floor / fogged / gone
     if(e.className=="w"){                              // wall: emit only camera-exposed faces
       f&&!wallAt(...at(f-1,o))?h.push(p("w f",f,o,e.textContent)):0      // front (toward camera)
       wallAt(...at(f,o-1))?0:h.push(p("w l",f,o,e.textContent))         // left face
       wallAt(...at(f,o+1))?0:h.push(p("w r",f,o,e.textContent))         // right face
-    }else if((f||o)&&~"mdMDjloa".indexOf(e.className))                   // stone/door/apple billboard (never underfoot)
+    }else if(e.className=="l"||e.className=="o")        // door on a solid pane: 🔒 locked / 🔓 ready to solve
+      h.push(door(r,c,f,o,e.className=="l"?"🔒":"🔓"))
+    else if((f||o)&&~"mdMDja".indexOf(e.className))     // stone/apple billboard (hangs in the air, never underfoot)
       h.push(`<b class="p bill" data-r="${r}" data-c="${c}" style="--f:${f};--o:${o}"><b class="${e.className}">${e.textContent}</b></b>`)
   }
   $("#scene").innerHTML=FC+h.join``
@@ -117,14 +127,15 @@ const restore=()=>{
   return s
 }
 window.reset=()=>{localStorage.removeItem(KEY);location.reload()}   // wipe saved progress
-const turn=d=>{dir=(dir+d)&3;i.style.rotate=dir*90+"deg";show();save()}   // rotate 90° (d: +1 CW, +3 CCW): spin marker, repaint, persist
+const turn=d=>{dir=(dir+d)&3;ang+=d==3?-90:90;i.style.rotate=ang+"deg";show();save()}   // rotate 90° (d: +1 CW, +3 CCW); ang is continuous so the marker turns the short way
+const inw=(r,c,dr,dc)=>{let t=td(r+dr,c+dc);return t&&!t.children[0]?[r+dr,c+dc]:[r,c]}   // one cell inward onto open ground, so entering a room lands you inside (not on the border)
 const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";$("#asks").textContent="submit";$$("#ask form button").forEach(b=>b.disabled=0);ask.showModal()}   // open a challenge dialog
 async function step(newR,newC){                      // move to / interact with cell; keyboard + tap
   if($$("dialog").some(e=>e.hasAttribute("open")))return
-  if(newR<0   &&newC==i.c){mr-=1;await loadM(mr,mc);jump(rMax,newC);show()}else
-  if(newR>rMax&&newC==i.c){mr+=1;await loadM(mr,mc);jump(0   ,newC);show()}else
-  if(newC<0   &&newR==i.r){mc-=1;await loadM(mr,mc);jump(newR,cMax);show()}else
-  if(newC>cMax&&newR==i.r){mc+=1;await loadM(mr,mc);jump(newR,0   );show()}else   // ignore diag move off edge (wall!)
+  if(newR<0   &&newC==i.c){mr-=1;await loadM(mr,mc);jump(...inw(rMax,newC,-1, 0));show()}else
+  if(newR>rMax&&newC==i.c){mr+=1;await loadM(mr,mc);jump(...inw(0   ,newC, 1, 0));show()}else
+  if(newC<0   &&newR==i.r){mc-=1;await loadM(mr,mc);jump(...inw(newR,cMax, 0,-1));show()}else
+  if(newC>cMax&&newR==i.r){mc+=1;await loadM(mr,mc);jump(...inw(newR,0   , 0, 1));show()}else   // ignore diag move off edge (wall!)
   if(0<=newR&&newR<=rMax&&0<=newC&&newC<=cMax){
     let t=td(newR,newC).children[0]
     if(t&&t.style.visibility!="hidden"){
@@ -206,11 +217,12 @@ document.addEventListener('DOMContentLoaded',async function main(){
   Object.defineProperty(i,"r",{get:()=>i.rVal,set:v=>place(i,i.rVal=v,i.cVal)})
   Object.defineProperty(i,"c",{get:()=>i.cVal,set:v=>place(i,i.rVal,i.cVal=v)})
   i.r=i.rVal;i.c=i.cVal
+  ang=dir*90;i.style.rotate=ang+"deg"     // seed the marker's heading (no animation on load)
   show()
-  document.onclick=e=>{                    // click a billboard to interact; click view zones to move/turn
+  document.onclick=e=>{                    // click a billboard/door to interact; click view zones to move/turn
     if(e.target.closest("dialog,button,#belt,#util"))return       // leave UI + automap alone
-    let bill=e.target.closest(".p.bill")
-    if(bill){let r=+bill.dataset.r,c=+bill.dataset.c               // tapped a stone/door/apple: one step toward it (onto it → interact)
+    let tgt=e.target.closest(".p[data-r]")
+    if(tgt){let r=+tgt.dataset.r,c=+tgt.dataset.c                  // tapped a stone/door/apple/exit: one step toward it (onto it → interact/cross)
       return Math.abs(r-i.r)>=Math.abs(c-i.c)?step(i.r+Math.sign(r-i.r),i.c):step(i.r,i.c+Math.sign(c-i.c))}
     let v=$("#view").getBoundingClientRect()
     if(e.clientX<v.left||e.clientX>v.right||e.clientY<v.top||e.clientY>v.bottom)return
