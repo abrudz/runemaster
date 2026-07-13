@@ -81,6 +81,10 @@ dialog input {
   font-weight: bold;
   font-size: calc(var(--size) * 0.6);
 }
+#askr {                      /* inline failure notice; the dialog + input stay put on a wrong answer */
+  font-family: Text;
+  color: var(--ruby);
+}
 #M {
   margin: var(--size);           /* one tile of clearance all round: for the counter, the belt, and touch room */
   border-collapse: collapse;

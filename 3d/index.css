@@ -179,6 +179,10 @@ dialog input {
   font-weight: bold;
   font-size: calc(var(--size) * 0.6);
 }
+#askr {                      /* inline failure notice; the dialog + input stay put on a wrong answer */
+  font-family: Text;
+  color: var(--ruby);
+}
 #M {                             /* now the small top-down automap (cells flush, no grid gaps) */
   margin: 0.25rem 0 0;
   border-collapse: collapse;

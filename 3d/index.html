@@ -15,7 +15,7 @@
       <p id="askp">question</p>
       <form onsubmit="return false">
         <input id="aski" inputmode="none" autofocus autocomplete="off" spellcheck="false" onkeydown="if(event.key=='Enter')ans(aski.value)">
-        <p><button id="asks" type="button" onclick="ans(aski.value)">Submit</button> <button type="button" onclick="aski.value='';ask.close()">Cancel</button></p>
+        <p><button id="asks" type="button" onclick="ans(aski.value)">Submit</button> <button type="button" onclick="aski.value='';ask.close()">Cancel</button> <span id="askr" aria-live="polite"></span></p>
       </form>
       <fieldset><legend> allowed runes — click to insert </legend><div id="askb"></div></fieldset>
     </dialog>

@@ -16,14 +16,14 @@ const dfnkeys=q=>q.f?(Array.isArray(q.a[0])?"⍺ ⍵ ":"⍵ "):""   // dfn arg k
 const keys=q=>q.req+q.add+dfnkeys(q)+[...q.task.matchAll(/`\w`/g)].join``.replace(/`(\w)`/g,"$1 ")   // a challenge's allowed runes
 const md=s=>s.replace(/\{(\w\W)\}/g,(_,m)=>b(m)).replace(/(?<!\\)`(.*?[^\\])`/g,"<code>$1</code>").replace(/(?<!\\)_(.*?[^\\])_/g,"<em>$1</em>").replace(/\\([`_])/g,"$1")
 const exec=s=>{
-  busy=1;$("#asks").textContent="Checking…";$$("#ask form button").forEach(b=>b.disabled=1)   // hold the challenge open + inert until the check resolves
+  busy=1;$("#askr").textContent="";$("#asks").textContent="Checking…";$$("#ask form button").forEach(b=>b.disabled=1)   // hold the challenge open + inert until the check resolves
   return fetch("https://tryapl.org/Exec",{
     method:"POST",
     headers:{"Content-Type":"application/json;charset=utf-8"},
     body:JSON.stringify([0,0,0,s]),
     signal:AbortSignal.timeout(35e3)
   }).then(d=>d.json()).then(d=>{busy=0;react(+d[3][0])})
-    .catch(_=>{busy=0;ask.close();msgp.innerHTML="TryAPL isn't responding — please try again.";msg.showModal()})
+    .catch(_=>{busy=0;$$("#ask form button").forEach(b=>b.disabled=0);$("#asks").textContent="Submit";$("#askr").textContent="TryAPL didn't respond — try again";aski.focus()})   // keep the dialog + input; let them retry
 }
 const getTop =e=>window.scrollY+e.getBoundingClientRect().top +"px"
 const getLeft=e=>window.scrollX+e.getBoundingClientRect().left+"px"
@@ -125,7 +125,7 @@ const restore=()=>{
 window.reset=()=>{localStorage.removeItem(KEY);location.reload()}   // wipe saved progress
 const turn=d=>{if(busy)return;dir=(dir+d)&3;ang+=d==3?-90:90;i.style.rotate=ang+"deg";show();save()}   // rotate 90° (d: +1 CW, +3 CCW); ang is continuous so the marker turns the short way; frozen mid-transition
 const inw=(r,c,dr,dc)=>{let t=td(r+dr,c+dc);return t&&!t.children[0]?[r+dr,c+dc]:[r,c]}   // one cell inward onto open ground, so entering a room lands you inside (not on the border)
-const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";$("#asks").textContent="Submit";$$("#ask form button").forEach(b=>b.disabled=0);ask.showModal()}   // open a challenge dialog
+const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";$("#askr").textContent="";$("#asks").textContent="Submit";$$("#ask form button").forEach(b=>b.disabled=0);ask.showModal()}   // open a challenge dialog
 async function step(newR,newC){                      // move to / interact with cell; keyboard + tap
   if(busy||$$("dialog").some(e=>e.hasAttribute("open")))return
   if(newR<0||newR>rMax||newC<0||newC>cMax)return      // never walk off the grid — border portals do the crossing
@@ -250,17 +250,19 @@ window.ans=t=>{
   exec(expr)
 }
 const react=b=>{
-  ask.close()                                        // the check resolved — dismiss the challenge
-  if(b&&ask.b.id[0]=="l"){              // door solved → plain passable door; leave the player standing in front
+  $$("#ask form button").forEach(x=>x.disabled=0);$("#asks").textContent="Submit"   // check resolved — controls live again
+  if(!b){$("#askr").textContent="Not quite — try again";aski.focus();return}          // wrong answer: keep the dialog + input so they can retry or Cancel
+  $("#askr").textContent="";ask.close()
+  if(ask.b.id[0]=="l"){                  // door solved → plain passable door; leave the player standing in front
     ask.b.className="x";ask.b.innerText="🚪"
     ;(doors[cur]??=[]).push(ask.b.id)   // remember door passed
     show()                              // repaint (player doesn't move through)
     save()
-  }else if(b&&ask.b.id[0]=="a"){         // 🍎 collected
+  }else if(ask.b.id[0]=="a"){            // 🍎 collected
     if(!apples.includes(ask.b.id))apples.push(ask.b.id)
     ask.b.remove();mini();draw();save()
     if(apples.length>=9)win()
-  }else if(b){
+  }else{
     $$("#belt td")[g].appendChild(c)
     chk();count();mini();draw();save()
   }
