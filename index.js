@@ -106,10 +106,10 @@ window.reset=()=>{localStorage.removeItem(KEY);location.reload()}   // wipe save
 const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";$("#askr").textContent="";$("#asks").textContent="Submit";$$("#ask form button").forEach(b=>b.disabled=0);ask.showModal()}   // open a challenge dialog
 async function step(newR,newC){                      // move to / interact with cell; keyboard + tap
   if($$("dialog").some(e=>e.hasAttribute("open")))return
-  if(newR<0   &&newC==i.c){mr-=1;await loadM(mr,mc);jump(rMax,newC);show()}else
-  if(newR>rMax&&newC==i.c){mr+=1;await loadM(mr,mc);jump(0   ,newC);show()}else
-  if(newC<0   &&newR==i.r){mc-=1;await loadM(mr,mc);jump(newR,cMax);show()}else
-  if(newC>cMax&&newR==i.r){mc+=1;await loadM(mr,mc);jump(newR,0   );show()}else   // ignore diag move off edge (wall!)
+  if(newR<0   &&newC==i.c){if(await loadM(mr-1,mc)){mr--;jump(rMax,newC);show()}}else   // commit the move only once the level actually loads
+  if(newR>rMax&&newC==i.c){if(await loadM(mr+1,mc)){mr++;jump(0   ,newC);show()}}else   // (missing/unreachable file -> stay put, don't corrupt mr/mc)
+  if(newC<0   &&newR==i.r){if(await loadM(mr,mc-1)){mc--;jump(newR,cMax);show()}}else
+  if(newC>cMax&&newR==i.r){if(await loadM(mr,mc+1)){mc++;jump(newR,0   );show()}}else   // ignore diag move off edge (wall!)
   if(0<=newR&&newR<=rMax&&0<=newC&&newC<=cMax){
     let t=td(newR,newC).children[0]
     if(t&&t.style.visibility!="hidden"){
@@ -146,10 +146,11 @@ addEventListener('keydown',e=>{
   if(moved&&!$$("dialog").some(x=>x.hasAttribute("open"))){e.preventDefault();step(newR,newC)}
 })
 async function loadM(mr,mc){
-  if(cur!=null)mem[cur].html=M.innerHTML
   let key=mr+" "+mc
   if(!mem[key]){
-    let jj=await fetch("r"+mr+"c"+mc+".json").then(d=>d.json())
+    let jj
+    try{jj=await fetch("r"+mr+"c"+mc+".json").then(d=>{if(!d.ok)throw 0;return d.json()})}
+    catch(_){return}                                   // no such level (or unreachable) — abort; caller keeps the player put
     mem[key]={j:jj,html:"<tbody>\n"+jj.M.map(
       (t,r)=>
         "<tr>\n"+t.match(/.{1,2}/g).map(
@@ -162,6 +163,7 @@ async function loadM(mr,mc){
         ).join`\n`+"\n</tr>"
     ).join`\n`+"</tbody>"}
   }
+  if(cur!=null)mem[cur].html=M.innerHTML               // save the room we're leaving — only now the new one is secured
   cur=key
   j=mem[key].j
   atlas[key]={w:j.theme.w,stones:[],apple:0}           // remember this room's wall + inventory (idempotent; migrates legacy entries)
@@ -180,6 +182,7 @@ async function loadM(mr,mc){
   let first=$$("#M td")[0]     ;rMin=getR(first);cMin=getC(first)
   let last =$$("#M td").at(-1) ;rMax=getR(last );cMax=getC(last )
   chk();count();mini();fit()
+  return 1                                             // signal a successful load (see step()'s edge crossings)
 }
 document.addEventListener('DOMContentLoaded',async function main(){
   i=$("#i");M=$("#M");root=$("#root")
