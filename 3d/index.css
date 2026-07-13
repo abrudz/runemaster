@@ -9,9 +9,7 @@
 }
 @font-face {
   font-family: APL;
-  src:
-    local("APL387 Unicode"), local("APL386 Unicode"), local("APL385 Unicode"),
-    url("../APL387.ttf");
+  src: local("SAX2"), url("../SAX2.ttf");
 }
 * {
   user-select: none;
