@@ -7,22 +7,22 @@
   "spot": "#e0edfa"
  },
  "M": [
-  "w w w w w w w w w w w ",
+  "w w w   w w w w w w w ",
   "w                   w ",
   "w             w     w ",
-  "w     w       w     w ",
+  "w     w       w     l0",
   "w     w   w l1w     w ",
-  "      w   w   w     w ",
+  "w     w   w   w     w ",
   "w     w   w l2w     w ",
   "w     w   w   w     w ",
   "w     w   w aEw     w ",
   "w     w   w   w     w ",
-  "w w w w w w w w l0w w "
+  "w w w w w w w w w w w "
  ],
  "l0": {
   "req": "M/d+d,",
   "add": "",
-  "task": "The northern stair descends to the Hall of Mirrors. Join the tallies `a` and `b`, then sum the whole strand, to descend.",
+  "task": "The eastern stair leads to the Hall of Mirrors. Join the tallies `a` and `b`, then sum the whole strand, to pass.",
   "expr": "+/(a←5?20),b←5?20"
  },
  "l1": {

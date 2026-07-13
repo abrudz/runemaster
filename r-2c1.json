@@ -1,0 +1,28 @@
+{
+ "name": "The Ward-Gate",
+ "theme": {
+  "w": "🚧",
+  "wall": "rgba(200,170,60,0.4)",
+  "back": "#171307",
+  "spot": "#fbf3d8"
+ },
+ "M": [
+  "w w w w w w w w w w w ",
+  "w     w       w     w ",
+  "w     w       w     w ",
+  "w                   w ",
+  "w     w       w     w ",
+  "          aK          ",
+  "w     w       w     w ",
+  "w                   w ",
+  "w     w       w     w ",
+  "w     w       w     w ",
+  "w w w w w   w w w w w "
+ ],
+ "aK": {
+  "req": "d≥d≤d∧j(",
+  "add": "",
+  "task": "The Ward-Gate judges every traveller against its bounds. _Transform_ the readings `h` into a ward-mark: 1 where a reading stands within the gate — at or above the floor `f` and at or below the ceiling `c` — and 0 where it strays beyond.\n\nWith `h` of `4 1 7 3 9 5`, a floor `f` of 3 and a ceiling `c` of 7, the mark is `1 0 1 1 0 1`.",
+  "expr": "((c←7)≥h)∧(f←3)≤h←4 1 7 3 9 5"
+ }
+}

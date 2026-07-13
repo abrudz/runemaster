@@ -13,11 +13,11 @@
   "w   w       w       w ",
   "w       w m⌈w w w   w ",
   "w w w   w             ",
-  "w m⌊    w   w w w w w ",
+  "w m⌊    w aNw w w w w ",
   "w   w           d-  w ",
   "w   w w w w w   w   w ",
   "w d÷            w   w ",
-  "w w w w w w w w w w w "
+  "w   w w w w w w w w w "
  ],
  "m≢": {
   "req": "",
@@ -48,5 +48,11 @@
   "add": "",
   "task": "{d÷} is the _ruby rune of sharing_, dividing what lies on its left by what lies on its right. Share `c` coins evenly among `h` hands — what falls to each?",
   "expr": "(c←?6⍴99)÷h←1+?6⍴9"
+ },
+ "aN": {
+  "req": "d⌿",
+  "add": "",
+  "task": "The Forge rings each rune as many times as its temper demands. _Transform_ the runes `r` into their echoes: sound each rune as often as the matching count in `c`.\n\nWith `c` of `2 0 3 1 2 3` upon `r` of `'DYALOG'`, the echoes ring `DDAAALOOGGG`.",
+  "expr": "(c←2 0 3 1 2 3)⌿r←'DYALOG'"
  }
 }

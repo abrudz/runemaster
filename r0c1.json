@@ -10,14 +10,14 @@
   "w w   w w w w w w w w ",
   "w d↓    w         w w ",
   "w   w   w   w w     l2",
-  "w d⌿w         w   w w ",
+  "w d⌿w     aO  w   w w ",
   "w   w w w w   w     w ",
   "w     d∧w d=    w   w ",
   "w w w   w   w   w   w ",
   "w m≠        w       w ",
   "    w w w d∨w m⌽w d⌈w ",
   "w               w d⌊w ",
-  "w w w w w w w w w w w "
+  "w w w w   w w w w w w "
  ],
  "d↓": {
   "req": "",
@@ -78,5 +78,11 @@
   "add": "",
   "task": "A slab of granite seals the eastern tunnel, scored with a warden's demand: take the crystal readings `r`, let none sink beneath the floor `f` nor rise above the ceiling `c`, then recite them from last to first. Speak them so and the slab grinds aside.",
   "expr": "⌽(f←3)⌈(c←7)⌊r←?⍨9"
+ },
+ "aO": {
+  "req": "d⌊d⌈",
+  "add": "",
+  "task": "The crystals of the Caverns must be held between floor and ceiling. _Transform_ the heights `h`: let none sink beneath the floor `f` nor rise above the ceiling `c` — clamp each into the band.\n\nWith floor 3 and ceiling 7, a height of 1 rises to 3 and a height of 9 falls to 7.",
+  "expr": "(f←3)⌈(c←7)⌊h←?⍨9"
  }
 }

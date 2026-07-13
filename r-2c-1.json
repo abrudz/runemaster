@@ -1,0 +1,28 @@
+{
+ "name": "The Sieve",
+ "theme": {
+  "w": "🕸️",
+  "wall": "rgba(120,150,120,0.38)",
+  "back": "#0c110c",
+  "spot": "#e2f0e2"
+ },
+ "M": [
+  "w w w w w w w w w w w ",
+  "w                   w ",
+  "w   w   w   w   w   w ",
+  "w                   w ",
+  "w   w   w   w   w   w ",
+  "w         aJ          ",
+  "w   w   w   w   w   w ",
+  "w                   w ",
+  "w   w   w   w   w   w ",
+  "w                   w ",
+  "w w w w w   w w w w w "
+ ],
+ "aJ": {
+  "req": "d∩",
+  "add": "",
+  "task": "The mesh of the Sieve lets only kindred through. _Transform_ the word `w` into just its vowels — keep, in order, every letter of `w` that also belongs to the vowel-band `v`, and let the rest fall away.\n\n`{answer}` for `'EUPHORIA'` sifted through `'AEIOU'` gives `EUOIA`.",
+  "expr": "(w←'EUPHORIA')∩v←'AEIOU'"
+ }
+}

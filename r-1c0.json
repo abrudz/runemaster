@@ -13,7 +13,7 @@
   "w   w       w       w ",
   "w       w M¨w w   w w ",
   "w w w   w       w     ",
-  "w d∊        w   w   w ",
+  "w d∊      aMw   w   w ",
   "w   w w w   w w w   w ",
   "w       w       d≠  w ",
   "w w w       w   w   w ",
@@ -48,5 +48,11 @@
   "add": "",
   "task": "{d≠} is the _ruby rune of difference_, marking 1 where its left and right disagree and 0 where they match. Where do the warp `a` and the weft `b` cross in different colours?",
   "expr": "(a←?8⍴5)≠b←?8⍴5"
+ },
+ "aM": {
+  "req": "M¨m⌽",
+  "add": "",
+  "task": "The looms of Weaver's Hall run every thread in reverse. _Transform_ the skein `s` — a bundle of separate threads — by mirroring _each_ thread end-for-end. Draw on {m⌽} within {M¨}.\n\n`{answer}` upon `'MOOD' 'NET' 'POP'` gives `DOOM` `TEN` `POP`.",
+  "expr": "⌽¨s←'MOOD' 'NET' 'POP'"
  }
 }
