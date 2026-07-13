@@ -1,7 +1,7 @@
 'use strict'
 let i,M,root,aski,askb,askp,ask,msg,msgp
 let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={},doors={},seen={},apples=[],atlas={},busy
-const KEY="runemaster"                             // saved-progress key
+const KEY="runemaster2"                            // saved-progress key (bumped: 4×4 reshape renamed/added rooms)
 const $=s=>document.querySelector(s)
 const $$=s=>[...document.querySelectorAll(s)]
 const td=(r,c)=>$("#r"+r+"c"+c)
@@ -12,7 +12,7 @@ const mkb=id=>{const e=document.createElement("b");e.tabIndex=0;e.id=id;e.classN
 const reqs=t=>(j[t.id].req??"").match(/../g)??[]
 const dfnkeys=q=>q.f?(Array.isArray(q.a[0])?"⍺ ⍵ ":"⍵ "):""   // dfn arg keys ({} from diamond)
 const keys=q=>q.req+q.add+dfnkeys(q)+[...q.task.matchAll(/`\w`/g)].join``.replace(/`(\w)`/g,"$1 ")   // a challenge's allowed runes
-const md=s=>s.replace(/\{(\w\W)\}/g,(_,m)=>b(m)).replace(/(?<!\\)`(.*?[^\\])`/g,"<code>$1</code>").replace(/(?<!\\)_(.*?[^\\])_/g,"<em>$1</em>").replace(/\\([`_])/g,"$1")
+const md=s=>s.replace(/\{(\w\W)\}/g,(_,m)=>b(m)).replace(/(?<!\\)`(.*?[^\\])`/g,"<code>$1</code>").replace(/(?<!\\)_(.*?[^\\])_/g,"<em>$1</em>").replace(/\\([`_])/g,"$1").replace(/\d+(?![^<]*>)/g,"<span class=num>$&</span>")   // digits (outside tags) in the APL font — never enter allowed-runes (keys())
 const exec=s=>{
   busy=1;$("#askr").textContent="";$("#asks").textContent="Checking…";$$("#ask form button").forEach(b=>b.disabled=1)   // hold the challenge open + inert until the check resolves
   return fetch("https://tryapl.org/Exec",{
@@ -64,12 +64,12 @@ const count=()=>{let n=$$("#M b.m,#M b.d,#M b.M,#M b.D,#M b.j").length   // unco
 const favico=w=>{                                    // dynamic svg favicon of the wall emoji
   let l=$("link[rel=icon]")??document.head.appendChild(Object.assign(document.createElement("link"),{rel:"icon"}))
   l.href="data:image/svg+xml,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="82" font-size="88" text-anchor="middle">${w}</text></svg>`)}
-const mini=()=>{                                     // 4×5 discovered-rooms table: row=mr+2, col=mc+1
+const mini=()=>{                                     // 4×4 discovered-rooms table: row=mr+2, col=mc+1
   let m=$("#mini");m.innerHTML=""
   let belt=$$("#belt b").map(e=>e.id)                 // collected rune ids (globally unique)
   const mk=(d,cls,txt)=>{let s=document.createElement("span");s.className=cls;s.textContent=txt;d.appendChild(s)}
   for(let r=-2;r<=1;r++){let tr=m.insertRow()
-    for(let cc=-1;cc<=3;cc++){let k=r+" "+cc,d=tr.insertCell()
+    for(let cc=-1;cc<=2;cc++){let k=r+" "+cc,d=tr.insertCell()
       if(k==cur)d.className="now"                     // current room: bg cleared → reads as a highlight
       let a=atlas[k];if(a==null)continue
       if(typeof a=="string")a={w:a,stones:[],apple:0} // migrate legacy save entries (bare wall emoji)
@@ -80,7 +80,7 @@ const mini=()=>{                                     // 4×5 discovered-rooms ta
     }
   }
 }
-const win=()=>{msgp.innerHTML="🍎 Nine apples gathered — you are the RuneMaster! 🍎";msg.showModal()}
+const win=()=>{msgp.innerHTML="🍎 Sixteen apples gathered — you are the RuneMaster! 🍎";msg.showModal()}
 const fit=()=>{                                      // fit board+margin+utilities to viewport (no scroll)
   root.style.setProperty("--cols",cMax+1)            // map width in tiles (portrait #util width)
   const land=matchMedia("(orientation: landscape)").matches, util=$("#util")
@@ -223,7 +223,9 @@ window.ans=t=>{
 const react=b=>{
   $$("#ask form button").forEach(x=>x.disabled=0);$("#asks").textContent="Submit"   // check resolved — controls live again
   if(!b){$("#askr").textContent="Not quite — try again";aski.focus();return}          // wrong answer: keep the dialog + input so they can retry or Cancel
-  $("#askr").textContent="";ask.close()
+  $("#askr").textContent=""
+  const o=ask.getBoundingClientRect()   // rune-fly origin: challenge dialog (grab before close blanks it)
+  ask.close()
   if(ask.b.id[0]=="l"){
     show(i.r=ask.r,i.c=ask.c)
     ask.b.style.visibility="hidden"
@@ -232,9 +234,11 @@ const react=b=>{
   }else if(ask.b.id[0]=="a"){            // 🍎 collected
     if(!apples.includes(ask.b.id))apples.push(ask.b.id)
     ask.b.remove();mini();save()
-    if(apples.length>=9)win()
+    if(apples.length>=16)win()
   }else{
-    $$("#belt td")[g].appendChild(c)
+    $$("#belt td")[g].appendChild(c)    // gem into its belt slot, then fly it in from the dialog (FLIP)
+    const f=c.getBoundingClientRect()
+    c.animate([{transform:`translate(${o.left+o.width/2-f.left-f.width/2}px,${o.top+o.height/2-f.top-f.height/2}px) scale(2)`,opacity:.4},{transform:"none",opacity:1}],{duration:500,easing:"ease-in-out"})
     chk();count();mini();save()
   }
 }

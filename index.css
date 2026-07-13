@@ -67,7 +67,8 @@ legend button {
   font-size: 0.85em;   /* fixed relative to the legend, not the board */
 }
 #askb > button,
-dialog code {
+dialog code,
+dialog .num {              /* digits in prose: APL font (SAX2), legible where Almendra isn't */
   font-weight: bold;
   font-family: APL;
   white-space: pre;
@@ -225,7 +226,7 @@ th {
   body { flex-direction: row; }                  /* map on the left, utilities on the right */
   #util {
     flex-direction: column;                      /* stacked; mini-map (+counters) on top, belt below */
-    width: calc(var(--mini) * 5 + 2rem);
+    width: calc(var(--mini) * 4 + 2rem);
     align-self: flex-start;
     margin: 0 var(--size) 0 1rem;                /* right: off the screen edge; left: air from the map */
     transform: translateY(var(--size));          /* drop to the map's tile row WITHOUT enlarging the box (which would shove the centred map down) */

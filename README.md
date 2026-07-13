@@ -6,7 +6,7 @@ Concept: Brian Becker
 
 Implementation: Adám Brudzewsky & Claude (Opus 4.8)
 
-[Play in your browser now!](https://abrudz.github.io/runemaster/) Explore the maze, solve the APL puzzles, collect the runes, and gather all nine apples to win.
+[Play in your browser now!](https://abrudz.github.io/runemaster/) Explore the maze, solve the APL puzzles, collect the runes, and gather all sixteen apples to win.
 
 <img width="727" height="727" alt="image" src="https://github.com/user-attachments/assets/2547dbf3-ca4b-4d33-aa08-b28075cdeb22" />
 
@@ -18,5 +18,5 @@ Implementation: Adám Brudzewsky & Claude (Opus 4.8)
 - When prompted for an APL expression, either type it or click the rune gems and buttons to insert.
 - Closed passages (🔒 on a 🚪) open (🚪) once you have collected all the required rune gems.
 - Move across the edges of the map to switch to the neighbouring map.
-- Free-standing apples (🍎) are the capstone challenges: like doors, each needs its required runes before it will pose its puzzle, but it never blocks your path. **Gather all nine apples to win.**
+- Free-standing apples (🍎) are the capstone challenges: like doors, each needs its required runes before it will pose its puzzle, but it never blocks your path. Every room holds one. **Gather all sixteen apples to win.**
 - Your progress is saved automatically; use _Restart Game_ to begin afresh.
