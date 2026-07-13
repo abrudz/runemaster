@@ -1,10 +1,12 @@
 'use strict'
 let i,M,root,aski,askb,askp,ask,msg,msgp
-let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={},doors={},seen={},apples=[],atlas={},busy
+let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,dir=0,cur,mem={},doors={},seen={},apples=[],atlas={},busy
 const KEY="runemaster"                             // saved-progress key
 const $=s=>document.querySelector(s)
 const $$=s=>[...document.querySelectorAll(s)]
 const td=(r,c)=>$("#r"+r+"c"+c)
+const DR=[-1,0,1,0]                                // facing → forward Δrow (N E S W)
+const DC=[ 0,1,0,-1]                               //          forward Δcol
 const ins={"(":"()","[":"[]","{":"{}","∘":"∘."}    // glyph -> typed form
 const mid={"()":1,"[]":1,"{}":1}                   // pairs: cursor between
 const b=r=>`<b tabindex='0' class='${r[0]}'>${ins[r[1]]??r[1]}</b>`
@@ -94,15 +96,16 @@ const fit=()=>{                                      // fit board+margin+utiliti
   }
   root.style.setProperty("--size",Math.max(14,s)+"px")
 }
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({mr,mc,r:i.r,c:i.c,belt:$$("#belt b").map(e=>e.id),doors,seen,apples,atlas}))}catch(_){}}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({mr,mc,dir,r:i.r,c:i.c,belt:$$("#belt b").map(e=>e.id),doors,seen,apples,atlas}))}catch(_){}}
 const restore=()=>{
   let s;try{s=JSON.parse(localStorage.getItem(KEY))}catch(_){s=null}
   if(!s)return null
-  doors=s.doors??{};seen=s.seen??{};apples=s.apples??[];atlas=s.atlas??{}
+  doors=s.doors??{};seen=s.seen??{};apples=s.apples??[];atlas=s.atlas??{};dir=s.dir??0   // old saves lack dir → North
   ;(s.belt??[]).forEach(id=>{let g="mdMDj".indexOf(id[0]);if(~g)$$("#belt td")[g].appendChild(mkb(id))})
   return s
 }
 window.reset=()=>{localStorage.removeItem(KEY);location.reload()}   // wipe saved progress
+const turn=d=>{dir=(dir+d)&3;show();save()}          // rotate 90° (d: +1 CW, +3 CCW), repaint, persist
 const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";$("#asks").textContent="submit";$$("#ask form button").forEach(b=>b.disabled=0);ask.showModal()}   // open a challenge dialog
 async function step(newR,newC){                      // move to / interact with cell; keyboard + tap
   if($$("dialog").some(e=>e.hasAttribute("open")))return
@@ -129,21 +132,19 @@ async function step(newR,newC){                      // move to / interact with 
   save()
 }
 addEventListener('keydown',e=>{
-  const up   =()=>newR=i.r-1
-  const down =()=>newR=i.r+1
-  const left =()=>newC=i.c-1
-  const right=()=>newC=i.c+1
-  let newR=i.r,newC=i.c,moved=0
-  e.key=="Home"      ||e.key=="7"||e.key=="q"||e.key=="u"    ?up(left(moved=1)):0
-  e.key=="ArrowUp"   ||e.key=="8"||e.key=="w"||e.key=="i"    ?up(moved=1):0
-  e.key=="PageUp"    ||e.key=="9"||e.key=="e"||e.key=="o"    ?up(right(moved=1)):0
-  e.key=="ArrowLeft" ||e.key=="4"||e.key=="a"||e.key=="j"    ?left(moved=1):0
-  e.key=="Clear"     ||e.key=="5"||e.key==" "||e.key=="Enter"?moved=1:0
-  e.key=="ArrowRight"||e.key=="6"||e.key=="d"||e.key=="l"    ?right(moved=1):0
-  e.key=="End"       ||e.key=="1"||e.key=="z"||e.key=="m"    ?down(left(moved=1)):0
-  e.key=="ArrowDown" ||e.key=="2"||e.key=="s"||e.key=="k"    ?down(moved=1):0
-  e.key=="PageDown"  ||e.key=="3"||e.key=="c"||e.key=="."    ?down(right(moved=1)):0
-  if(moved&&!$$("dialog").some(x=>x.hasAttribute("open"))){e.preventDefault();step(newR,newC)}
+  if($$("dialog").some(x=>x.hasAttribute("open")))return          // frozen while a dialog is open
+  const fwd   =()=>step(i.r+DR[dir],      i.c+DC[dir])            // ahead
+  const back  =()=>step(i.r-DR[dir],      i.c-DC[dir])            // behind
+  const strafe=s=>step(i.r+DR[(dir+s)&3], i.c+DC[(dir+s)&3])      // sidestep, keep facing
+  let k=e.key,act=1
+  k=="ArrowUp"   ||k=="w"||k=="8"||k=="Enter"||k==" "?fwd():      // step / activate ahead
+  k=="ArrowDown" ||k=="s"||k=="2"                    ?back():     // step back
+  k=="ArrowLeft" ||k=="a"||k=="4"                    ?turn(3):    // rotate CCW
+  k=="ArrowRight"||k=="d"||k=="6"                    ?turn(1):    // rotate CW
+  k=="q"                                             ?strafe(3):  // strafe left
+  k=="e"                                             ?strafe(1):  // strafe right
+  act=0
+  if(act)e.preventDefault()
 })
 async function loadM(mr,mc){
   if(cur!=null)mem[cur].html=M.innerHTML
