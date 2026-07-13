@@ -48,13 +48,31 @@ const lb=(ch,sol)=>{
   })
 }
 window.addEventListener('resize',()=>{fit();jump(i.r,i.c)})
-const show=()=>{                                     // reveal 3×3 round player, remember it
-  let s=seen[cur]??=[]
-  for(let r=i.r-1;r<=i.r+1;r++)for(let c=i.c-1;c<=i.c+1;c++){
-    let t=td(r,c);if(!t)continue
-    if(t.children[0])t.children[0].style.opacity=1
-    let k=r+","+c;if(!s.includes(k))s.push(k)
+const MAXV=5,VW=2                                    // first-person frustum: cells ahead, lateral ±
+const wallAt=(r,c)=>{let t=td(r,c);if(!t)return 1;let e=t.children[0];return e&&e.className=="w"&&e.style.visibility!="hidden"?1:0}   // off-grid & live walls block sight
+const show=()=>{                                     // reveal 3×3 + cast down the facing corridor, remember, repaint
+  let s=seen[cur]??=[],R=(dir+1)&3
+  const lit=(r,c)=>{let t=td(r,c);if(!t)return 0;if(t.children[0])t.children[0].style.opacity=1;s.includes(r+","+c)||s.push(r+","+c);return!wallAt(r,c)}
+  for(let r=i.r-1;r<=i.r+1;r++)for(let c=i.c-1;c<=i.c+1;c++)lit(r,c)   // 3×3 around
+  for(let o=-VW;o<=VW;o++)for(let f=1;f<=MAXV;f++)                     // three columns down the corridor, halt at first wall
+    if(!lit(i.r+DR[dir]*f+DR[R]*o,i.c+DC[dir]*f+DC[R]*o))break
+  draw()
+}
+const draw=()=>{                                     // project the visible cells into the first-person scene
+  let R=(dir+1)&3,h=[]                                // R: "right" facing (lateral offset)
+  const at=(f,o)=>[i.r+DR[dir]*f+DR[R]*o,i.c+DC[dir]*f+DC[R]*o]       // camera(f ahead,o right) → world r,c
+  const p=(cl,f,o,g)=>`<b class="p ${cl}" style="--f:${f};--o:${o}">${g}</b>`
+  for(let f=MAXV;f>=0;f--)for(let o=-VW;o<=VW;o++){    // far→near
+    let[r,c]=at(f,o),e=td(r,c)?.children[0]
+    if(!e||e.style.visibility=="hidden"||e.style.opacity!="1")continue   // floor / fogged / gone
+    if(e.className=="w"){                              // wall: emit only camera-exposed faces
+      f&&!wallAt(...at(f-1,o))?h.push(p("w f",f,o,e.textContent)):0      // front (toward camera)
+      wallAt(...at(f,o-1))?0:h.push(p("w l",f,o,e.textContent))         // left face
+      wallAt(...at(f,o+1))?0:h.push(p("w r",f,o,e.textContent))         // right face
+    }else if((f||o)&&~"mdMDjloa".indexOf(e.className))                   // stone/door/apple billboard (never underfoot)
+      h.push(`<b class="p bill" data-r="${r}" data-c="${c}" style="--f:${f};--o:${o}"><b class="${e.className}">${e.textContent}</b></b>`)
   }
+  $("#scene").innerHTML=h.join``
 }
 const chk=()=>{
   let bi=$$("#belt b").map(e=>e.id)
@@ -180,7 +198,7 @@ async function loadM(mr,mc){
   favico(j.theme.w)
   let first=$$("#M td")[0]     ;rMin=getR(first);cMin=getC(first)
   let last =$$("#M td").at(-1) ;rMax=getR(last );cMax=getC(last )
-  chk();count();mini();fit()
+  chk();count();mini();fit();draw()
 }
 document.addEventListener('DOMContentLoaded',async function main(){
   i=$("#i");M=$("#M");root=$("#root")
@@ -195,15 +213,14 @@ document.addEventListener('DOMContentLoaded',async function main(){
   Object.defineProperty(i,"c",{get:()=>i.cVal,set:v=>place(i,i.rVal,i.cVal=v)})
   i.r=i.rVal;i.c=i.cVal
   show()
-  document.onclick=e=>{                    // tile click steps toward it; click outside map steps that way (even across edge)
-    if(e.target.closest("dialog,button,#belt"))return   // leave UI controls alone
-    const t=e.target.closest("#M td")
-    let dr,dc
-    if(t){dr=Math.sign(getR(t)-i.r);dc=Math.sign(getC(t)-i.c)}   // inside map: toward tapped tile
-    else{const b=M.getBoundingClientRect()                       // outside map: general dir (diag in corners)
-      dr=e.clientY<b.top?-1:e.clientY>b.bottom?1:0
-      dc=e.clientX<b.left?-1:e.clientX>b.right?1:0}
-    if(dr||dc)step(i.r+dr,i.c+dc)
+  document.onclick=e=>{                    // click a billboard to interact; click view zones to move/turn
+    if(e.target.closest("dialog,button,#belt,#util"))return       // leave UI + automap alone
+    let bill=e.target.closest(".p.bill")
+    if(bill)return step(+bill.dataset.r,+bill.dataset.c)           // tapped a stone/door/apple ahead
+    let v=$("#view").getBoundingClientRect()
+    if(e.clientX<v.left||e.clientX>v.right||e.clientY<v.top||e.clientY>v.bottom)return
+    let x=(e.clientX-v.left)/v.width,y=(e.clientY-v.top)/v.height  // zones: top→fwd, bottom→back, sides→turn
+    y<.33?step(i.r+DR[dir],i.c+DC[dir]):y>.67?step(i.r-DR[dir],i.c-DC[dir]):x<.5?turn(3):turn(1)
   }
 })
 window.ans=t=>{
@@ -224,16 +241,16 @@ window.ans=t=>{
 const react=b=>{
   ask.close()                                        // the check resolved — dismiss the challenge
   if(b&&ask.b.id[0]=="l"){
-    show(i.r=ask.r,i.c=ask.c)
     ask.b.style.visibility="hidden"
     ;(doors[cur]??=[]).push(ask.b.id)   // remember door passed
+    show(i.r=ask.r,i.c=ask.c)           // step through, reveal, repaint
     save()
   }else if(b&&ask.b.id[0]=="a"){         // 🍎 collected
     if(!apples.includes(ask.b.id))apples.push(ask.b.id)
-    ask.b.remove();mini();save()
+    ask.b.remove();mini();draw();save()
     if(apples.length>=9)win()
   }else if(b){
     $$("#belt td")[g].appendChild(c)
-    chk();count();mini();save()
+    chk();count();mini();draw();save()
   }
 }

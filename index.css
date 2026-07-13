@@ -35,6 +35,8 @@ html {
   --speed: 0.5s;
   --size: 2.5rem;
   --mini: 2.5rem;   /* mini-map room tile (fixed, uncoupled from the board's --size) */
+  --cell: 46vmin;   /* first-person world-cell edge (fit() tunes it) */
+  --persp: 54vmin;  /* camera focal length (≈1.15·--cell) */
 }
 body {
   background: var(--spot);
@@ -46,6 +48,67 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
+}
+/* ── first-person view ────────────────────────────────────────── */
+#view {                                  /* the stage: a perspective window into the room */
+  position: relative;
+  width: 100%;
+  height: 82dvh;
+  overflow: hidden;
+  perspective: var(--persp);
+  perspective-origin: 50% 50%;           /* eye at vertical centre → walls span the horizon */
+  background: linear-gradient(           /* ceiling → lit horizon → floor, in the room's palette */
+    var(--back) 0%,
+    color-mix(in srgb, var(--spot) 22%, var(--back)) 50%,
+    var(--back) 100%);
+}
+#scene {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.p {                                     /* a cell-sized panel, centred on the eye at z=0 */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--cell);
+  height: var(--cell);
+  margin: calc(var(--cell) / -2);
+  transform-style: preserve-3d;
+  text-align: center;
+}
+.p::after {                              /* lantern falloff: fade into the void with depth */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--back);
+  opacity: calc(var(--f) / 6);
+  pointer-events: none;
+}
+.p.w {                                   /* wall face: solid-backed tint, wall-emoji textured */
+  background-color: var(--back);         /* opaque base so translucent --wall themes still read as wall */
+  background-image: linear-gradient(var(--wall), var(--wall));
+  line-height: var(--cell);
+  font-size: calc(var(--cell) * 0.86);
+  box-shadow: inset 0 0 0 1px #0006;
+  box-sizing: border-box;
+}
+.p.w.f { transform: translate3d(calc(var(--cell) * var(--o)),         0px, calc(var(--cell) * (0.5 - var(--f)))); }
+.p.w.l { transform: translate3d(calc(var(--cell) * (var(--o) - 0.5)), 0px, calc(var(--cell) * var(--f) * -1)) rotateY( 90deg); }
+.p.w.r { transform: translate3d(calc(var(--cell) * (var(--o) + 0.5)), 0px, calc(var(--cell) * var(--f) * -1)) rotateY(-90deg); }
+.p.bill {                                /* stone / door / apple, camera-facing at its cell */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--cell) * 0.55);
+  transform: translate3d(calc(var(--cell) * var(--o)), 0px, calc(var(--cell) * var(--f) * -1));
+}
+.p.bill > b { opacity: 1; }
+#scene .m, #scene .d, #scene .M, #scene .D, #scene .j {   /* gems render large in the scene (not automap-small) */
+  width: calc(var(--cell) * 0.42);
+  height: calc(var(--cell) * 0.42);
+  line-height: calc(var(--cell) * 0.42);
+  font-size: calc(var(--cell) * 0.3);
 }
 dialog {
   z-index: 150;
