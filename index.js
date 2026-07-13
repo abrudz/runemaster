@@ -1,6 +1,6 @@
 'use strict'
 let i,M,root,aski,askb,askp,ask,msg,msgp
-let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={},doors={},seen={},apples=[],atlas={},busy
+let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={},doors={},seen={},apples=[],atlas={},busy,cheating
 const KEY="runemaster2"                            // saved-progress key (bumped: 4×4 reshape renamed/added rooms)
 const $=s=>document.querySelector(s)
 const $$=s=>[...document.querySelectorAll(s)]
@@ -103,6 +103,7 @@ const restore=()=>{
   return s
 }
 window.reset=()=>{localStorage.removeItem(KEY);location.reload()}   // wipe saved progress
+window.cheat=(on=1)=>(cheating=on,`QA cheat ${on?"ON — walk into any met-prerequisite rune, unlocked door or apple to auto-take it (sealed ones still need their runes)":"off"}`)   // console QA aid
 const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";$("#askr").textContent="";$("#asks").textContent="Submit";$$("#ask form button").forEach(b=>b.disabled=0);ask.showModal()}   // open a challenge dialog
 async function step(newR,newC){                      // move to / interact with cell; keyboard + tap
   if($$("dialog").some(e=>e.hasAttribute("open")))return
@@ -117,13 +118,13 @@ async function step(newR,newC){                      // move to / interact with 
         let bi=$$("#belt b").map(e=>e.id)   // collected
         msgp.innerHTML="This door still needs:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `   // only the runes you lack
         msg.showModal()
-      }else if(t.className=="o"){ask.r=newR;ask.c=newC;openask(t,keys(j[t.id]))}
+      }else if(t.className=="o"){ask.r=newR;ask.c=newC;cheating?(ask.b=t,react(1)):openask(t,keys(j[t.id]))}   // cheat: walk through an unlocked door
       else if(~(g="mdMDj".indexOf(t.className))){show(i.r=newR,i.c=newC)   // rune stone: req-gated (prerequisite runes)
         let bi=$$("#belt b").map(e=>e.id)
-        reqs(t).every(r=>~bi.indexOf(r))?(c=t,openask(c,c.id+keys(j[c.id]))):(msgp.innerHTML="This rune stays sealed; you still need:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `,msg.showModal())}
+        reqs(t).every(r=>~bi.indexOf(r))?(c=t,cheating?(ask.b=t,react(1)):openask(c,c.id+keys(j[c.id]))):(msgp.innerHTML="This rune stays sealed; you still need:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `,msg.showModal())}   // cheat: auto-collect an available rune
       else if(t.className=="a"){show(i.r=newR,i.c=newC)   // free-standing 🍎: req-gated but non-blocking
         let bi=$$("#belt b").map(e=>e.id)
-        reqs(t).every(r=>~bi.indexOf(r))?openask(t,keys(j[t.id])):(msgp.innerHTML="This apple is still guarded; you still need:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `,msg.showModal())}
+        reqs(t).every(r=>~bi.indexOf(r))?(cheating?(ask.b=t,react(1)):openask(t,keys(j[t.id]))):(msgp.innerHTML="This apple is still guarded; you still need:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `,msg.showModal())}   // cheat: auto-take an available apple
     }else show(i.r=newR,i.c=newC)
   }
   save()
