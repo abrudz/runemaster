@@ -176,6 +176,7 @@ dialog code {
 dialog input {
   width: 100%;
   font-family: APL;
+  font-weight: bold;
   font-size: calc(var(--size) * 0.6);
 }
 #M {                             /* now the small top-down automap (cells flush, no grid gaps) */
@@ -340,7 +341,7 @@ b {
 }
 b {
   display: inline-block;
-  font-weight: normal;
+  font-weight: bold;            /* thicken the thin SAX2 rune font (single-weight → synthesized bold) */
   position: relative;
   transition: opacity var(--speed);
   font-family: APL;
