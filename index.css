@@ -1,12 +1,10 @@
 @font-face {
   font-family: Text;
-  letter-spacing: 0.25ex;
-  src: url("Gemcut Bold.otf");
+  src: url("Almendra-Regular.ttf");
 }
 @font-face {
   font-family: Text;
-  letter-spacing: 0.25ex;
-  src: url("Gemcut Bold Italic.otf");
+  src: url("Almendra-Italic.ttf");
   font-style: italic;
 }
 @font-face {
@@ -61,12 +59,10 @@ dialog::backdrop {
 dialog p {
   line-height: calc(var(--size) * 0.8);
   font-family: Text;
-  letter-spacing: 0.25ex;
 }
 dialog button,
 legend button {
   font-family: Text;
-  letter-spacing: 0.25ex;
   font-size: calc(var(--size) * 0.6);
 }
 legend button {
@@ -104,7 +100,6 @@ td {
 fieldset {
   border: 0.15rem solid currentColor;
   font-family: Text;
-  letter-spacing: 0.25ex;
   padding: 0.1rem 0.5rem 0.4rem;
 }
 #util {                                          /* belt + mini-map, together as wide as the map */
@@ -120,7 +115,6 @@ fieldset {
   flex: 1 1 auto;
   min-width: 0;                                  /* allow shrink so stones wrap instead of scrolling */
   font-family: Text;
-  letter-spacing: 0.25ex;                        /* restore the font the removed fieldset provided */
 }
 legend,
 th {
@@ -139,7 +133,6 @@ th {
   display: block;
   text-align: left;
   font-family: Text;
-  letter-spacing: 0.25ex;
   font-size: 1.1rem;
   margin-bottom: 0.2rem;
 }
@@ -179,12 +172,10 @@ th {
 }
 #topbar button {           /* Restart left the legend, so restyle it here */
   font-family: Text;
-  letter-spacing: 0.25ex;
   font-size: 0.85rem;
 }
 #left {                    /* room name; ellipsis so long names don't collide with Restart */
   font-family: Text;
-  letter-spacing: 0.25ex;
   font-size: 0.85rem;
   flex: 1 1 auto;
   min-width: 0;
@@ -283,7 +274,6 @@ b {
   border-width: 0.33rem;
   border-style: outset;
   border-color: var(--gem-edge);   /* one place sets every stone's bevel colour */
-  letter-spacing: normal;          /* cancel the fieldset/dialog 0.25ex that shifts single glyphs off-centre */
 }
 .m {
   border-radius: 1em 1em 0em 1em;
