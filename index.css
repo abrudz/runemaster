@@ -135,6 +135,14 @@ th {
   display: block;
   width: 100%;
 }
+#belt caption {              /* heading above the collected-rune belts */
+  display: block;
+  text-align: left;
+  font-family: Text;
+  letter-spacing: 0.25ex;
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
 #belt tr {
   display: flex;
   align-items: flex-start;
@@ -233,6 +241,14 @@ th {
   }
   #belt { flex: none; }                          /* width:100% already set above */
   #side { order: -1; width: 100%; }              /* mini-map (+counters) on top, belt below */
+}
+@media (min-width: 1200px) and (orientation: landscape) {
+  #util {                                        /* roomy screen → double the whole utilities panel */
+    zoom: 2;
+    transform: none;                             /* the translateY offset would double under zoom */
+    align-self: flex-start;
+    max-height: 50dvh;                           /* halved because zoom:2 doubles it back to the viewport height */
+  }
 }
 td > * {
   z-index: 100;

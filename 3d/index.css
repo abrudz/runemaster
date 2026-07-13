@@ -236,6 +236,14 @@ th {
   display: block;
   width: 100%;
 }
+#belt caption {              /* heading above the collected-rune belts */
+  display: block;
+  text-align: left;
+  font-family: Text;
+  letter-spacing: 0.25ex;
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
 #belt tr {
   display: flex;
   align-items: flex-start;
