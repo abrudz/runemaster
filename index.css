@@ -23,12 +23,12 @@ html {
   --ruby: rgb(146, 0, 0);
   --sapphire: rgb(0, 109, 219);
   --amethyst: rgb(73, 0, 146);
-  --l-emerald: rgba(140, 214, 209, 0.85);
-  --l-ruby: rgba(240, 184, 184, 0.85);
-  --l-sapphire: rgba(158, 205, 250, 0.85);
-  --l-amethyst: rgba(206, 176, 236, 0.85);
+  --l-emerald: rgba(140, 214, 209);
+  --l-ruby: rgba(240, 184, 184);
+  --l-sapphire: rgba(158, 205, 250);
+  --l-amethyst: rgba(206, 176, 236);
   --diamond: #222;
-  --gem-edge: rgba(255, 255, 255, 0.6);
+  --gem-edge: rgba(255, 255, 255, 0.4);
   --back: #222;
   --spot: #999;
   --wall: rgb(146, 73, 0);
@@ -78,12 +78,12 @@ body {
   transform-style: preserve-3d;
   text-align: center;
 }
-.p.w::after {                            /* wall lantern falloff: fade into the void with depth */
+.p.w::after {                            /* gentle depth cue: distant walls dim but stay visible (no pop-in) */
   content: "";
   position: absolute;
   inset: 0;
   background: var(--back);
-  opacity: calc(var(--f) / 6);
+  opacity: calc(var(--f) / 18);
   pointer-events: none;
 }
 .p.w {                                   /* wall face: solid-backed tint, wall-emoji textured */

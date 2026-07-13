@@ -48,31 +48,27 @@ const lb=(ch,sol)=>{
   })
 }
 window.addEventListener('resize',()=>{fit();jump(i.r,i.c)})
-const MAXV=5,VW=2                                    // first-person frustum: cells ahead, lateral ±
 const FC=`<b class="p ceil"></b><b class="p floor"></b>`   // constant sky + ground slabs
 const wallAt=(r,c)=>{let t=td(r,c);if(!t)return 1;let e=t.children[0];return e&&e.className=="w"&&e.style.visibility!="hidden"?1:0}   // off-grid & live walls block sight
-const show=()=>{                                     // reveal only what the view sees (line of sight down each frustum column), remember, repaint
-  let s=seen[cur]??=[],R=(dir+1)&3
-  const lit=(r,c)=>{let t=td(r,c);if(!t)return 0;if(t.children[0])t.children[0].style.opacity=1;s.includes(r+","+c)||s.push(r+","+c);return!wallAt(r,c)}
-  for(let o=-VW;o<=VW;o++)for(let f=0;f<=MAXV;f++)                     // each column from the current rank forward, halt at first wall
-    if(!lit(i.r+DR[dir]*f+DR[R]*o,i.c+DC[dir]*f+DC[R]*o))break
+const show=()=>{                                     // rooms are small → reveal the whole current room, then repaint
+  let s=seen[cur]??=[]
+  for(let r=0;r<=rMax;r++)for(let c=0;c<=cMax;c++){let e=td(r,c)?.children[0];if(e)e.style.opacity=1;s.includes(r+","+c)||s.push(r+","+c)}
   draw()
 }
-const draw=()=>{                                     // project the visible cells into the first-person scene
-  let R=(dir+1)&3,h=[]                                // R: "right" facing (lateral offset)
+const draw=()=>{                                     // project the whole room in front of the camera (small levels → no pop-in)
+  let R=(dir+1)&3,MX=Math.max(rMax,cMax),h=[]         // R: "right" facing; MX: room reach ahead/lateral
   const at=(f,o)=>[i.r+DR[dir]*f+DR[R]*o,i.c+DC[dir]*f+DC[R]*o]       // camera(f ahead,o right) → world r,c
   const p=(cl,f,o,g)=>`<b class="p ${cl}" style="--f:${f};--o:${o}">${g}</b>`
   const border=(r,c)=>r==0||r==rMax||c==0||c==cMax
-  const seenAt=(r,c)=>seen[cur]?.includes(r+","+c)
   const door=(r,c,f,o,lk)=>`<b class="p w door f" data-r="${r}" data-c="${c}" style="--f:${f};--o:${o}">🚪${lk?`<b class="lk">${lk}</b>`:""}</b>`   // 🚪 on a solid wall pane
-  for(let f=MAXV;f>=0;f--)for(let o=-VW;o<=VW;o++){    // far→near
+  for(let f=MX;f>=0;f--)for(let o=-MX;o<=MX;o++){     // far→near, whole room ahead
     let[r,c]=at(f,o),t=td(r,c),e=t?.children[0]
     if(!t){                                           // off-grid: an open edge = a doorway into the neighbouring room
       let[pr,pc]=at(f-1,o),pt=td(pr,pc)
-      if(f&&pt&&!pt.children[0]&&border(pr,pc)&&seenAt(pr,pc))h.push(door(pr,pc,f,o,""))   // plain 🚪, no challenge
+      if(f&&pt&&!pt.children[0]&&border(pr,pc))h.push(door(pr,pc,f,o,""))   // plain 🚪, no challenge
       continue
     }
-    if(!e||e.style.visibility=="hidden"||e.style.opacity!="1")continue   // floor / fogged / gone
+    if(!e||e.style.visibility=="hidden")continue      // floor / passed door
     if(e.className=="w"){                              // wall: emit only camera-exposed faces
       f&&!wallAt(...at(f-1,o))?h.push(p("w f",f,o,e.textContent)):0      // front (toward camera)
       wallAt(...at(f,o-1))?0:h.push(p("w l",f,o,e.textContent))         // left face
