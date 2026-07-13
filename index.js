@@ -131,13 +131,13 @@ async function step(newR,newC){                      // move to / interact with 
   if(newR<0||newR>rMax||newC<0||newC>cMax)return      // never walk off the grid — border portals do the crossing
   let td0=td(newR,newC).children[0]
   if((newR==0||newR==rMax||newC==0||newC==cMax)&&(!td0||td0.className=="x")){   // border floor exit or passed door → jump to the neighbour
-    busy=1;let v=$("#view");v.classList.remove("swap");void v.offsetWidth;v.classList.add("swap")   // dark flash over the swap
-    await new Promise(z=>setTimeout(z,110))
+    busy=1;let v=$("#view");v.classList.add("dark")     // fade to black first…
+    await new Promise(z=>setTimeout(z,150))             // …hold until fully dark, then swap under cover
     if(newR==0)        {mr-=1;await loadM(mr,mc);jump(...inw(rMax,newC,-1, 0))}
     else if(newR==rMax){mr+=1;await loadM(mr,mc);jump(...inw(0   ,newC, 1, 0))}
     else if(newC==0)   {mc-=1;await loadM(mr,mc);jump(...inw(newR,cMax, 0,-1))}
     else               {mc+=1;await loadM(mr,mc);jump(...inw(newR,0   , 0, 1))}
-    show();busy=0;save();return
+    show();v.classList.remove("dark");busy=0;save();return   // reveal the new room with a fade-in
   }
   if(0<=newR&&newR<=rMax&&0<=newC&&newC<=cMax){
     let t=td(newR,newC).children[0]

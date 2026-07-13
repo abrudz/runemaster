@@ -63,7 +63,7 @@ body {
   perspective-origin: 50% 50%;           /* eye at vertical centre → walls span the horizon */
   background: linear-gradient(var(--sky) 0 50%, var(--back) 50%);   /* sky above the horizon, dark below (floor plane covers it) */
 }
-#view::after {                           /* brief dark flash that softens room transitions */
+#view::after {                           /* black curtain: held down while the next room loads */
   content: "";
   position: absolute;
   inset: 0;
@@ -71,9 +71,9 @@ body {
   opacity: 0;
   pointer-events: none;
   z-index: 9;
+  transition: opacity 0.14s ease;
 }
-#view.swap::after { animation: swap 0.34s ease; }
-@keyframes swap { 0% { opacity: 0 } 45% { opacity: 0.92 } 100% { opacity: 0 } }
+#view.dark::after { opacity: 1; }
 #scene {
   position: absolute;
   inset: 0;
