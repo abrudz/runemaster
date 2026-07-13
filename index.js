@@ -63,18 +63,16 @@ const draw=()=>{                                     // project the whole room i
   const door=(r,c,f,o,lk)=>`<b class="p w door f" data-r="${r}" data-c="${c}" style="--f:${f};--o:${o}">🚪${lk?`<b class="lk">${lk}</b>`:""}</b>`   // 🚪 on a solid wall pane
   for(let f=MX;f>=0;f--)for(let o=-MX;o<=MX;o++){     // far→near, whole room ahead
     let[r,c]=at(f,o),t=td(r,c),e=t?.children[0]
-    if(!t){                                           // off-grid: an open edge = a doorway into the neighbouring room
-      let[pr,pc]=at(f-1,o),pt=td(pr,pc)
-      if(f&&pt&&!pt.children[0]&&border(pr,pc))h.push(door(pr,pc,f,o,""))   // plain 🚪, no challenge
-      continue
-    }
-    if(!e||e.style.visibility=="hidden")continue      // floor / passed door
+    if(!t)continue                                    // off-grid: nothing (portals sit on the border cells)
+    if(border(r,c)&&!e){h.push(door(r,c,f,o,""));continue}   // open edge = plain portal door into the neighbour
+    if(!e||e.style.visibility=="hidden")continue      // floor / gone
     if(e.className=="w"){                              // wall: emit only camera-exposed faces
       f&&!wallAt(...at(f-1,o))?h.push(p("w f",f,o,e.textContent)):0      // front (toward camera)
       wallAt(...at(f,o-1))?0:h.push(p("w l",f,o,e.textContent))         // left face
       wallAt(...at(f,o+1))?0:h.push(p("w r",f,o,e.textContent))         // right face
-    }else if(e.className=="l"||e.className=="o")        // door on a solid pane: 🔒 locked / 🔓 ready to solve
+    }else if(e.className=="l"||e.className=="o")        // challenge door on a solid pane: 🔒 locked / 🔓 ready
       h.push(door(r,c,f,o,e.className=="l"?"🔒":"🔓"))
+    else if(e.className=="x")h.push(door(r,c,f,o,""))   // passed door → plain 🚪 (portal if on the border)
     else if((f||o)&&~"mdMDja".indexOf(e.className))     // stone/apple billboard (hangs in the air, never underfoot)
       h.push(`<b class="p bill" data-r="${r}" data-c="${c}" style="--f:${f};--o:${o}"><b class="${e.className}">${e.textContent}</b></b>`)
   }
@@ -113,6 +111,8 @@ const fit=()=>{                                      // size the first-person ce
   let cell=Math.min(w,h)*0.95                         // a cell ≈ fills the view's smaller dimension
   root.style.setProperty("--cell",cell+"px")
   root.style.setProperty("--persp",cell*1.15+"px")   // focal length → field of view
+  let mw=$("#mini").offsetWidth                       // fit the whole automap to the mini-map's width (no clipped edges)
+  if(mw)root.style.setProperty("--amap",mw/(cMax+1)+"px")
 }
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({mr,mc,dir,r:i.r,c:i.c,belt:$$("#belt b").map(e=>e.id),doors,seen,apples,atlas}))}catch(_){}}
 const restore=()=>{
@@ -123,15 +123,22 @@ const restore=()=>{
   return s
 }
 window.reset=()=>{localStorage.removeItem(KEY);location.reload()}   // wipe saved progress
-const turn=d=>{dir=(dir+d)&3;ang+=d==3?-90:90;i.style.rotate=ang+"deg";show();save()}   // rotate 90° (d: +1 CW, +3 CCW); ang is continuous so the marker turns the short way
+const turn=d=>{if(busy)return;dir=(dir+d)&3;ang+=d==3?-90:90;i.style.rotate=ang+"deg";show();save()}   // rotate 90° (d: +1 CW, +3 CCW); ang is continuous so the marker turns the short way; frozen mid-transition
 const inw=(r,c,dr,dc)=>{let t=td(r+dr,c+dc);return t&&!t.children[0]?[r+dr,c+dc]:[r,c]}   // one cell inward onto open ground, so entering a room lands you inside (not on the border)
 const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";$("#asks").textContent="submit";$$("#ask form button").forEach(b=>b.disabled=0);ask.showModal()}   // open a challenge dialog
 async function step(newR,newC){                      // move to / interact with cell; keyboard + tap
-  if($$("dialog").some(e=>e.hasAttribute("open")))return
-  if(newR<0   &&newC==i.c){mr-=1;await loadM(mr,mc);jump(...inw(rMax,newC,-1, 0));show()}else
-  if(newR>rMax&&newC==i.c){mr+=1;await loadM(mr,mc);jump(...inw(0   ,newC, 1, 0));show()}else
-  if(newC<0   &&newR==i.r){mc-=1;await loadM(mr,mc);jump(...inw(newR,cMax, 0,-1));show()}else
-  if(newC>cMax&&newR==i.r){mc+=1;await loadM(mr,mc);jump(...inw(newR,0   , 0, 1));show()}else   // ignore diag move off edge (wall!)
+  if(busy||$$("dialog").some(e=>e.hasAttribute("open")))return
+  if(newR<0||newR>rMax||newC<0||newC>cMax)return      // never walk off the grid — border portals do the crossing
+  let td0=td(newR,newC).children[0]
+  if((newR==0||newR==rMax||newC==0||newC==cMax)&&(!td0||td0.className=="x")){   // border floor exit or passed door → jump to the neighbour
+    busy=1;let v=$("#view");v.classList.remove("swap");void v.offsetWidth;v.classList.add("swap")   // dark flash over the swap
+    await new Promise(z=>setTimeout(z,110))
+    if(newR==0)        {mr-=1;await loadM(mr,mc);jump(...inw(rMax,newC,-1, 0))}
+    else if(newR==rMax){mr+=1;await loadM(mr,mc);jump(...inw(0   ,newC, 1, 0))}
+    else if(newC==0)   {mc-=1;await loadM(mr,mc);jump(...inw(newR,cMax, 0,-1))}
+    else               {mc+=1;await loadM(mr,mc);jump(...inw(newR,0   , 0, 1))}
+    show();busy=0;save();return
+  }
   if(0<=newR&&newR<=rMax&&0<=newC&&newC<=cMax){
     let t=td(newR,newC).children[0]
     if(t&&t.style.visibility!="hidden"){
@@ -140,6 +147,7 @@ async function step(newR,newC){                      // move to / interact with 
         msgp.innerHTML="This door still needs:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `   // only the runes you lack
         msg.showModal()
       }else if(t.className=="o"){ask.r=newR;ask.c=newC;openask(t,keys(j[t.id]))}
+      else if(t.className=="x")show(i.r=newR,i.c=newC)   // interior passed door: walk through
       else if(~(g="mdMDj".indexOf(t.className))){show(i.r=newR,i.c=newC)   // rune stone: req-gated (prerequisite runes)
         let bi=$$("#belt b").map(e=>e.id)
         reqs(t).every(r=>~bi.indexOf(r))?(c=t,openask(c,c.id+keys(j[c.id]))):(msgp.innerHTML="This rune stays sealed; you still need:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `,msg.showModal())}
@@ -191,7 +199,7 @@ async function loadM(mr,mc){
   }))
   M.innerHTML=mem[key].html
   let got=new Set($$("#belt b").map(e=>e.id))          // already collected
-  $$("#M b").forEach(e=>got.has(e.id)||apples.includes(e.id)?e.remove():doors[key]?.includes(e.id)?e.style.visibility="hidden":0)   // collected runes/apples gone; passed doors open
+  $$("#M b").forEach(e=>got.has(e.id)||apples.includes(e.id)?e.remove():doors[key]?.includes(e.id)?(e.className="x",e.innerText="🚪"):0)   // collected runes/apples gone; passed doors → plain doors
   ;(seen[key]??[]).forEach(k=>{let[r,c]=k.split`,`;let e=td(r,c)?.children[0];if(e)e.style.opacity=1})        // restore revealed fog
   if(j.theme.wall)root.style.setProperty("--wall",j.theme.wall)
   if(j.theme.back)root.style.setProperty("--back",j.theme.back)
@@ -243,10 +251,10 @@ window.ans=t=>{
 }
 const react=b=>{
   ask.close()                                        // the check resolved — dismiss the challenge
-  if(b&&ask.b.id[0]=="l"){
-    ask.b.style.visibility="hidden"
+  if(b&&ask.b.id[0]=="l"){              // door solved → plain passable door; leave the player standing in front
+    ask.b.className="x";ask.b.innerText="🚪"
     ;(doors[cur]??=[]).push(ask.b.id)   // remember door passed
-    show(i.r=ask.r,i.c=ask.c)           // step through, reveal, repaint
+    show()                              // repaint (player doesn't move through)
     save()
   }else if(b&&ask.b.id[0]=="a"){         // 🍎 collected
     if(!apples.includes(ask.b.id))apples.push(ask.b.id)
