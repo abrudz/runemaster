@@ -279,25 +279,25 @@ b {
   border-color: var(--gem-edge);   /* one place sets every stone's bevel colour */
 }
 .m {
-  border-radius: 1em 1em 0em 1em;
+  border-radius: 50% 50% 0em 50%;
   color: var(--emerald);
   -webkit-text-stroke-color: var(--emerald);
   background: var(--l-emerald);
 }
 .d {
-  border-radius: 1em 1em 0em 0em;
+  border-radius: 50% 50% 0em 0em;
   color: var(--ruby);
   -webkit-text-stroke-color: var(--ruby);
   background: var(--l-ruby);
 }
 .M {
-  border-radius: 0em 0.5em 0.5em 0.5em;
+  border-radius: 0em 50% 50% 50%;
   color: var(--sapphire);
   -webkit-text-stroke-color: var(--sapphire);
   background: var(--l-sapphire);
 }
 .D {
-  border-radius: 0.5em 0em 0.5em 0.5em;
+  border-radius: 50% 0em 50% 50%;
   color: var(--amethyst);
   -webkit-text-stroke-color: var(--amethyst);
   background: var(--l-amethyst);
@@ -328,11 +328,12 @@ i {
   display: block;
   font-style: normal;
   z-index: 50;
-  box-shadow: 0 0 calc(var(--size) * 0.8) var(--size) var(--spot);
+  box-shadow: 0 0 calc(var(--size) / 2) calc(var(--size)/1.5) var(--spot);
   background: var(--spot);
   position: absolute;
   text-align: center;
   transition: var(--speed);
+  transform: scale(1.5);
 }
 .w {
   background: var(--wall);
@@ -358,5 +359,4 @@ i {
   font-size: 1rem;
   border-width: 0.2rem;
   margin: 0 0.15rem;
-  vertical-align: middle;
 }

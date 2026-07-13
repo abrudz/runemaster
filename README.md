@@ -12,7 +12,7 @@ Implementation: Adám Brudzewsky & Claude (Opus 4.8)
 
 ## Gameplay
 
-- Move with the arrow keys, numpad, or <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> (and <kbd>Q</kbd><kbd>E</kbd><kbd>Z</kbd><kbd>C</kbd> for diagonals), or <kbd>I</kbd><kbd>J</kbd><kbd>K</kbd><kbd>L</kbd> (and <kbd>U</kbd><kbd>O</kbd><kbd>M</kbd><kbd>.</kbd> for diagonals).
+- Move yourself (🕴️) with the arrow keys, numpad, or <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> (and <kbd>Q</kbd><kbd>E</kbd><kbd>Z</kbd><kbd>C</kbd> for diagonals), or <kbd>I</kbd><kbd>J</kbd><kbd>K</kbd><kbd>L</kbd> (and <kbd>U</kbd><kbd>O</kbd><kbd>M</kbd><kbd>.</kbd> for diagonals).
 - On a touchscreen or with a mouse, tap a tile to step toward it, or tap outside the map to step that way — even across an edge.
 - Move about the map to uncover it and collect coloured rune gems.
 - When prompted for an APL expression, either type it or click the rune gems and buttons to insert.
