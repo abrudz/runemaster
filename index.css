@@ -37,6 +37,7 @@ html {
   --mini: 2.5rem;   /* mini-map room tile (fixed, uncoupled from the board's --size) */
   --cell: 46vmin;   /* first-person world-cell edge (fit() tunes it) */
   --persp: 54vmin;  /* camera focal length (≈1.15·--cell) */
+  --amap: 1.4rem;   /* automap tile (fixed, uncoupled from the first-person --cell) */
 }
 body {
   background: var(--spot);
@@ -52,8 +53,10 @@ body {
 /* ── first-person view ────────────────────────────────────────── */
 #view {                                  /* the stage: a perspective window into the room */
   position: relative;
+  flex: 1 1 auto;
+  align-self: stretch;
   width: 100%;
-  height: 82dvh;
+  min-height: 0;
   overflow: hidden;
   perspective: var(--persp);
   perspective-origin: 50% 50%;           /* eye at vertical centre → walls span the horizon */
@@ -90,7 +93,7 @@ body {
   background-image: linear-gradient(var(--wall), var(--wall));
   line-height: var(--cell);
   font-size: calc(var(--cell) * 0.86);
-  box-shadow: inset 0 0 0 1px #0006;
+  box-shadow: 0 0 0 1px #0008;           /* dark bleed masks the bright seam where panels meet at the vanishing point */
   box-sizing: border-box;
 }
 .p.w.f { transform: translate3d(calc(var(--cell) * var(--o)),         0px, calc(var(--cell) * (0.5 - var(--f)))); }
@@ -149,20 +152,21 @@ dialog input {
   font-family: APL;
   font-size: calc(var(--size) * 0.6);
 }
-#M {
-  margin: var(--size);           /* one tile of clearance all round: for the counter, the belt, and touch room */
-  border-collapse: collapse;
-  box-shadow: 0 0 calc(var(--size) / 4) calc(var(--size) / 4) var(--back);
+#M {                             /* now the small top-down automap (grid lines via border-spacing, like #mini) */
+  margin: 0.25rem 0 0;
+  border-collapse: separate;
+  border-spacing: 0.06rem;
+  table-layout: fixed;
 }
 td {
-  height: var(--size);
-  font-size: calc(var(--size) * 0.6);
+  height: var(--amap);
+  font-size: calc(var(--amap) * 0.6);
   position: relative;
   padding: 0;
 }
 #M td {
   background: var(--back);
-  width: var(--size);
+  width: var(--amap);
 }
 fieldset {
   border: 0.15rem solid currentColor;
@@ -170,12 +174,15 @@ fieldset {
   letter-spacing: 0.25ex;
   padding: 0.1rem 0.5rem 0.4rem;
 }
-#util {                                          /* belt + mini-map, together as wide as the map */
+#util {                                          /* belt + mini-map + automap, below the view (portrait) */
   box-sizing: border-box;
   display: flex;
   gap: 0.5rem;
   align-items: flex-start;
-  width: calc(var(--size) * var(--cols));        /* portrait: exactly the map's width */
+  justify-content: center;
+  flex: none;
+  width: 100%;
+  padding: 0 0.5rem 0.25rem;
 }
 #belt {                                          /* the belt, now a direct child of #util (was inside a fieldset) */
   box-sizing: border-box;
@@ -323,9 +330,9 @@ b {
 .M,
 .D,
 .j {
-  width: calc(var(--size) * 0.6);
-  height: calc(var(--size) * 0.6);
-  line-height: calc(var(--size) * 0.6);
+  width: calc(var(--amap) * 0.6);
+  height: calc(var(--amap) * 0.6);
+  line-height: calc(var(--amap) * 0.6);
   -webkit-text-stroke: 0.05rem;
   border-width: 0.33rem;
   border-style: outset;
@@ -376,28 +383,29 @@ b {
     rgba(255, 255, 255, 0.55)
   );
 }
-i {
-  height: var(--size);
-  width: var(--size);
-  line-height: var(--size);
-  font-size: calc(var(--size) * 0.7);   /* scale the player with the tiles */
+i {                                    /* the automap "you are here" arrow, pointing where you face */
+  height: var(--amap);
+  width: var(--amap);
+  line-height: var(--amap);
+  font-size: calc(var(--amap) * 0.8);
+  color: var(--spot);
   display: block;
   font-style: normal;
-  z-index: 50;
-  box-shadow: 0 0 calc(var(--size) * 0.8) var(--size) var(--spot);
-  background: var(--spot);
+  z-index: 120;                        /* over automap tiles, under dialogs (150) */
+  box-shadow: 0 0 calc(var(--amap) * 0.9) calc(var(--amap) * 0.5) var(--spot);   /* soft lantern glow */
+  background: none;
   position: absolute;
   text-align: center;
   transition: var(--speed);
 }
-.w {
+#M .w {                                /* automap wall tile (scene walls are .p.w, sized off --cell) */
   background: var(--wall);
-  height: var(--size);
-  width: var(--size);
-  border-radius: calc(var(--size) / 2.5);
+  height: var(--amap);
+  width: var(--amap);
+  border-radius: calc(var(--amap) / 2.5);
 }
-.a {
-  font-size: calc(var(--size) * 0.72);   /* free-standing apple (P10) */
+#M .a {
+  font-size: calc(var(--amap) * 0.72);   /* free-standing apple (P10) */
 }
 #belt b {                 /* belt runes are a fixed size (uncoupled from --size) so the belt height is stable */
   width: 1.5rem;

@@ -29,7 +29,7 @@ const getTop =e=>window.scrollY+e.getBoundingClientRect().top +"px"
 const getLeft=e=>window.scrollX+e.getBoundingClientRect().left+"px"
 const getR=e=>parseInt(e.id.replace(/r|c\d+/g,""))
 const getC=e=>parseInt(e.id.replace(/r\d+c/,""))
-const place=(e,y,x)=>{const t=td(y,x);e.style.top=getTop(t);e.style.left=getLeft(t)}
+const place=(e,y,x)=>{const t=td(y,x);e.style.top=getTop(t);e.style.left=getLeft(t);e.style.rotate=dir*90+"deg"}   // automap marker points where you face
 const jump=(r,c)=>{i.style.transition="none";i.r=r;i.c=c;void i.offsetWidth;i.style.transition=""}
 const lb=(ch,sol)=>{
   const a=[...new Set(ch.match(/../g)??[])]          // allowed runes, deduped
@@ -76,7 +76,7 @@ const draw=()=>{                                     // project the visible cell
 }
 const chk=()=>{
   let bi=$$("#belt b").map(e=>e.id)
-  $$(".l").forEach(e=>reqs(e).every(r=>~bi.indexOf(r))?(e.className="o",e.innerText="🚪"):0)
+  $$("#M .l").forEach(e=>reqs(e).every(r=>~bi.indexOf(r))?(e.className="o",e.innerText="🚪"):0)   // #M-scoped: scene clones share class 'l' but carry no id
 }
 const count=()=>{let n=$$("#M b.m,#M b.d,#M b.M,#M b.D,#M b.j").length   // uncollected stones here (for the tab title)
   $("#left").textContent=j.name;$("#left").title=j.name                 // room name (rune count now lives on the mini-map tile)
@@ -101,18 +101,12 @@ const mini=()=>{                                     // 4×5 discovered-rooms ta
   }
 }
 const win=()=>{msgp.innerHTML="🍎 Nine apples gathered — you are the RuneMaster! 🍎";msg.showModal()}
-const fit=()=>{                                      // fit board+margin+utilities to viewport (no scroll)
-  root.style.setProperty("--cols",cMax+1)            // map width in tiles (portrait #util width)
-  const land=matchMedia("(orientation: landscape)").matches, util=$("#util")
-  let s=parseFloat(getComputedStyle(root).getPropertyValue("--size"))||24   // seed from current
-  for(let p=0;p<4;p++){                              // fixed point: utilities' extent depends on --size
-    root.style.setProperty("--size",Math.max(14,s)+"px")   // (reading offset* below forces a reflow)
-    if(land){                                        // landscape: utilities to the right (incl. their margin)
-      let cs=getComputedStyle(util),uw=util.offsetWidth+(parseFloat(cs.marginLeft)||0)+(parseFloat(cs.marginRight)||0)
-      s=Math.min((innerWidth-8-uw)/(cMax+3),(innerHeight-12)/(rMax+3))
-    }else s=Math.min((innerWidth-8)/(cMax+3),(innerHeight-util.offsetHeight-12)/(rMax+3))   // +3: cols/rows + 1-tile margin each side
-  }
-  root.style.setProperty("--size",Math.max(14,s)+"px")
+const fit=()=>{                                      // size the first-person cell + camera to the view box
+  let v=$("#view"),w=v.clientWidth,h=v.clientHeight
+  if(!w||!h)return
+  let cell=Math.min(w,h)*0.95                         // a cell ≈ fills the view's smaller dimension
+  root.style.setProperty("--cell",cell+"px")
+  root.style.setProperty("--persp",cell*1.15+"px")   // focal length → field of view
 }
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({mr,mc,dir,r:i.r,c:i.c,belt:$$("#belt b").map(e=>e.id),doors,seen,apples,atlas}))}catch(_){}}
 const restore=()=>{
@@ -216,7 +210,8 @@ document.addEventListener('DOMContentLoaded',async function main(){
   document.onclick=e=>{                    // click a billboard to interact; click view zones to move/turn
     if(e.target.closest("dialog,button,#belt,#util"))return       // leave UI + automap alone
     let bill=e.target.closest(".p.bill")
-    if(bill)return step(+bill.dataset.r,+bill.dataset.c)           // tapped a stone/door/apple ahead
+    if(bill){let r=+bill.dataset.r,c=+bill.dataset.c               // tapped a stone/door/apple
+      return Math.abs(r-i.r)+Math.abs(c-i.c)==1?step(r,c):step(i.r+DR[dir],i.c+DC[dir])}   // adjacent→interact; farther→approach one step
     let v=$("#view").getBoundingClientRect()
     if(e.clientX<v.left||e.clientX>v.right||e.clientY<v.top||e.clientY>v.bottom)return
     let x=(e.clientX-v.left)/v.width,y=(e.clientY-v.top)/v.height  // zones: top→fwd, bottom→back, sides→turn
