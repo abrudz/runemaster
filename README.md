@@ -8,17 +8,15 @@ Implementation: Adám Brudzewsky & Claude (Opus 4.8)
 
 [Play in your browser now!](https://abrudz.github.io/runemaster/) Explore the maze, solve the APL puzzles, collect the runes, and gather all nine apples to win.
 
-Prefer a first-person view? A **3D dungeon-crawler** version — same maze, levels, and puzzles — is playable at [`/3d`](3d/) ([play it here](https://abrudz.github.io/runemaster/3d/)). It shares the level and font files with this top-down version but keeps its own saved progress, so you can play both.
-
 <img width="727" height="727" alt="image" src="https://github.com/user-attachments/assets/2547dbf3-ca4b-4d33-aa08-b28075cdeb22" />
 
 ## Gameplay
 
-- Move with the arrow keys, numpad, or WASD (and QEZC for diagonals), or IJKL (and UOM for diagonals).
+- Move with the arrow keys, numpad, or <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> (and <kbd>Q</kbd><kbd>E</kbd><kbd>Z</kbd><kbd>C</kbd> for diagonals), or <kbd>I</kbd><kbd>J</kbd><kbd>K</kbd><kbd>L</kbd> (and <kbd>U</kbd><kbd>O</kbd><kbd>M</kbd><kbd>.</kbd> for diagonals).
 - On a touchscreen or with a mouse, tap a tile to step toward it, or tap outside the map to step that way — even across an edge.
 - Move about the map to uncover it and collect coloured rune gems.
 - When prompted for an APL expression, either type it or click the rune gems and buttons to insert.
-- Closed passages (⛔) turn into doors (🚪) once you have collected all the required rune gems.
+- Closed passages (🔒 on a 🚪) open (🚪) once you have collected all the required rune gems.
 - Move across the edges of the map to switch to the neighbouring map.
 - Free-standing apples (🍎) are the capstone challenges: like doors, each needs its required runes before it will pose its puzzle, but it never blocks your path. **Gather all nine apples to win.**
 - Your progress is saved automatically; use _Restart Game_ to begin afresh.
