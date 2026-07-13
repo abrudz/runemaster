@@ -343,15 +343,6 @@ th {
   #belt { flex: none; }                          /* width:100% already set above */
   #side { order: -1; width: 100%; }              /* mini-map (+counters) on top, belt below */
 }
-@media (min-width: 1200px) and (orientation: landscape) {
-  #util {                                        /* roomy screen → double the whole utilities panel */
-    zoom: 2;
-    transform: none;                             /* drop the top-down tile-row offset */
-    align-self: flex-start;
-    max-height: 50dvh;                           /* halved because zoom:2 doubles it back to the viewport height */
-    overflow-y: auto;
-  }
-}
 td > * {
   z-index: 100;
 }
