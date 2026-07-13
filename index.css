@@ -245,7 +245,7 @@ th {
 @media (min-width: 1200px) and (orientation: landscape) {
   #util {                                        /* roomy screen → double the whole utilities panel */
     zoom: 2;
-    transform: none;                             /* the translateY offset would double under zoom */
+    transform: translateY(calc(var(--size) / 2));   /* zoom:2 doubles it → one map square down, aligned with the board */
     align-self: flex-start;
     max-height: 50dvh;                           /* halved because zoom:2 doubles it back to the viewport height */
   }
@@ -351,6 +351,14 @@ i {
 }
 .a {
   font-size: calc(var(--size) * 0.72);   /* free-standing apple (P10) */
+}
+#M .lk {                     /* padlock overlaid on a locked door (🚪) */
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  transform: translate(-50%, -50%);
+  font-size: 0.6em;
+  opacity: 1;                /* the fog rule #M b{opacity:0} would otherwise hide this nested <b> */
 }
 #belt b {                 /* belt runes are a fixed size (uncoupled from --size) so the belt height is stable */
   width: 1.5rem;

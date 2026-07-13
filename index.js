@@ -157,7 +157,7 @@ async function loadM(mr,mc){
             (t[0]!="w"?' id="'+t+'"':"")+   // double-quoted: a token may contain ' (the quote rune j')
             " class='"+t[0]+"'"+
             ">"+
-            (t[0]=="w"?jj.theme.w:t[0]=="l"?"⛔":t[0]=="o"?"🚪":t[0]=="a"?"🍎":ins[t[1]]??t[1])+
+            (t[0]=="w"?jj.theme.w:t[0]=="l"?'🚪<b class="lk">🔒</b>':t[0]=="o"?"🚪":t[0]=="a"?"🍎":ins[t[1]]??t[1])+
             "</b>":"")+"</td>"
         ).join`\n`+"\n</tr>"
     ).join`\n`+"</tbody>"}
