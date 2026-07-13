@@ -8,6 +8,8 @@ Implementation: Adám Brudzewsky & Claude (Opus 4.8)
 
 [Play in your browser now!](https://abrudz.github.io/runemaster/) Explore the maze, solve the APL puzzles, collect the runes, and gather all nine apples to win.
 
+Prefer a first-person view? A **3D dungeon-crawler** version — same maze, levels, and puzzles — is playable at [`/3d`](3d/) ([play it here](https://abrudz.github.io/runemaster/3d/)). It shares the level and font files with this top-down version but keeps its own saved progress, so you can play both.
+
 <img width="727" height="727" alt="image" src="https://github.com/user-attachments/assets/2547dbf3-ca4b-4d33-aa08-b28075cdeb22" />
 
 ## Gameplay

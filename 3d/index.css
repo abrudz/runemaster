@@ -1,0 +1,455 @@
+@font-face {
+  font-family: Text;
+  letter-spacing: 0.25ex;
+  src: url("../Gemcut Bold.otf");
+}
+@font-face {
+  font-family: Text;
+  letter-spacing: 0.25ex;
+  src: url("../Gemcut Bold Italic.otf");
+  font-style: italic;
+}
+@font-face {
+  font-family: APL;
+  src:
+    local("APL387 Unicode"), local("APL386 Unicode"), local("APL385 Unicode"),
+    url("../APL387.ttf");
+}
+* {
+  user-select: none;
+}
+html {
+  --emerald: rgb(0, 73, 73);
+  --ruby: rgb(146, 0, 0);
+  --sapphire: rgb(0, 109, 219);
+  --amethyst: rgb(73, 0, 146);
+  --l-emerald: rgba(140, 214, 209);
+  --l-ruby: rgba(240, 184, 184);
+  --l-sapphire: rgba(158, 205, 250);
+  --l-amethyst: rgba(206, 176, 236);
+  --diamond: #222;
+  --gem-edge: rgba(255, 255, 255, 0.4);
+  --back: #222;
+  --spot: #999;
+  --wall: rgb(146, 73, 0);
+  --speed: 0.5s;
+  --size: 2.5rem;
+  --mini: 2.5rem;   /* mini-map room tile (fixed, uncoupled from the board's --size) */
+  --cell: 46vmin;   /* first-person world-cell edge (fit() tunes it) */
+  --persp: 54vmin;  /* camera focal length (≈1.15·--cell) */
+  --amap: 1.4rem;   /* automap tile (fixed, uncoupled from the first-person --cell) */
+  --sky: #7ec0ee;   /* ceiling: a constant sky */
+}
+body {
+  background: var(--spot);
+  margin: 0;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+/* ── first-person view ────────────────────────────────────────── */
+#view {                                  /* the stage: a perspective window into the room */
+  position: relative;
+  flex: 1 1 auto;
+  align-self: stretch;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  perspective: var(--persp);
+  perspective-origin: 50% 50%;           /* eye at vertical centre → walls span the horizon */
+  background: linear-gradient(var(--sky) 0 50%, var(--back) 50%);   /* sky above the horizon, dark below (floor plane covers it) */
+}
+#view::after {                           /* black curtain: held down while the next room loads */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9;
+  transition: opacity 0.14s ease;
+}
+#view.dark::after { opacity: 1; }
+#scene {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.p {                                     /* a cell-sized panel, centred on the eye at z=0 */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--cell);
+  height: var(--cell);
+  margin: calc(var(--cell) / -2);
+  transform-style: preserve-3d;
+  text-align: center;
+}
+.p.w::after {                            /* gentle depth cue: distant walls dim but stay visible (no pop-in) */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--back);
+  opacity: calc(var(--f) / 18);
+  pointer-events: none;
+}
+.p.w {                                   /* wall face: solid-backed tint, wall-emoji textured */
+  background-color: var(--back);         /* opaque base so translucent --wall themes still read as wall */
+  background-image: linear-gradient(var(--wall), var(--wall));
+  line-height: var(--cell);
+  font-size: calc(var(--cell) * 0.86);
+  box-shadow: 0 0 0 1px #0008;           /* dark bleed masks the bright seam where panels meet at the vanishing point */
+  box-sizing: border-box;
+}
+.p.w.f { transform: translate3d(calc(var(--cell) * var(--o)),         0px, calc(var(--cell) * (0.5 - var(--f)))); }
+.p.w.l { transform: translate3d(calc(var(--cell) * (var(--o) - 0.5)), 0px, calc(var(--cell) * var(--f) * -1)) rotateY( 90deg); }
+.p.w.r { transform: translate3d(calc(var(--cell) * (var(--o) + 0.5)), 0px, calc(var(--cell) * var(--f) * -1)) rotateY(-90deg); }
+.p.floor, .p.ceil {                      /* ground & sky slabs, in perspective */
+  width: calc(var(--cell) * 13);
+  height: calc(var(--cell) * 13);
+  margin: 0;
+}
+.p.floor {                               /* same tint as the walls, but bare (no emoji) */
+  background-color: var(--back);
+  background-image: linear-gradient(var(--wall), var(--wall));
+  transform: translate(-50%, -50%) translate3d(0, calc(var(--cell) * 0.5), calc(var(--cell) * -5)) rotateX(90deg);
+}
+.p.ceil {
+  background: var(--sky);
+  transform: translate(-50%, -50%) translate3d(0, calc(var(--cell) * -0.5), calc(var(--cell) * -5)) rotateX(-90deg);
+}
+.p.door > .lk {                          /* small padlock overlaid on the door: 🔒 locked / 🔓 ready */
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  transform: translate(-50%, -50%);
+  font-size: 0.5em;                      /* relative to the door's glyph */
+  line-height: 1;
+}
+.p.bill {                                /* stone / apple, hanging in the air (no pane) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--cell) * 0.5);    /* free-standing apple */
+  transform: translate3d(calc(var(--cell) * var(--o)), 0px, calc(var(--cell) * var(--f) * -1));
+}
+.p.bill > b { opacity: 1; }
+#scene .m, #scene .d, #scene .M, #scene .D, #scene .j {   /* gems render mid-size in the scene, with a proportional bevel */
+  width: calc(var(--cell) * 0.34);
+  height: calc(var(--cell) * 0.34);
+  line-height: calc(var(--cell) * 0.34);
+  font-size: calc(var(--cell) * 0.24);
+  border-width: calc(var(--cell) * 0.045);
+}
+dialog {
+  z-index: 150;
+  font-size: calc(var(--size) * 0.6);
+  background: var(--spot);
+  max-width: 92vw;
+  max-height: 92dvh;
+  overflow: auto;
+}
+dialog::backdrop {
+  background: #0003;
+}
+dialog p {
+  line-height: calc(var(--size) * 0.8);
+  font-family: Text;
+  letter-spacing: 0.25ex;
+}
+dialog button,
+legend button {
+  font-family: Text;
+  letter-spacing: 0.25ex;
+  font-size: calc(var(--size) * 0.6);
+}
+legend button {
+  font-size: 0.85em;   /* fixed relative to the legend, not the board */
+}
+#askb > button,
+dialog code {
+  font-weight: bold;
+  font-family: APL;
+  white-space: pre;
+}
+#askb > * {
+  cursor: pointer;
+}
+dialog input {
+  width: 100%;
+  font-family: APL;
+  font-size: calc(var(--size) * 0.6);
+}
+#M {                             /* now the small top-down automap (cells flush, no grid gaps) */
+  margin: 0.25rem 0 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+td {
+  height: var(--amap);
+  font-size: calc(var(--amap) * 0.6);
+  position: relative;
+  padding: 0;
+}
+#M td {
+  background: var(--back);
+  width: var(--amap);
+}
+fieldset {
+  border: 0.15rem solid currentColor;
+  font-family: Text;
+  letter-spacing: 0.25ex;
+  padding: 0.1rem 0.5rem 0.4rem;
+}
+#util {                                          /* belt + mini-map + automap, below the view (portrait) */
+  box-sizing: border-box;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  justify-content: center;
+  flex: none;
+  width: 100%;
+  padding: 0 0.5rem 0.25rem;
+}
+#belt {                                          /* the belt, now a direct child of #util (was inside a fieldset) */
+  box-sizing: border-box;
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;                                  /* allow shrink so stones wrap instead of scrolling */
+  font-family: Text;
+  letter-spacing: 0.25ex;                        /* restore the font the removed fieldset provided */
+}
+legend,
+th {
+  font-size: 1.1rem;
+}
+th {
+  text-align: left;
+  font-weight: normal;
+}
+#belt,
+#belt tbody {
+  display: block;
+  width: 100%;
+}
+#belt tr {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+#belt th {                 /* gem-category label, kept on one line */
+  flex: none;
+  white-space: nowrap;
+  font-size: 1rem;
+  line-height: 1.9rem;
+}
+#belt td {                 /* stone container: rune gems wrap to more lines when narrow */
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: auto;            /* override global td{height:var(--size)} or wrapped rows clip */
+  min-height: 1.9rem;
+  font-size: 1rem;         /* uncouple belt row height from the map's --size-based font */
+  white-space: normal;
+}
+#side {                    /* right of the belt: counters/Restart above the mini-map */
+  flex: none;              /* hugs the mini-map table's own width */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+#topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+#topbar button {           /* Restart left the legend, so restyle it here */
+  font-family: Text;
+  letter-spacing: 0.25ex;
+  font-size: 0.85rem;
+}
+#left {                    /* room name; ellipsis so long names don't collide with Restart */
+  font-family: Text;
+  letter-spacing: 0.25ex;
+  font-size: 0.85rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#mini {                    /* 4×5 discovered-rooms table (row = mr+2, col = mc+1) */
+  table-layout: fixed;      /* columns exactly one tile wide, so cells stay square */
+  border-collapse: separate;
+  border-spacing: 0.15rem;  /* the gaps show the page background, drawing the grid lines */
+}
+#mini td {
+  width: var(--mini);
+  height: var(--mini);
+  line-height: var(--mini); /* pin the cell height square (and centre the emoji) */
+  padding: 0;
+  text-align: center;
+  font-size: calc(var(--mini) * 0.6);
+  background: var(--back);   /* dark tile; wall emoji appears here on first entry */
+}
+#mini td.now {             /* current room: no fill, so the page bg shows through as a highlight */
+  background: transparent;
+}
+#mini td .ap, #mini td .rc {
+  position: absolute;
+  font-size: calc(var(--mini) * 0.42);  
+  line-height: 1;
+  opacity: 0.8;
+}
+#mini td .ap {             /* uncollected-apple badge, lower-left corner */
+  left: 0;
+  bottom: 0.1rem;
+}
+#mini td .rc {             /* remaining-rune count, bottom-right corner (legible on dark tile AND the transparent .now tile) */
+  right: 0;
+  bottom: 0;
+  width: 1rem;
+  font-family: Text;
+  color: var(--spot);
+  background: var(--back);
+  border-radius: 0.3rem;
+}
+@media (orientation: landscape) {
+  body { flex-direction: row; }                  /* map on the left, utilities on the right */
+  #util {
+    flex-direction: column;                      /* stacked; mini-map (+counters) on top, belt below */
+    width: calc(var(--mini) * 5 + 2rem);
+    align-self: flex-start;
+    margin: 0 var(--size) 0 1rem;                /* right: off the screen edge; left: air from the map */
+    transform: translateY(var(--size));          /* drop to the map's tile row WITHOUT enlarging the box (which would shove the centred map down) */
+    overflow-y: auto;
+    max-height: calc(100dvh - var(--size));
+  }
+  #belt { flex: none; }                          /* width:100% already set above */
+  #side { order: -1; width: 100%; }              /* mini-map (+counters) on top, belt below */
+}
+td > * {
+  z-index: 100;
+}
+#M td,
+b {
+  text-align: center;
+}
+b {
+  display: inline-block;
+  font-weight: normal;
+  position: relative;
+  transition: opacity var(--speed);
+  font-family: APL;
+}
+#belt b,
+#askb > * {
+  margin: 0 calc(var(--size) * 0.1);
+}
+#M b {
+  opacity: 0;
+}
+.m,
+.d,
+.M,
+.D,
+.j {                               /* default stone size = dialog/prose scale (--size); #M & #scene override below */
+  width: calc(var(--size) * 0.6);
+  height: calc(var(--size) * 0.6);
+  line-height: calc(var(--size) * 0.6);
+  -webkit-text-stroke: 0.05rem;
+  border-width: calc(var(--size) * 0.08);
+  border-style: outset;
+  border-color: var(--gem-edge);   /* one place sets every stone's bevel colour */
+  letter-spacing: normal;          /* cancel the fieldset/dialog 0.25ex that shifts single glyphs off-centre */
+}
+#M .m, #M .d, #M .M, #M .D, #M .j {   /* automap stones: tiny, thin proportional bevel */
+  width: calc(var(--amap) * 0.6);
+  height: calc(var(--amap) * 0.6);
+  line-height: calc(var(--amap) * 0.6);
+  border-width: calc(var(--amap) * 0.08);
+}
+.m {
+  border-radius: 1em 1em 0em 1em;
+  color: var(--emerald);
+  -webkit-text-stroke-color: var(--emerald);
+  background: var(--l-emerald);
+}
+.d {
+  border-radius: 1em 1em 0em 0em;
+  color: var(--ruby);
+  -webkit-text-stroke-color: var(--ruby);
+  background: var(--l-ruby);
+}
+.M {
+  border-radius: 0em 0.5em 0.5em 0.5em;
+  color: var(--sapphire);
+  -webkit-text-stroke-color: var(--sapphire);
+  background: var(--l-sapphire);
+}
+.D {
+  border-radius: 0.5em 0em 0.5em 0.5em;
+  color: var(--amethyst);
+  -webkit-text-stroke-color: var(--amethyst);
+  background: var(--l-amethyst);
+  font-size: 0.72em;
+  letter-spacing: -0.18em;
+  text-indent: -0.18em;
+}
+.j {
+  border-radius: 50%;
+  color: var(--diamond);
+  font-size: 0.72em;
+  letter-spacing: -0.18em;
+  text-indent: -0.18em;
+  background: radial-gradient(
+    circle at 50% 40%,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 0, 64, 0.32) 24%,
+    rgba(255, 170, 0, 0.32) 38%,
+    rgba(60, 200, 0, 0.32) 52%,
+    rgba(0, 150, 255, 0.32) 66%,
+    rgba(150, 0, 220, 0.32) 80%,
+    rgba(255, 255, 255, 0.55)
+  );
+}
+i {                                    /* the automap "you are here" arrow, pointing where you face */
+  height: var(--amap);
+  width: var(--amap);
+  line-height: var(--amap);
+  font-size: calc(var(--amap) * 0.8);
+  color: var(--spot);
+  display: block;
+  font-style: normal;
+  z-index: 120;                        /* over automap tiles, under dialogs (150) */
+  text-shadow: 0 0 0.2rem var(--back);   /* just enough contrast to read the arrow; no 3×3 lantern */
+  background: none;
+  position: absolute;
+  text-align: center;
+  transition: var(--speed);
+}
+#M .w {                                /* automap wall tile (scene walls are .p.w, sized off --cell) */
+  background: var(--wall);
+  height: var(--amap);
+  width: var(--amap);
+  border-radius: calc(var(--amap) / 2.5);
+}
+#M .a {
+  font-size: calc(var(--amap) * 0.72);   /* free-standing apple (P10) */
+}
+#belt b {                 /* belt runes are a fixed size (uncoupled from --size) so the belt height is stable */
+  width: 1.5rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  font-size: 1rem;
+  border-width: 0.2rem;
+  margin: 0 0.15rem;
+  vertical-align: middle;
+}
