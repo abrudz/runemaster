@@ -38,6 +38,7 @@ html {
   --cell: 46vmin;   /* first-person world-cell edge (fit() tunes it) */
   --persp: 54vmin;  /* camera focal length (≈1.15·--cell) */
   --amap: 1.4rem;   /* automap tile (fixed, uncoupled from the first-person --cell) */
+  --sky: #7ec0ee;   /* ceiling: a constant sky */
 }
 body {
   background: var(--spot);
@@ -60,10 +61,7 @@ body {
   overflow: hidden;
   perspective: var(--persp);
   perspective-origin: 50% 50%;           /* eye at vertical centre → walls span the horizon */
-  background: linear-gradient(           /* ceiling → lit horizon → floor, in the room's palette */
-    var(--back) 0%,
-    color-mix(in srgb, var(--spot) 22%, var(--back)) 50%,
-    var(--back) 100%);
+  background: linear-gradient(var(--sky) 0 50%, var(--back) 50%);   /* sky above the horizon, dark below (floor plane covers it) */
 }
 #scene {
   position: absolute;
@@ -80,7 +78,7 @@ body {
   transform-style: preserve-3d;
   text-align: center;
 }
-.p::after {                              /* lantern falloff: fade into the void with depth */
+.p.w::after {                            /* wall lantern falloff: fade into the void with depth */
   content: "";
   position: absolute;
   inset: 0;
@@ -99,19 +97,35 @@ body {
 .p.w.f { transform: translate3d(calc(var(--cell) * var(--o)),         0px, calc(var(--cell) * (0.5 - var(--f)))); }
 .p.w.l { transform: translate3d(calc(var(--cell) * (var(--o) - 0.5)), 0px, calc(var(--cell) * var(--f) * -1)) rotateY( 90deg); }
 .p.w.r { transform: translate3d(calc(var(--cell) * (var(--o) + 0.5)), 0px, calc(var(--cell) * var(--f) * -1)) rotateY(-90deg); }
-.p.bill {                                /* stone / door / apple, camera-facing at its cell */
+.p.floor, .p.ceil {                      /* ground & sky slabs, in perspective */
+  width: calc(var(--cell) * 13);
+  height: calc(var(--cell) * 13);
+  margin: 0;
+}
+.p.floor {                               /* same tint as the walls, but bare (no emoji) */
+  background-color: var(--back);
+  background-image: linear-gradient(var(--wall), var(--wall));
+  transform: translate(-50%, -50%) translate3d(0, calc(var(--cell) * 0.5), calc(var(--cell) * -5)) rotateX(90deg);
+}
+.p.ceil {
+  background: var(--sky);
+  transform: translate(-50%, -50%) translate3d(0, calc(var(--cell) * -0.5), calc(var(--cell) * -5)) rotateX(-90deg);
+}
+.p.bill {                                /* stone / door / apple, hanging in the air (no pane) */
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: calc(var(--cell) * 0.55);
+  opacity: calc(1 - var(--f) * 0.12);    /* dim with depth, but no rectangular backing */
   transform: translate3d(calc(var(--cell) * var(--o)), 0px, calc(var(--cell) * var(--f) * -1));
 }
 .p.bill > b { opacity: 1; }
-#scene .m, #scene .d, #scene .M, #scene .D, #scene .j {   /* gems render large in the scene (not automap-small) */
+#scene .m, #scene .d, #scene .M, #scene .D, #scene .j {   /* gems render large in the scene, with a proportionally thick bevel */
   width: calc(var(--cell) * 0.42);
   height: calc(var(--cell) * 0.42);
   line-height: calc(var(--cell) * 0.42);
   font-size: calc(var(--cell) * 0.3);
+  border-width: calc(var(--cell) * 0.056);
 }
 dialog {
   z-index: 150;
@@ -152,10 +166,9 @@ dialog input {
   font-family: APL;
   font-size: calc(var(--size) * 0.6);
 }
-#M {                             /* now the small top-down automap (grid lines via border-spacing, like #mini) */
+#M {                             /* now the small top-down automap (cells flush, no grid gaps) */
   margin: 0.25rem 0 0;
-  border-collapse: separate;
-  border-spacing: 0.06rem;
+  border-collapse: collapse;
   table-layout: fixed;
 }
 td {
@@ -334,7 +347,7 @@ b {
   height: calc(var(--amap) * 0.6);
   line-height: calc(var(--amap) * 0.6);
   -webkit-text-stroke: 0.05rem;
-  border-width: 0.33rem;
+  border-width: calc(var(--amap) * 0.08);   /* thin bevel, proportional to the tiny automap stone */
   border-style: outset;
   border-color: var(--gem-edge);   /* one place sets every stone's bevel colour */
   letter-spacing: normal;          /* cancel the fieldset/dialog 0.25ex that shifts single glyphs off-centre */
@@ -392,7 +405,7 @@ i {                                    /* the automap "you are here" arrow, poin
   display: block;
   font-style: normal;
   z-index: 120;                        /* over automap tiles, under dialogs (150) */
-  box-shadow: 0 0 calc(var(--amap) * 0.9) calc(var(--amap) * 0.5) var(--spot);   /* soft lantern glow */
+  text-shadow: 0 0 0.2rem var(--back);   /* just enough contrast to read the arrow; no 3×3 lantern */
   background: none;
   position: absolute;
   text-align: center;

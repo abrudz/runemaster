@@ -49,12 +49,12 @@ const lb=(ch,sol)=>{
 }
 window.addEventListener('resize',()=>{fit();jump(i.r,i.c)})
 const MAXV=5,VW=2                                    // first-person frustum: cells ahead, lateral ±
+const FC=`<b class="p ceil"></b><b class="p floor"></b>`   // constant sky + ground slabs
 const wallAt=(r,c)=>{let t=td(r,c);if(!t)return 1;let e=t.children[0];return e&&e.className=="w"&&e.style.visibility!="hidden"?1:0}   // off-grid & live walls block sight
-const show=()=>{                                     // reveal 3×3 + cast down the facing corridor, remember, repaint
+const show=()=>{                                     // reveal only what the view sees (line of sight down each frustum column), remember, repaint
   let s=seen[cur]??=[],R=(dir+1)&3
   const lit=(r,c)=>{let t=td(r,c);if(!t)return 0;if(t.children[0])t.children[0].style.opacity=1;s.includes(r+","+c)||s.push(r+","+c);return!wallAt(r,c)}
-  for(let r=i.r-1;r<=i.r+1;r++)for(let c=i.c-1;c<=i.c+1;c++)lit(r,c)   // 3×3 around
-  for(let o=-VW;o<=VW;o++)for(let f=1;f<=MAXV;f++)                     // three columns down the corridor, halt at first wall
+  for(let o=-VW;o<=VW;o++)for(let f=0;f<=MAXV;f++)                     // each column from the current rank forward, halt at first wall
     if(!lit(i.r+DR[dir]*f+DR[R]*o,i.c+DC[dir]*f+DC[R]*o))break
   draw()
 }
@@ -72,7 +72,7 @@ const draw=()=>{                                     // project the visible cell
     }else if((f||o)&&~"mdMDjloa".indexOf(e.className))                   // stone/door/apple billboard (never underfoot)
       h.push(`<b class="p bill" data-r="${r}" data-c="${c}" style="--f:${f};--o:${o}"><b class="${e.className}">${e.textContent}</b></b>`)
   }
-  $("#scene").innerHTML=h.join``
+  $("#scene").innerHTML=FC+h.join``
 }
 const chk=()=>{
   let bi=$$("#belt b").map(e=>e.id)
@@ -117,7 +117,7 @@ const restore=()=>{
   return s
 }
 window.reset=()=>{localStorage.removeItem(KEY);location.reload()}   // wipe saved progress
-const turn=d=>{dir=(dir+d)&3;show();save()}          // rotate 90° (d: +1 CW, +3 CCW), repaint, persist
+const turn=d=>{dir=(dir+d)&3;i.style.rotate=dir*90+"deg";show();save()}   // rotate 90° (d: +1 CW, +3 CCW): spin marker, repaint, persist
 const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";$("#asks").textContent="submit";$$("#ask form button").forEach(b=>b.disabled=0);ask.showModal()}   // open a challenge dialog
 async function step(newR,newC){                      // move to / interact with cell; keyboard + tap
   if($$("dialog").some(e=>e.hasAttribute("open")))return
@@ -210,8 +210,8 @@ document.addEventListener('DOMContentLoaded',async function main(){
   document.onclick=e=>{                    // click a billboard to interact; click view zones to move/turn
     if(e.target.closest("dialog,button,#belt,#util"))return       // leave UI + automap alone
     let bill=e.target.closest(".p.bill")
-    if(bill){let r=+bill.dataset.r,c=+bill.dataset.c               // tapped a stone/door/apple
-      return Math.abs(r-i.r)+Math.abs(c-i.c)==1?step(r,c):step(i.r+DR[dir],i.c+DC[dir])}   // adjacent→interact; farther→approach one step
+    if(bill){let r=+bill.dataset.r,c=+bill.dataset.c               // tapped a stone/door/apple: one step toward it (onto it → interact)
+      return Math.abs(r-i.r)>=Math.abs(c-i.c)?step(i.r+Math.sign(r-i.r),i.c):step(i.r,i.c+Math.sign(c-i.c))}
     let v=$("#view").getBoundingClientRect()
     if(e.clientX<v.left||e.clientX>v.right||e.clientY<v.top||e.clientY>v.bottom)return
     let x=(e.clientX-v.left)/v.width,y=(e.clientY-v.top)/v.height  // zones: top→fwd, bottom→back, sides→turn
