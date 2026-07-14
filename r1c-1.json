@@ -12,7 +12,7 @@
   "w     w w w w w     w ",
   "w w     w w w     w w ",
   "w w w     w     w w w ",
-  "w w w w       w w w w ",
+  "w w w w   d∨  w w w w ",
   "w w w w       w w w w ",
   "w w w     w     w w w ",
   "w w     w w w     w w ",
@@ -62,5 +62,11 @@
    "4+2×?9",
    "5+2×?9"
   ]
+ },
+ "d∨": {
+  "req": "",
+  "add": "",
+  "task": "{d∨} is the _ruby rune of disjunction_, kindling a light where either of its sides is lit. The cross holds where either stroke `a` or `b` still burns — mark where.",
+  "expr": "(a←1 1 0 0)∨b←0 1 0 1"
  }
 }

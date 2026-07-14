@@ -10,9 +10,9 @@
   "w w w w w w w w w w w ",
   "w     w       w     w ",
   "w     w       w     w ",
-  "w                   w ",
+  "w         d≤        w ",
   "w     w       w     w ",
-  "          aK          ",
+  "      d≥  aK  d∧      ",
   "w     w       w     w ",
   "w                   w ",
   "w     w       w     w ",
@@ -24,5 +24,23 @@
   "add": "",
   "task": "The Ward-Gate judges every traveller against its bounds. _Transform_ the readings `h` into a ward-mark: 1 where a reading stands within the gate — at or above the floor `f` and at or below the ceiling `c` — and 0 where it strays beyond.\n\nWith `h` of `4 1 7 3 9 5`, a floor `f` of 3 and a ceiling `c` of 7, the mark is `1 0 1 1 0 1`.",
   "expr": "((c←7)≥h)∧(f←3)≤h←4 1 7 3 9 5"
+ },
+ "d≤": {
+  "req": "",
+  "add": "",
+  "task": "{d≤} is the _ruby rune of at-most_, giving 1 where what lies on its left does not exceed what lies on its right. The Ward-Gate's lintel judges each height `r` against the mark `w` — where does it pass beneath?",
+  "expr": "(r←?6⍴9)≤w←?6⍴9"
+ },
+ "d≥": {
+  "req": "",
+  "add": "",
+  "task": "{d≥} is the _ruby rune of at-least_, giving 1 where what lies on its left stands no lower than what lies on its right. Mark where each reading `r` clears the Ward-Gate's threshold `t`.",
+  "expr": "(r←?6⍴9)≥t←?6⍴9"
+ },
+ "d∧": {
+  "req": "",
+  "add": "",
+  "task": "{d∧} is the _ruby rune of conjunction_, kindling a light only where both its sides are lit. The Ward-Gate opens only when both wards `a` and `b` shine at once — mark where.",
+  "expr": "(a←1 1 0 0)∧b←0 1 0 1"
  }
 }

@@ -8,23 +8,17 @@
  },
  "M": [
   "w w   w w w w w w w w ",
-  "w d↓    w         w w ",
+  "w       w         w w ",
   "w   w   w   w w     l2",
-  "w d⌿w     aO  w   w w ",
+  "w   w     aO  w   w w ",
   "w   w w w w   w     w ",
-  "w     d∧w d=    w   w ",
+  "w       w       w   w ",
   "w w w   w   w   w   w ",
-  "w m≠        w       w ",
-  "    w w w d∨w m⌽w d⌈w ",
+  "w           w       w ",
+  "    w w w   w m⌽w d⌈w ",
   "w               w d⌊w ",
   "w w w w   w w w w w w "
  ],
- "d↓": {
-  "req": "",
-  "add": "",
-  "task": "{d↓} is the _ruby rune of dropping_, casting away from the start of the list on its right as many items as the number on its left. A rockfall has buried the first `n` runes of the vein `v` — recite what still shows.",
-  "expr": "(n←2)↓v←'STALAGMITE'"
- },
  "d⌊": {
   "req": "",
   "add": "",
@@ -36,36 +30,6 @@
   "add": "",
   "task": "{d⌈} is the _ruby rune of the greater_, giving the larger of each pair it stands between. A risen floor of `f` lifts the crystal heights `h`; none may sink below it.",
   "expr": "(f←3)⌈h←?⍨9"
- },
- "d⌿": {
-  "req": "",
-  "add": "",
-  "task": "{d⌿} is the _ruby rune of copying_, repeating each item on its right as many times as the matching count on its left. Sound the runes `r`, each echoing by its count in `c`.",
-  "expr": "(c←2 0 3 1 2 3)⌿r←'DYALOG'"
- },
- "d=": {
-  "req": "",
-  "add": "",
-  "task": "{d=} is the _ruby rune of equality_, marking 1 where its left and right agree and 0 where they differ. Where do the twin tallies `a` and `b` match?",
-  "expr": "(a←3 1 4 1 5)=b←2 1 4 1 3"
- },
- "m≠": {
-  "req": "",
-  "add": "",
-  "task": "{m≠} is the _emerald rune of first sightings_, marking each item of the list on its right that has not been seen earlier in it. Mark the first appearance of every rune in the chant `c`.",
-  "expr": "≠c←'BOOKKEEPER'"
- },
- "d∧": {
-  "req": "",
-  "add": "",
-  "task": "{d∧} is the _ruby rune of conjunction_, kindling a light only where both its sides are lit. Where are both the wards `a` and `b` aglow at once?",
-  "expr": "(a←1 1 0 0)∧b←0 1 0 1"
- },
- "d∨": {
-  "req": "",
-  "add": "",
-  "task": "{d∨} is the _ruby rune of disjunction_, kindling a light where either of its sides is lit. Where is either ward `a` or `b` aglow?",
-  "expr": "(a←1 1 0 0)∨b←0 1 0 1"
  },
  "m⌽": {
   "req": "",

@@ -10,11 +10,11 @@
   "w w w w w w w w w w w ",
   "w                   w ",
   "w   w   w   w   w   w ",
-  "w                   w ",
+  "w         d∩        w ",
   "w   w   w   w   w   w ",
-  "w         aJ          ",
+  "w     d∊  aJ        w ",
   "w   w   w   w   w   w ",
-  "w                   w ",
+  "w                     ",
   "w   w   w   w   w   w ",
   "w                   w ",
   "w w w w w   w w w w w "
@@ -24,5 +24,17 @@
   "add": "",
   "task": "The mesh of the Sieve lets only kindred through. _Transform_ the word `w` into just its vowels — keep, in order, every letter of `w` that also belongs to the vowel-band `v`, and let the rest fall away.\n\n`{answer}` for `'EUPHORIA'` sifted through `'AEIOU'` gives `EUOIA`.",
   "expr": "(w←'EUPHORIA')∩v←'AEIOU'"
+ },
+ "d∩": {
+  "req": "",
+  "add": "",
+  "task": "{d∩} is the _ruby rune of meeting_, keeping from the list on its left only those items that also lie on its right. The Sieve's web passes only the kindred: from the name `i`, keep the glyphs that also spell the key `k`.",
+  "expr": "(i←'DRAKE MALLARD')∩k←'DARK'"
+ },
+ "d∊": {
+  "req": "",
+  "add": "",
+  "task": "{d∊} is the _ruby rune of belonging_, marking 1 for each item on its left that is found somewhere on its right, and 0 for each that is not. Which of the sigils `d` are strung anywhere in the warden-web `v`?",
+  "expr": "(d←?8⍴9)∊v←5?9"
  }
 }

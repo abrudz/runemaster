@@ -12,7 +12,7 @@
   "w             w     w ",
   "w     w       w     l0",
   "w     w   w l1w     w ",
-  "w     w   w   w     w ",
+  "w     w m≢w   w     w ",
   "w     w   w l2w     w ",
   "w     w   w   w     w ",
   "w     w   w aEw     w ",
@@ -58,5 +58,11 @@
    "3 4 3 4 6",
    "5 3 6 6 3 5 5 4 1 6 1 6 4 6 3 2 3 2 6 3 1 4 4 3 5"
   ]
+ },
+ "m≢": {
+  "req": "",
+  "add": "",
+  "task": "{m≢} is the _emerald rune of tallying_, telling how many items lie in the list on its right — a tally-scratch of a rune. How many marks stand in the skyline `m`?",
+  "expr": "≢m←⎕A[?⍨6+?9]"
  }
 }
