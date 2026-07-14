@@ -57,6 +57,7 @@ const show=()=>{                                     // reveal 3×3 round player
 const chk=()=>{
   let bi=$$("#belt b").map(e=>e.id)
   $$(".l").forEach(e=>reqs(e).every(r=>~bi.indexOf(r))?(e.className="o",e.innerText="🚪"):0)
+  $$("#M .a").forEach(e=>reqs(e).every(r=>~bi.indexOf(r))?e.innerHTML="🍎":0)   // met-prereq apples shed their lock (non-blocking, so class stays "a")
 }
 const count=()=>{let n=$$("#M b.m,#M b.d,#M b.M,#M b.D,#M b.j").length   // uncollected stones here (for the tab title)
   $("#left").textContent=j.name;$("#left").title=j.name                 // room name (rune count now lives on the mini-map tile)
@@ -159,7 +160,7 @@ async function loadM(mr,mc){
             (t[0]!="w"?' id="'+t+'"':"")+   // double-quoted: a token may contain ' (the quote rune j')
             " class='"+t[0]+"'"+
             ">"+
-            (t[0]=="w"?jj.theme.w:t[0]=="l"?'🚪<b class="lk">🔒</b>':t[0]=="o"?"🚪":t[0]=="a"?"🍎":ins[t[1]]??t[1])+
+            (t[0]=="w"?jj.theme.w:t[0]=="l"?'🚪<b class="lk">🔒</b>':t[0]=="o"?"🚪":t[0]=="a"?'🍎<b class="lk">🔒</b>':ins[t[1]]??t[1])+   // apples wear the lock too, until their runes are gathered
             "</b>":"")+"</td>"
         ).join`\n`+"\n</tr>"
     ).join`\n`+"</tbody>"}

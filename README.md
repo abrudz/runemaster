@@ -18,5 +18,5 @@ Implementation: Adám Brudzewsky & Claude (Opus 4.8)
 - When prompted for an APL expression, either type it or click the rune gems and buttons to insert.
 - Closed passages (🔒 on a 🚪) open (🚪) once you have collected all the required rune gems.
 - Move across the edges of the map to switch to the neighbouring map.
-- Free-standing apples (🍎) are the capstone challenges: like doors, each needs its required runes before it will pose its puzzle, but it never blocks your path. Every room holds one. **Gather all sixteen apples to win.**
+- Free-standing apples (🍎) are the capstone challenges: like doors, each wears a 🔒 and needs its required runes before it will pose its puzzle, but it never blocks your path. Every room holds one. **Gather all sixteen apples to win.**
 - Your progress is saved automatically; use _Restart Game_ to begin afresh.
