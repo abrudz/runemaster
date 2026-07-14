@@ -1,6 +1,6 @@
 'use strict'
 let i,M,root,aski,askb,askp,ask,msg,msgp
-let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={},doors={},seen={},apples=[],atlas={},busy,cheating
+let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={},doors={},seen={},apples=[],atlas={},busy,cheating,moving
 const KEY="runemaster2"                            // saved-progress key (bumped: 4×4 reshape renamed/added rooms)
 const $=s=>document.querySelector(s)
 const $$=s=>[...document.querySelectorAll(s)]
@@ -107,7 +107,10 @@ window.reset=()=>{localStorage.removeItem(KEY);location.reload()}   // wipe save
 window.cheat=(on=1)=>(cheating=on,`QA cheat ${on?"ON — walk into any met-prerequisite rune, unlocked door or apple to auto-take it (sealed ones still need their runes)":"off"}`)   // console QA aid
 const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";$("#askr").textContent="";$("#asks").textContent="Submit";$$("#ask form button").forEach(b=>b.disabled=0);ask.showModal()}   // open a challenge dialog
 async function step(newR,newC){                      // move to / interact with cell; keyboard + tap
+  if(moving)return                                   // a level crossing is still loading — drop this press (else fast keys race the await and shove r/c out of bounds)
   if($$("dialog").some(e=>e.hasAttribute("open")))return
+  moving=1
+  try{
   if(newR<0   &&newC==i.c){if(await loadM(mr-1,mc)){mr--;jump(rMax,newC);show()}}else   // commit the move only once the level actually loads
   if(newR>rMax&&newC==i.c){if(await loadM(mr+1,mc)){mr++;jump(0   ,newC);show()}}else   // (missing/unreachable file -> stay put, don't corrupt mr/mc)
   if(newC<0   &&newR==i.r){if(await loadM(mr,mc-1)){mc--;jump(newR,cMax);show()}}else
@@ -129,6 +132,7 @@ async function step(newR,newC){                      // move to / interact with 
     }else show(i.r=newR,i.c=newC)
   }
   save()
+  }finally{moving=0}
 }
 addEventListener('keydown',e=>{
   const up   =()=>newR=i.r-1
