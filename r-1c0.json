@@ -40,7 +40,7 @@
  "aM": {
   "req": "M¨m⌽",
   "add": "",
-  "task": "The looms of Weaver's Hall run every thread in reverse. _Transform_ the skein `s` — a bundle of separate threads — by mirroring _each_ thread end-for-end. Draw on {m⌽} within {M¨}.\n\n`{answer}` upon `'MOOD' 'NET' 'POP'` gives `DOOM` `TEN` `POP`.",
+  "task": "The looms of Weaver's Hall run every thread in reverse. _Transform_ the skein `s` — a bundle of separate threads — by mirroring _each_ thread end-for-end. Draw on {m⌽} within {M¨}.\n\n`{answer}` upon `'MOOD' 'NET' 'POP'` gives `'DOOM' 'TEN' 'POP'`.",
   "expr": "⌽¨s←'MOOD' 'NET' 'POP'"
  }
 }

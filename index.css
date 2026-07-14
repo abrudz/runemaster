@@ -1,33 +1,40 @@
 @font-face {
   font-family: Text;
-  src: url("Almendra-BoldItalic.ttf");
+  src: url("Almendra-BoldItalic.ttf"), fantasy;
   font-style: italic;
 }
 @font-face {
   font-family: Text;
-  src: url("Almendra-Regular.ttf");
+  src: url("Almendra-Regular.ttf"), cursive;
 }
 @font-face {
   font-family: APL;
-  src: local("SAX2"), url("SAX2.ttf");
+  src: local("SAX2"), url("SAX2.ttf"), monospace;
 }
 * {
   user-select: none;
 }
 html {
   --emerald: rgb(0, 73, 73);
-  --ruby: rgb(146, 0, 0);
-  --sapphire: rgb(0, 109, 219);
-  --amethyst: rgb(73, 0, 146);
   --l-emerald: rgba(140, 214, 209, 0.85);
+  --ruby: rgb(146, 0, 0);
   --l-ruby: rgba(240, 184, 184, 0.85);
+  --sapphire: rgb(0, 109, 219);
   --l-sapphire: rgba(158, 205, 250, 0.85);
+  --amethyst: rgb(73, 0, 146);
   --l-amethyst: rgba(206, 176, 236, 0.85);
   --diamond: #222;
+  --l-diamond: radial-gradient(
+    circle at 50% 40%,
+    rgba(255, 255, 255, 0.90),
+    rgba(255,   0,  64, 0.32) 24%,
+    rgba(255, 170,   0, 0.32) 38%,
+    rgba( 60, 200,   0, 0.32) 52%,
+    rgba(  0, 150, 255, 0.32) 66%,
+    rgba(150,   0, 220, 0.32) 80%,
+    rgba(255, 255, 255, 0.55)
+  );
   --gem-edge: rgba(255, 255, 255, 0.6);
-  --back: #222;
-  --spot: #999;
-  --wall: rgb(146, 73, 0);
   --speed: 0.5s;
   --size: 2.5rem;
   --mini: 2.5rem;   /* mini-map room tile (fixed, uncoupled from the board's --size) */
@@ -68,18 +75,19 @@ legend button {
 }
 #askb > button,
 dialog code,
-dialog .num {              /* digits in prose: APL font (SAX2), legible where Almendra isn't */
-  font-weight: bold;
+dialog .num,
+dialog input,
+b {              /* digits in prose: APL font (SAX2), legible where Almendra isn't */
+  font-weight: normal;
   font-family: APL;
   white-space: pre;
+  -webkit-text-stroke: 0.01em;
 }
 #askb > * {
   cursor: pointer;
 }
 dialog input {
   width: 100%;
-  font-family: APL;
-  font-weight: bold;
   font-size: calc(var(--size) * 0.6);
 }
 #askr {                      /* inline failure notice; the dialog + input stay put on a wrong answer */
@@ -123,8 +131,6 @@ fieldset {
 legend,
 th {
   font-size: 1.1rem;
-}
-th {
   text-align: left;
   font-weight: normal;
 }
@@ -181,7 +187,6 @@ th {
 #left {                    /* room name; ellipsis so long names don't collide with Restart */
   font-family: Text;
   flex: 1 1 auto;
-  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -253,10 +258,8 @@ b {
 }
 b {
   display: inline-block;
-  font-weight: bold;            /* thicken the thin SAX2 rune font (single-weight → synthesized bold) */
   position: relative;
   transition: opacity var(--speed);
-  font-family: APL;
 }
 #belt b,
 #askb > * {
@@ -274,52 +277,37 @@ b {
   height: calc(var(--size) * 0.6);
   line-height: calc(var(--size) * 0.6);
   font-size: 0.667em;              /* glyph ≈ 2/3 of the stone, matching the belt (1rem glyph in a 1.5rem stone) */
-  -webkit-text-stroke: 0.05rem;
   border-width: 0.33rem;
   border-style: outset;
   border-color: var(--gem-edge);   /* one place sets every stone's bevel colour */
+  -webkit-text-stroke: 0.04em;
+  letter-spacing: -0.18em;
+  text-indent: -0.18em;
 }
 .m {
   border-radius: 50% 50% 0em 50%;
   color: var(--emerald);
-  -webkit-text-stroke-color: var(--emerald);
   background: var(--l-emerald);
 }
 .d {
   border-radius: 50% 50% 0em 0em;
   color: var(--ruby);
-  -webkit-text-stroke-color: var(--ruby);
   background: var(--l-ruby);
 }
 .M {
   border-radius: 0em 50% 50% 50%;
   color: var(--sapphire);
-  -webkit-text-stroke-color: var(--sapphire);
   background: var(--l-sapphire);
 }
 .D {
   border-radius: 50% 0em 50% 50%;
   color: var(--amethyst);
-  -webkit-text-stroke-color: var(--amethyst);
   background: var(--l-amethyst);
-  letter-spacing: -0.18em;
-  text-indent: -0.18em;
 }
 .j {
   border-radius: 50%;
   color: var(--diamond);
-  letter-spacing: -0.18em;
-  text-indent: -0.18em;
-  background: radial-gradient(
-    circle at 50% 40%,
-    rgba(255, 255, 255, 0.9),
-    rgba(255, 0, 64, 0.32) 24%,
-    rgba(255, 170, 0, 0.32) 38%,
-    rgba(60, 200, 0, 0.32) 52%,
-    rgba(0, 150, 255, 0.32) 66%,
-    rgba(150, 0, 220, 0.32) 80%,
-    rgba(255, 255, 255, 0.55)
-  );
+  background: var(--l-diamond);
 }
 i {
   height: var(--size);
@@ -334,6 +322,10 @@ i {
   position: absolute;
   text-align: center;
   transition: var(--speed);
+}
+i,
+.l,
+.o {
   transform: scale(1.5);
 }
 .w {

@@ -2,26 +2,25 @@
 let i,M,root,aski,askb,askp,ask,msg,msgp
 let j,g,c,rMin,cMin,rMax,cMax,mr=0,mc=0,cur,mem={},doors={},seen={},apples=[],atlas={},busy,cheating,moving
 const KEY="runemaster2"                            // saved-progress key (bumped: 4×4 reshape renamed/added rooms)
-const $=s=>document.querySelector(s)
-const $$=s=>[...document.querySelectorAll(s)]
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)]
 const td=(r,c)=>$("#r"+r+"c"+c)
 const ins={"(":"()","[":"[]","{":"{}","∘":"∘."}    // glyph -> typed form
 const mid={"()":1,"[]":1,"{}":1}                   // pairs: cursor between
-const b=r=>`<b tabindex='0' class='${r[0]}'>${ins[r[1]]??r[1]}</b>`
-const mkb=id=>{const e=document.createElement("b");e.tabIndex=0;e.id=id;e.className=id[0];e.innerHTML=ins[id[1]]??id[1];return e}  // rebuild collected rune (keep id for chk)
+const b=r=>`<b tabindex=0 class='${r[0]}'>${ins[r[1]]??r[1]}</b>`
+const mkb=id=>{const e=document.createElement`b`;e.tabIndex=0;e.id=id;e.className=id[0];e.innerHTML=ins[id[1]]??id[1];return e}  // rebuild collected rune (keep id for chk)
 const reqs=t=>(j[t.id].req??"").match(/../g)??[]
 const dfnkeys=q=>q.f?(Array.isArray(q.a[0])?"⍺ ⍵ ":"⍵ "):""   // dfn arg keys ({} from diamond)
 const keys=q=>q.req+q.add+dfnkeys(q)+[...q.task.matchAll(/`\w`/g)].join``.replace(/`(\w)`/g,"$1 ")   // a challenge's allowed runes
 const md=s=>s.replace(/\{(\w\W)\}/g,(_,m)=>b(m)).replace(/(?<!\\)`(.*?[^\\])`/g,"<code>$1</code>").replace(/(?<!\\)_(.*?[^\\])_/g,"<em>$1</em>").replace(/\\([`_])/g,"$1").replace(/\d+(?![^<]*>)/g,"<span class=num>$&</span>")   // digits (outside tags) in the APL font — never enter allowed-runes (keys())
 const exec=s=>{
-  busy=1;$("#askr").textContent="";$("#asks").textContent="Checking…";$$("#ask form button").forEach(b=>b.disabled=1)   // hold the challenge open + inert until the check resolves
+  busy=1;$`#askr`.textContent="";$`#asks`.textContent="Checking…";$$`#ask form button`.forEach(b=>b.disabled=1)   // hold the challenge open + inert until the check resolves
   return fetch("https://tryapl.org/Exec",{
     method:"POST",
     headers:{"Content-Type":"application/json;charset=utf-8"},
     body:JSON.stringify([0,0,0,s]),
     signal:AbortSignal.timeout(35e3)
   }).then(d=>d.json()).then(d=>{busy=0;react(+d[3][0])})
-    .catch(_=>{busy=0;$$("#ask form button").forEach(b=>b.disabled=0);$("#asks").textContent="Submit";$("#askr").textContent="TryAPL didn't respond — try again";aski.focus()})   // keep the dialog + input; let them retry
+    .catch(_=>{busy=0;$$`#ask form button`.forEach(b=>b.disabled=0);$`#asks`.textContent="Submit";$`#askr`.textContent="TryAPL didn't respond — try again";aski.focus()})   // keep the dialog + input; let them retry
 }
 const getTop =e=>window.scrollY+e.getBoundingClientRect().top +"px"
 const getLeft=e=>window.scrollX+e.getBoundingClientRect().left+"px"
@@ -37,7 +36,7 @@ const lb=(ch,sol)=>{
   let sh=[...a]
   do sh.sort(_=>Math.random()-0.5);while(a.length>1&&sh.map(gl).join``==ans)   // never hand over the answer
   askb.innerHTML=sh.map(s=>s[1]==" "?`<button>${s[0]}</button>`:b(s)).join``
-  $$("#askb>*").forEach(e=>e.onclick=()=>{
+  $$`#askb>*`.forEach(e=>e.onclick=()=>{
     const txt=e.innerText,off=mid[txt]??txt.length    // pairs: cursor between; else after
     const at=aski.selectionStart
     aski.value=aski.value.slice(0,at)+txt+aski.value.slice(aski.selectionEnd)
@@ -55,20 +54,20 @@ const show=()=>{                                     // reveal 3×3 round player
   }
 }
 const chk=()=>{
-  let bi=$$("#belt b").map(e=>e.id)
-  $$(".l").forEach(e=>reqs(e).every(r=>~bi.indexOf(r))?(e.className="o",e.innerText="🚪"):0)
-  $$("#M .a").forEach(e=>reqs(e).every(r=>~bi.indexOf(r))?e.innerHTML="🍎":0)   // met-prereq apples shed their lock (non-blocking, so class stays "a")
+  let bi=$$`#belt b`.map(e=>e.id)
+  $$`.l`.forEach(e=>reqs(e).every(r=>~bi.indexOf(r))?(e.className="o",e.innerText="🚪"):0)
+  $$`#M .a`.forEach(e=>reqs(e).every(r=>~bi.indexOf(r))?e.innerHTML="🍎":0)   // met-prereq apples shed their lock (non-blocking, so class stays "a")
 }
-const count=()=>{let n=$$("#M b.m,#M b.d,#M b.M,#M b.D,#M b.j").length   // uncollected stones here (for the tab title)
-  $("#left").textContent=j.name;$("#left").title=j.name                 // room name (rune count now lives on the mini-map tile)
+const count=()=>{let n=$$`#M b.m,#M b.d,#M b.M,#M b.D,#M b.j`.length   // uncollected stones here (for the tab title)
+  $`#left`.textContent=j.name;$`#left`.title=j.name                 // room name (rune count now lives on the mini-map tile)
   document.title=`${j.name} (${n}) - RuneMaster`}
 const favico=w=>{                                    // dynamic svg favicon of the wall emoji
-  let l=$("link[rel=icon]")??document.head.appendChild(Object.assign(document.createElement("link"),{rel:"icon"}))
+  let l=$`link[rel=icon]`??document.head.appendChild(Object.assign(document.createElement`link`,{rel:"icon"}))
   l.href="data:image/svg+xml,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="82" font-size="88" text-anchor="middle">${w}</text></svg>`)}
 const mini=()=>{                                     // 4×4 discovered-rooms table: row=mr+2, col=mc+1
-  let m=$("#mini");m.innerHTML=""
-  let belt=$$("#belt b").map(e=>e.id)                 // collected rune ids (globally unique)
-  const mk=(d,cls,txt)=>{let s=document.createElement("span");s.className=cls;s.textContent=txt;d.appendChild(s)}
+  let m=$`#mini`;m.innerHTML=""
+  let belt=$$`#belt b`.map(e=>e.id)                 // collected rune ids (globally unique)
+  const mk=(d,cls,txt)=>{let s=document.createElement`span`;s.className=cls;s.textContent=txt;d.appendChild(s)}
   for(let r=-2;r<=1;r++){let tr=m.insertRow()
     for(let cc=-1;cc<=2;cc++){let k=r+" "+cc,d=tr.insertCell()
       if(k==cur)d.className="now"                     // current room: bg cleared → reads as a highlight
@@ -84,8 +83,8 @@ const mini=()=>{                                     // 4×4 discovered-rooms ta
 const win=()=>{msgp.innerHTML="🍎 Sixteen apples gathered — you are the RuneMaster! 🍎";msg.showModal()}
 const fit=()=>{                                      // fit board+margin+utilities to viewport (no scroll)
   root.style.setProperty("--cols",cMax+1)            // map width in tiles (portrait #util width)
-  const land=matchMedia("(orientation: landscape)").matches, util=$("#util")
-  let s=parseFloat(getComputedStyle(root).getPropertyValue("--size"))||24   // seed from current
+  const land=matchMedia`(orientation: landscape)`.matches, util=$`#util`
+  let s=parseFloat(getComputedStyle(root).getPropertyValue`--size`)||24   // seed from current
   for(let p=0;p<4;p++){                              // fixed point: utilities' extent depends on --size
     root.style.setProperty("--size",Math.max(14,s)+"px")   // (reading offset* below forces a reflow)
     if(land){                                        // landscape: utilities to the right (incl. their margin)
@@ -95,20 +94,20 @@ const fit=()=>{                                      // fit board+margin+utiliti
   }
   root.style.setProperty("--size",Math.max(14,s)+"px")
 }
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({mr,mc,r:i.r,c:i.c,belt:$$("#belt b").map(e=>e.id),doors,seen,apples,atlas}))}catch(_){}}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({mr,mc,r:i.r,c:i.c,belt:$$`#belt b`.map(e=>e.id),doors,seen,apples,atlas}))}catch(_){}}
 const restore=()=>{
   let s;try{s=JSON.parse(localStorage.getItem(KEY))}catch(_){s=null}
   if(!s)return null
   doors=s.doors??{};seen=s.seen??{};apples=s.apples??[];atlas=s.atlas??{}
-  ;(s.belt??[]).forEach(id=>{let g="mdMDj".indexOf(id[0]);if(~g)$$("#belt td")[g].appendChild(mkb(id))})
+  ;(s.belt??[]).forEach(id=>{let g="mdMDj".indexOf(id[0]);if(~g)$$`#belt td`[g].appendChild(mkb(id))})
   return s
 }
 window.reset=()=>{localStorage.removeItem(KEY);location.reload()}   // wipe saved progress
 window.cheat=(on=1)=>(cheating=on,`QA cheat ${on?"ON — walk into any met-prerequisite rune, unlocked door or apple to auto-take it (sealed ones still need their runes)":"off"}`)   // console QA aid
-const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";$("#askr").textContent="";$("#asks").textContent="Submit";$$("#ask form button").forEach(b=>b.disabled=0);ask.showModal()}   // open a challenge dialog
+const openask=(el,k)=>{askp.innerHTML=md(j[el.id].task);lb(k,j[el.id].expr??j[el.id].f);ask.b=el;aski.value="";$`#askr`.textContent="";$`#asks`.textContent="Submit";$$`#ask form button`.forEach(b=>b.disabled=0);ask.showModal()}   // open a challenge dialog
 async function step(newR,newC){                      // move to / interact with cell; keyboard + tap
   if(moving)return                                   // a level crossing is still loading — drop this press (else fast keys race the await and shove r/c out of bounds)
-  if($$("dialog").some(e=>e.hasAttribute("open")))return
+  if($$`dialog`.some(e=>e.hasAttribute`open`))return
   moving=1
   try{
   if(newR<0   &&newC==i.c){if(await loadM(mr-1,mc)){mr--;jump(rMax,newC);show()}}else   // commit the move only once the level actually loads
@@ -119,15 +118,15 @@ async function step(newR,newC){                      // move to / interact with 
     let t=td(newR,newC).children[0]
     if(t&&t.style.visibility!="hidden"){
       if(t.className=="l"){
-        let bi=$$("#belt b").map(e=>e.id)   // collected
+        let bi=$$`#belt b`.map(e=>e.id)   // collected
         msgp.innerHTML="This door still needs:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `   // only the runes you lack
         msg.showModal()
       }else if(t.className=="o"){ask.r=newR;ask.c=newC;cheating?(ask.b=t,react(1)):openask(t,keys(j[t.id]))}   // cheat: walk through an unlocked door
       else if(~(g="mdMDj".indexOf(t.className))){show(i.r=newR,i.c=newC)   // rune stone: req-gated (prerequisite runes)
-        let bi=$$("#belt b").map(e=>e.id)
+        let bi=$$`#belt b`.map(e=>e.id)
         reqs(t).every(r=>~bi.indexOf(r))?(c=t,cheating?(ask.b=t,react(1)):openask(c,c.id+keys(j[c.id]))):(msgp.innerHTML="This rune stays sealed; you still need:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `,msg.showModal())}   // cheat: auto-collect an available rune
       else if(t.className=="a"){show(i.r=newR,i.c=newC)   // free-standing 🍎: req-gated but non-blocking
-        let bi=$$("#belt b").map(e=>e.id)
+        let bi=$$`#belt b`.map(e=>e.id)
         reqs(t).every(r=>~bi.indexOf(r))?(cheating?(ask.b=t,react(1)):openask(t,keys(j[t.id]))):(msgp.innerHTML="This apple is still guarded; you still need:<br>"+reqs(t).filter(r=>!~bi.indexOf(r)).map(b).join` `,msg.showModal())}   // cheat: auto-take an available apple
     }else show(i.r=newR,i.c=newC)
   }
@@ -149,7 +148,7 @@ addEventListener('keydown',e=>{
   e.key=="End"       ||e.key=="1"||e.key=="z"||e.key=="m"    ?down(left(moved=1)):0
   e.key=="ArrowDown" ||e.key=="2"||e.key=="s"||e.key=="k"    ?down(moved=1):0
   e.key=="PageDown"  ||e.key=="3"||e.key=="c"||e.key=="."    ?down(right(moved=1)):0
-  if(moved&&!$$("dialog").some(x=>x.hasAttribute("open"))){e.preventDefault();step(newR,newC)}
+  if(moved&&!$$`dialog`.some(x=>x.hasAttribute`open`)){e.preventDefault();step(newR,newC)}
 })
 async function loadM(mr,mc){
   let key=mr+" "+mc
@@ -178,22 +177,22 @@ async function loadM(mr,mc){
     else if(t[0]=="a")atlas[key].apple=t                  // the room's apple, if any
   }))
   M.innerHTML=mem[key].html
-  let got=new Set($$("#belt b").map(e=>e.id))          // already collected
-  $$("#M b").forEach(e=>got.has(e.id)||apples.includes(e.id)?e.remove():doors[key]?.includes(e.id)?e.style.visibility="hidden":0)   // collected runes/apples gone; passed doors open
+  let got=new Set($$`#belt b`.map(e=>e.id))          // already collected
+  $$`#M b`.forEach(e=>got.has(e.id)||apples.includes(e.id)?e.remove():doors[key]?.includes(e.id)?e.style.visibility="hidden":0)   // collected runes/apples gone; passed doors open
   ;(seen[key]??[]).forEach(k=>{let[r,c]=k.split`,`;let e=td(r,c)?.children[0];if(e)e.style.opacity=1})        // restore revealed fog
   if(j.theme.wall)root.style.setProperty("--wall",j.theme.wall)
   if(j.theme.back)root.style.setProperty("--back",j.theme.back)
   if(j.theme.spot)root.style.setProperty("--spot",j.theme.spot)
   favico(j.theme.w)
-  let first=$$("#M td")[0]     ;rMin=getR(first);cMin=getC(first)
-  let last =$$("#M td").at(-1) ;rMax=getR(last );cMax=getC(last )
+  let first=$$`#M td`[0]     ;rMin=getR(first);cMin=getC(first)
+  let last =$$`#M td`.at(-1) ;rMax=getR(last );cMax=getC(last )
   chk();count();mini();fit()
   return 1                                             // signal a successful load (see step()'s edge crossings)
 }
 document.addEventListener('DOMContentLoaded',async function main(){
-  i=$("#i");M=$("#M");root=$("#root")
-  aski=$("#aski");askb=$("#askb");askp=$("#askp")
-  ask=$("#ask");msg=$("#msg");msgp=$("#msgp")
+  i=$`#i`;M=$`#M`;root=$`#root`
+  aski=$`#aski`;askb=$`#askb`;askp=$`#askp`
+  ask=$`#ask`;msg=$`#msg`;msgp=$`#msgp`
   if(/[?&]reset\b/.test(location.search))localStorage.removeItem(KEY)
   const s=restore()
   if(s){mr=s.mr;mc=s.mc}
@@ -204,8 +203,8 @@ document.addEventListener('DOMContentLoaded',async function main(){
   i.r=i.rVal;i.c=i.cVal
   show()
   document.onclick=e=>{                    // tile click steps toward it; click outside map steps that way (even across edge)
-    if(e.target.closest("dialog,button,#belt"))return   // leave UI controls alone
-    const t=e.target.closest("#M td")
+    if(e.target.closest`dialog,button,#belt`)return   // leave UI controls alone
+    const t=e.target.closest`#M td`
     let dr,dc
     if(t){dr=Math.sign(getR(t)-i.r);dc=Math.sign(getC(t)-i.c)}   // inside map: toward tapped tile
     else{const b=M.getBoundingClientRect()                       // outside map: general dir (diag in corners)
@@ -230,9 +229,9 @@ window.ans=t=>{
   exec(expr)
 }
 const react=b=>{
-  $$("#ask form button").forEach(x=>x.disabled=0);$("#asks").textContent="Submit"   // check resolved — controls live again
-  if(!b){$("#askr").textContent="Not quite — try again";aski.focus();return}          // wrong answer: keep the dialog + input so they can retry or Cancel
-  $("#askr").textContent=""
+  $$`#ask form button`.forEach(x=>x.disabled=0);$`#asks`.textContent="Submit"   // check resolved — controls live again
+  if(!b){$`#askr`.textContent="Not quite — try again";aski.focus();return}          // wrong answer: keep the dialog + input so they can retry or Cancel
+  $`#askr`.textContent=""
   const o=ask.getBoundingClientRect()   // rune-fly origin: challenge dialog (grab before close blanks it)
   ask.close()
   if(ask.b.id[0]=="l"){
@@ -245,7 +244,7 @@ const react=b=>{
     ask.b.remove();mini();save()
     if(apples.length>=16)win()
   }else{
-    $$("#belt td")[g].appendChild(c)    // gem into its belt slot, then fly it in from the dialog (FLIP)
+    $$`#belt td`[g].appendChild(c)    // gem into its belt slot, then fly it in from the dialog (FLIP)
     const f=c.getBoundingClientRect()
     c.animate?.([{transform:`translate(${o.left+o.width/2-f.left-f.width/2}px,${o.top+o.height/2-f.top-f.height/2}px) scale(2)`,opacity:.4},{transform:"none",opacity:1}],{duration:500,easing:"ease-in-out"})
     chk();count();mini();save()
