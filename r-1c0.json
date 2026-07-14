@@ -12,7 +12,7 @@
   "    w   w   w   w   w ",
   "w   w       w       w ",
   "w       w M¨w w   w w ",
-  "w w w   w       w     ",
+  "w w w m⌽w       w     ",
   "w         aMw   w   w ",
   "w   w w w   w w w   w ",
   "w       w           w ",
@@ -42,5 +42,11 @@
   "add": "",
   "task": "The looms of Weaver's Hall run every thread in reverse. _Transform_ the skein `s` — a bundle of separate threads — by mirroring _each_ thread end-for-end. Draw on {m⌽} within {M¨}.\n\n`{answer}` upon `'MOOD' 'NET' 'POP'` gives `DOOM` `TEN` `POP`.",
   "expr": "⌽¨s←'MOOD' 'NET' 'POP'"
+ },
+ "m⌽": {
+  "req": "",
+  "add": "",
+  "task": "{m⌽} is the _emerald rune of reversal_, mirroring the order of the list on its right. Run the thread `h` back through the loom, end for end — so it may be woven anew with {M¨}.",
+  "expr": "⌽h←5?99"
  }
 }
