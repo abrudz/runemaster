@@ -8,11 +8,11 @@
  },
  "M": [
   "w l0w w w w w w w w w ",
-  "    w w aDl2  l1    w ",
+  "w   w w aDl2  l1    w ",
   "w     w w w w w     w ",
   "w w     w w w     w w ",
   "w w w     w     w w w ",
-  "w w w w       w w w w ",
+  "w w w w   d∨  w w w w ",
   "w w w w       w w w w ",
   "w w w     w     w w w ",
   "w w     w w w     w w ",
@@ -22,7 +22,7 @@
  "l0": {
   "req": "M/d×d,",
   "add": "",
-  "task": "The southern stair climbs to the Hall of Mirrors. Join the tallies `a` and `b`, then multiply the whole strand together, to ascend.",
+  "task": "The northern stair climbs back to the Reckoner's Forge. Join the tallies `a` and `b`, then multiply the whole strand together, to ascend.",
   "expr": "×/(a←3?9),b←3?9"
  },
  "l1": {
@@ -62,5 +62,11 @@
    "4+2×?9",
    "5+2×?9"
   ]
+ },
+ "d∨": {
+  "req": "",
+  "add": "",
+  "task": "{d∨} is the _ruby rune of disjunction_, kindling a light where either of its sides is lit. The cross holds where either stroke `a` or `b` still burns — mark where.",
+  "expr": "(a←1 1 0 0)∨b←0 1 0 1"
  }
 }

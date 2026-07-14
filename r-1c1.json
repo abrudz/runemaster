@@ -7,24 +7,18 @@
   "spot": "#f6ead0"
  },
  "M": [
-  "w w w w w w w w w w w ",
+  "w w w w w   w w w w w ",
   "w   l2              w ",
   "w l1w           w w w ",
   "w   w w       w w   w ",
   "w     w w aBw w     w ",
-  "        w w w         ",
+  "      d=w w w         ",
   "w       w w w       w ",
   "w     w w   w w     w ",
   "w   w w       w w   w ",
-  "w         d∩        w ",
+  "w                   w ",
   "w w l0w w w w w w w w "
  ],
- "d∩": {
-  "req": "",
-  "add": "",
-  "task": "{d∩} is the _ruby rune of commonality_, keeping (in order) the items on its left that also appear on its right. The vault opens only where two wards cross: keep the runes of the inscription `i` that the warding key `k` also bears.",
-  "expr": "(i←'DRAKE MALLARD')∩k←'DARK'"
- },
  "l0": {
   "req": "d≡",
   "add": "",
@@ -68,5 +62,11 @@
    "1",
    "2"
   ]
+ },
+ "d=": {
+  "req": "",
+  "add": "",
+  "task": "{d=} is the _ruby rune of equality_, marking 1 where its left and right agree and 0 where they differ. Where do the crossed tallies `a` and `b` meet in the same mark?",
+  "expr": "(a←3 1 4 1 5)=b←2 1 4 1 3"
  }
 }

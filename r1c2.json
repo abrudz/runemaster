@@ -8,11 +8,11 @@
  },
  "M": [
   "w w w l0w w w w w w w ",
-  "w             w       ",
+  "w             w     w ",
   "w   w w w   w w w   w ",
   "w       w       w   w ",
   "w w w   w w w   w   w ",
-  "w aCw     w         w ",
+  "w aCw   d↓w         w ",
   "w l2w w   w w w w   w ",
   "w l1w           w   w ",
   "w   w w w w w   w   w ",
@@ -62,5 +62,11 @@
    "'DYALOG'",
    "'HELLO'"
   ]
+ },
+ "d↓": {
+  "req": "",
+  "add": "",
+  "task": "{d↓} is the _ruby rune of dropping_, casting away from the start of the list on its right as many items as the number on its left. The first `n` names of the roll `v` have already answered — recite who remains.",
+  "expr": "(n←2)↓v←'STALAGMITE'"
  }
 }

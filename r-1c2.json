@@ -7,12 +7,12 @@
   "spot": "#f7ecc8"
  },
  "M": [
-  "w w w w w w w w w w w ",
+  "w w w w w   w w w w w ",
   "w                   w ",
   "w         w w       w ",
   "w       w w w w     w ",
-  "w       w aH  w     w ",
-  "      w w     w w     ",
+  "w     M\\w aH  w     w ",
+  "      w w     w w   w ",
   "w     w w w l2w w   w ",
   "w   w w       w w w w ",
   "w   w w l1w w w w w w ",
@@ -62,5 +62,11 @@
    "6",
    "6+?5"
   ]
+ },
+ "M\\": {
+  "req": "d+",
+  "add": "",
+  "task": "{M\\} is the _sapphire rune of accumulation_ — set to the right of a rune, it sweeps that rune along the list, keeping every running result. Lay the pyramid's rising courses: with {d+}, take the running total of the blocks `t`.",
+  "expr": "+\\t←?6⍴20"
  }
 }

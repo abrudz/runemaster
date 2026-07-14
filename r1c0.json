@@ -7,22 +7,22 @@
   "spot": "#e0edfa"
  },
  "M": [
-  "w w w w w w w w w w w ",
+  "w w w   w w w w w w w ",
   "w                   w ",
   "w             w     w ",
-  "w     w       w     w ",
+  "w     w       w     l0",
   "w     w   w l1w     w ",
-  "      w   w   w     w ",
+  "w     w m≢w   w     w ",
   "w     w   w l2w     w ",
   "w     w   w   w     w ",
   "w     w   w aEw     w ",
   "w     w   w   w     w ",
-  "w w w w w w w w l0w w "
+  "w w w w w w w w w w w "
  ],
  "l0": {
   "req": "M/d+d,",
   "add": "",
-  "task": "The northern stair descends to the Hall of Mirrors. Join the tallies `a` and `b`, then sum the whole strand, to descend.",
+  "task": "The eastern stair leads to the Hall of Mirrors. Join the tallies `a` and `b`, then sum the whole strand, to pass.",
   "expr": "+/(a←5?20),b←5?20"
  },
  "l1": {
@@ -58,5 +58,11 @@
    "3 4 3 4 6",
    "5 3 6 6 3 5 5 4 1 6 1 6 4 6 3 2 3 2 6 3 1 4 4 3 5"
   ]
+ },
+ "m≢": {
+  "req": "",
+  "add": "",
+  "task": "{m≢} is the _emerald rune of tallying_, telling how many items lie in the list on its right — a tally-scratch of a rune. How many marks stand in the skyline `m`?",
+  "expr": "≢m←⎕A[?⍨6+?9]"
  }
 }

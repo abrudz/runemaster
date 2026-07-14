@@ -1,0 +1,40 @@
+{
+ "name": "The Cipher Hall",
+ "theme": {
+  "w": "🔡",
+  "wall": "rgba(120,120,200,0.4)",
+  "back": "#0a0a16",
+  "spot": "#e6e6fb"
+ },
+ "M": [
+  "w w w w w w w w w w w ",
+  "w                   w ",
+  "w   w           w   w ",
+  "w   w     d≠    w   w ",
+  "w   w           w   w ",
+  "      m≠  aL        w ",
+  "w   w           w   w ",
+  "w   w           w   w ",
+  "w   w           w   w ",
+  "w                   w ",
+  "w w w w w   w w w w w "
+ ],
+ "aL": {
+  "req": "d≠M/d+",
+  "add": "",
+  "task": "Two runners bore the same message, yet the copies disagree. _Transform_ the twin transmissions `a` and `b` into a single tally: how many positions carry different symbols.\n\nWith `a` of `3 1 4 1 5 9` and `b` of `3 2 4 7 5 8`, the count of differences is 3.",
+  "expr": "+/(a←3 1 4 1 5 9)≠b←3 2 4 7 5 8"
+ },
+ "d≠": {
+  "req": "",
+  "add": "",
+  "task": "{d≠} is the _ruby rune of difference_, marking 1 where its left and right disagree and 0 where they match. Where do the twin ciphers `a` and `b` bear differing symbols?",
+  "expr": "(a←?8⍴5)≠b←?8⍴5"
+ },
+ "m≠": {
+  "req": "",
+  "add": "",
+  "task": "{m≠} is the _emerald rune of first sightings_, marking each item of the list on its right that has not been seen earlier in it. Mark the first appearance of every glyph in the cipher `c`.",
+  "expr": "≠c←'BOOKKEEPER'"
+ }
+}

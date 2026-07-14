@@ -7,17 +7,17 @@
   "spot": "#eef0ff"
  },
  "M": [
-  "w w w w w w w w   w w ",
+  "w w w w   w w w w w w ",
   "w     w     w w     w ",
   "w   w     w   w     w ",
-  "w   w   w     w w aGw ",
+  "    w   w     w w aGw ",
   "w       w   w       w ",
-  "    w       w d⍉w   w ",
+  "w   w       w d⍉w   w ",
   "w w w   w       w   w ",
   "w       w w w   w   w ",
   "w   w   w       w   w ",
   "w   w       w       w ",
-  "w   w w w w w w w w w "
+  "w w w w w w w w w w w "
  ],
  "d⍉": {
   "req": "",
