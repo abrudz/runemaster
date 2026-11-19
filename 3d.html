@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" id="root">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>RuneMaster 3D</title>
+    <link rel="stylesheet" href="index.css"/>
+    <style>
+      #M,#i{visibility:hidden}                 /* 2D board stays laid out (index.js measures it) but unseen */
+      #view3d{position:fixed;inset:0;z-index:0;display:block;touch-action:none}
+      #topbar{flex-wrap:wrap}#left{flex-basis:100%}
+      /* scoreboard panel: floating or docked (dock.js); "html" outranks index.css's #util rules */
+      html #util{position:fixed;z-index:1;flex-direction:column;align-items:stretch;align-self:auto;gap:.4rem;
+        box-sizing:border-box;width:calc(var(--mini) * 4 + 2rem);max-height:calc(100dvh - 1rem);overflow-y:auto;
+        margin:0;transform:none;zoom:1;padding:0 .6rem .6rem;border-radius:.5rem;box-shadow:0 .3rem 1.2rem #0007;
+        background:color-mix(in srgb,var(--spot) 90%,transparent)}
+      html #util.left,html #util.right{top:0;bottom:0;max-height:none;border-radius:0}
+      html #util.left{left:0} html #util.right{right:0}
+      html #side{order:-1;width:100%} html #belt{flex:none}
+      #grip{order:-2;position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:.25rem;
+        margin:0 -.6rem;padding:.3rem .5rem;background:var(--spot);cursor:grab;touch-action:none;font-family:Text}
+      #util.drag{opacity:.85}#util.drag #grip{cursor:grabbing}
+      #grip .gh{flex:1;opacity:.5;letter-spacing:-.1em}
+      #grip button{font-size:.85rem;padding:0 .4rem;line-height:1.5}
+      #util.left [data-dock=left],#util.right [data-dock=right],#util.float [data-dock=float]{font-weight:bold;box-shadow:inset 0 0 0 2px currentColor}
+      #belt caption{cursor:pointer}
+      #belt caption::before{content:"▾ "}
+      #belt.shut caption::before{content:"▸ "}
+      #belt.shut tr{display:none}
+      #dockhint{position:fixed;top:0;bottom:0;width:calc(var(--mini) * 4 + 2rem);z-index:0;pointer-events:none;
+        background:color-mix(in srgb,var(--spot) 30%,transparent);display:none}
+      #dockhint.left{display:block;left:0} #dockhint.right{display:block;right:0}
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="index.js"></script>
+    <script src="dock.js"></script>
+    <script src="three-view.js"></script>
+  </head>
+  <body>
+    <dialog id="msg">
+      <p id="msgp">message</p>
+      <form method="dialog"><button autofocus>OK</button></form>
+    </dialog>
+    <dialog id="ask">
+      <p id="askp">question</p>
+      <form onsubmit="return false">
+        <input id="aski" inputmode="none" autofocus autocomplete="off" spellcheck="false" onkeydown="if(event.key=='Enter')ans(aski.value)">
+        <p><button id="asks" type="button" onclick="ans(aski.value)">Submit</button> <button type="button" onclick="aski.value='';ask.close()">Cancel</button> <span id="askr" aria-live="polite"></span></p>
+      </form>
+      <fieldset><legend> Allowed runes — click to insert </legend><div id="askb"></div></fieldset>
+    </dialog>
+    <i id="i">🕴️‍</i>
+    <table id="M"></table>
+    <div id="util">
+      <table id="belt">
+        <caption>Collected runes</caption>
+        <tr><th>Emerald:</th><td></td></tr>
+        <tr><th>Ruby:</th><td></td></tr>
+        <tr><th>Sapphire:</th><td></td></tr>
+        <tr><th>Amethyst:</th><td></td></tr>
+        <tr><th>Diamond:</th><td></td></tr>
+      </table>
+      <div id="side">
+        <div id="topbar"><em id="left"></em> <button id="vbtn" title="V to toggle; scroll or +/- to zoom">Room</button> <button onclick="location='index.html'">2D</button> <button onclick="reset()">Restart</button></div>
+        <table id="mini"></table>
+      </div>
+    </div>
+  </body>
+</html>
